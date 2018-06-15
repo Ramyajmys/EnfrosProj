@@ -1,6 +1,14 @@
-footer.footer {
+.footer-new {
+  background-color: #343a40 !important; 
+  color: white;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+.footer-new p {
+  padding: 5px;
+  margin: 0;
   text-align: center;
-  padding: 30px 0;
-  margin-top: 70px;
-  border-top: 1px solid #E5E5E5;
+  font-size: 14px;
 }

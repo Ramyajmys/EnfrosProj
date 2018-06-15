@@ -8,7 +8,6 @@ import routes from './myroute.routes';
 export class MyrouteComponent {
   /*@ngInject*/
   constructor() {
-    this.message = 'Hello';
   }
 }
 

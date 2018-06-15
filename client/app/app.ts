@@ -10,7 +10,8 @@ const ngSanitize = require('angular-sanitize');
 const uiRouter = require('angular-ui-router');
 const uiBootstrap = require('angular-ui-bootstrap');
 import 'angular-validation-match';
-
+import 'angular-animate';
+import 'angular-material';
 
 
 import {routeConfig} from './app.config';
@@ -23,12 +24,17 @@ import footer from '../components/footer/footer.component';
 import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
-
-
+import AddProductCategoryComponent from './addProductCategory/addProductCategory.component';
+import AddProductSubCategoryComponent from './addProductSubCategory/addProductSubCategory.component';
+import ProductPageComponent from './productPage/productPage.component';
+import AllCategoryListComponent from './allCategoryList/allCategoryList.component';
 
 import './app.scss';
 
 angular.module('testprojApp', [
+ 'ngAnimate',
+ 'ngMaterial',
+  require('angular-material-data-table'),
   ngCookies,
   ngResource,
   ngSanitize,
@@ -46,7 +52,12 @@ angular.module('testprojApp', [
   main,
   constants,
 
-  util
+  util,
+
+  AddProductCategoryComponent,
+  AddProductSubCategoryComponent,
+  ProductPageComponent,
+  AllCategoryListComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

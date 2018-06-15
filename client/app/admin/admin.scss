@@ -1,20 +1,41 @@
-.trash { color:rgb(209, 91, 71); }
-
-.user-list {
-	li {
-		display: flex;
-		border: none;
-		border-bottom: 1px lightgray solid;
-		margin-bottom: 0;
-		&:last-child { border-bottom: none; }
-
-		.user-info {
-			flex-grow: 1;
-		}
-		.trash {
-			display: flex;
-			align-items: center;
-			text-decoration: none;
-		}
-	}
+.sidetab-menu {
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    background-color: #122f3b;
+}
+.tab-content {
+    width: 85%;
+    height: 100%;
+    position: fixed;
+    margin-left: 15%;
+    overflow: auto;
+}
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: white;
+    padding: 10px 10px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    border-top: 1px solid #ffffff;
+    //border-bottom: 1px solid #ffffff;
+}
+.sidetab-icon {
+    width: 15px;
+    margin-right: 13px; 
+    font-size: 13px;
+}
+.tab button.active {
+    color: #CDDC39;
+}
+.tabcontent {
+    float: left;
+    padding: 20px 23px;
+    width: 100%;
+    height: 100%;
 }
