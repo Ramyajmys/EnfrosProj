@@ -1,0 +1,45 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>Sub-category</h2>
+        <span flex></span>
+        <div ng-click="addProductSubCategoryCtrl.closeDialog()" style="font-size: 30px; outline: none;">&times;</div>
+    </div>
+</md-toolbar>
+        
+<div class="modal-body width-650 padding-2x">
+    <form class="form-horizontal" ng-submit="addProductSubCategoryCtrl.save()">
+        <div class="form-group">
+            <label class="col-md-3">Category<span class="red-color">*</span></label>
+            <div class="col-md-9">
+                <select class="form-control" ng-model="addProductSubCategoryCtrl.subCategoryObj.category_id" name="category_id" required>
+                    <option value="">Select Category</option>
+                    <option ng-repeat="category in addProductSubCategoryCtrl.categoryList" value="{{category._id}}">{{category.category_name}}</option>
+                    <option ng-repeat="category in addProductSubCategoryCtrl.categoryList" ng-if="addProductSubCategoryCtrl.flag" ng-value="{{category._id}}">{{category.category_name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3">Sub-category<span class="red-color">*</span></label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="subcategory" placeholder="Enter Sub-category" ng-model="addProductSubCategoryCtrl.subCategoryObj.sub_category_name" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3">Description</label>
+            <div class="col-md-9">
+                <textarea type="text" row="2" class="form-control" name="description" placeholder="Enter Sub-category Description" ng-model="addProductSubCategoryCtrl.subCategoryObj.sub_category_description"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3"></label>
+            <div class="col-md-9">
+                <md-button class="md-raised md-primary btnWidth bootstrap-md-btn" type="submit">Save</md-button>
+                <md-button class="md-raised md-accent btnWidth bootstrap-md-btn" ng-click="addProductSubCategoryCtrl.closeDialog()">Cancel</md-button>
+            </div>
+        </div>
+        <div layout="row" layout-align="center center" class="alert alert-danger" ng-show="addProductSubCategoryCtrl.errMsg">
+            {{addProductSubCategoryCtrl.errMsg}}
+        </div>
+    </form>
+</div>
+        

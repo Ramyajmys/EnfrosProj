@@ -1,0 +1,36 @@
+.imgCover {
+    height: 200px;
+    width: 200px;
+    margin: auto;
+}
+.imgStyle {
+    height: 200px;
+    width: 200px;
+    padding: 10px;
+}
+.chooseFile {
+    padding-bottom: 10px;
+    margin: auto;
+    width: 95px;
+}
+.topSpace {
+    padding-top: 10px;
+}
+.imgDiv {
+    height: 30px;
+    width: 30px;
+}
+.tblImg {
+    height: 30px;
+    width: 30px;
+}
+@media (max-width: 959px) {
+    .imgCover {
+        height: 150px;
+        width: 150px;
+    }
+    .imgStyle {
+        height: 150px;
+        width: 150px;
+    }
+}

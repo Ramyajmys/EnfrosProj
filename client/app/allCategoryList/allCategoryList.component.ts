@@ -32,6 +32,7 @@ export class AllCategoryListComponent {
     limit: 5,
     page: 1
   };
+  flag: boolean = false;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast) {
@@ -44,9 +45,11 @@ export class AllCategoryListComponent {
   }
 
   New() {
+    this.flag = false;
+    this.categoryObj = {};
     var vm = this;
     this.$mdDialog.show({
-      controller: AllCategoryListComponent,
+      controller: () => this,
       controllerAs: 'cat',
       template: require('./addcategory.html'),
       clickOutsideToClose: false,
@@ -72,32 +75,69 @@ export class AllCategoryListComponent {
 
   save() {
     this.btnClicked = true;
-    this.$http.post('/api/ProductCategorys', this.categoryObj).then(response => {
-      if(response.status === 200 || response.status === 201) {
-        this.$mdToast.show(
-          this.$mdToast.simple()
-          .textContent('Successfully Added')
-          .position('bottom right')
-          .hideDelay(3000)
-        );
-        this.closeDialog();
-        this.btnClicked = false;
-      }
-    }, err => {
-      if(err.data.message) {
-        this.errMsg = err.data.message;
-      } else if(err.status === 500) {
-        this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
-        this.errMsg = 'Not Found';
-      } else {
-        this.errMsg = err;
-      }
-    });
+    if(!this.flag) {
+      this.$http.post('/api/ProductCategorys', this.categoryObj).then(response => {
+        if(response.status === 200 || response.status === 201) {
+          this.$mdToast.show(
+            this.$mdToast.simple()
+            .textContent('Successfully Added')
+            .position('bottom right')
+            .hideDelay(3000)
+          );
+          this.closeDialog();
+          this.btnClicked = false;
+        }
+      }, err => {
+        if(err.data.message) {
+          this.errMsg = err.data.message;
+        } else if(err.status === 500) {
+          this.errMsg = 'Internal Server Error';
+        } else if(err.status === 404) {
+          this.errMsg = 'Not Found';
+        } else {
+          this.errMsg = err;
+        }
+      });
+    } else {
+      this.$http.post('/api/ProductCategorys/update', this.categoryObj).then(response => {
+        if(response.status === 200 || response.status === 201) {
+          this.$mdToast.show(
+            this.$mdToast.simple()
+            .textContent('Successfully Updated')
+            .position('bottom right')
+            .hideDelay(3000)
+          );
+          this.closeDialog();
+          this.btnClicked = false;
+        }
+      }, err => {
+        if(err.data.message) {
+          this.errMsg = err.data.message;
+        } else if(err.status === 500) {
+          this.errMsg = 'Internal Server Error';
+        } else if(err.status === 404) {
+          this.errMsg = 'Not Found';
+        } else {
+          this.errMsg = err;
+        }
+      });
+    }
+    
   }
 
   edit(dObj) {
-
+    this.flag = true;
+    this.categoryObj = dObj;
+    var vm = this;
+    this.$mdDialog.show({
+      template: require('./addcategory.html'),
+      controller: () => this,
+      controllerAs: 'cat',
+      clickOutsideToClose: false,
+      onRemoving: function(event) {
+        vm.get();
+      }
+    });
   }
 
   delete(dObj) {

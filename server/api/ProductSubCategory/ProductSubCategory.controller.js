@@ -11,6 +11,7 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
+import {ProductCategory} from '../../sqldb';
 import {ProductSubCategory} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
@@ -66,7 +67,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of ProductSubCategorys
 export function index(req, res) {
-  return ProductSubCategory.findAll()
+  return ProductSubCategory.findAll({include: [{model: ProductCategory}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -92,13 +93,10 @@ export function create(req, res) {
 
 // Upserts the given ProductSubCategory in the DB at the specified ID
 export function upsert(req, res) {
-  if(req.body._id) {
-    Reflect.deleteProperty(req.body, '_id');
-  }
-
-  return ProductSubCategory.upsert(req.body, {
+ 
+  return ProductSubCategory.update(req.body, {
     where: {
-      _id: req.params.id
+      _id: req.body._id
     }
   })
     .then(respondWithResult(res))

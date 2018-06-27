@@ -3,7 +3,6 @@
         <md-card>
             <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="start start" layout-align-sm="center center">
                 <h4>Category</h4>
-                <!-- <md-button class="md-raised md-primary" ng-click="allCategoryListCtrl.NewCategory()">New Category</md-button> -->
                 <button type="button" class="btn btn-success" ng-click="allCategoryListCtrl.New()">New Category</button>
             </div>
             <md-table-container>
@@ -16,35 +15,32 @@
                         </tr>
                     </thead>
                     <tbody md-body>   
-                                <tr md-row md-auto-select ng-repeat="category in allCategoryListCtrl.categoryList
-                                                                    | orderBy: allCategoryListCtrl.query.order 
-                                                                    | limitTo: allCategoryListCtrl.query.limit : (allCategoryListCtrl.query.page -1) * allCategoryListCtrl.query.limit">
-                                <td md-cell>{{category.category_name}}</td>
-                                <td md-cell>{{category.category_description}}</td> 
-                                <td md-cell>
-                                        <button type="button" class="btn btn-info"  ng-click="allCategoryListCtrl.edit(category)">Edit</button>
-                                        <button type="button" class="btn btn-danger"  ng-click="allCategoryListCtrl.confirmDelete(category, $event)">Delete</button>
-                                    <!-- <md-button class="md-raised md-primary lowercase-text" ng-click="allCategoryListCtrl.view(category)">View</md-button> -->
-                                </td>
-                            </tr>
+                        <tr md-row md-auto-select ng-repeat="category in allCategoryListCtrl.categoryList
+                                                            | orderBy: allCategoryListCtrl.query.order 
+                                                            | limitTo: allCategoryListCtrl.query.limit : (allCategoryListCtrl.query.page -1) * allCategoryListCtrl.query.limit">
+                            <td md-cell>{{category.category_name}}</td>
+                            <td md-cell>{{category.category_description}}</td> 
+                            <td md-cell>
+                                <button type="button" class="btn btn-info"  ng-click="allCategoryListCtrl.edit(category)">Edit</button>
+                                <button type="button" class="btn btn-danger"  ng-click="allCategoryListCtrl.confirmDelete(category, $event)">Delete</button>
+                            </td>
+                        </tr>
                     </tbody>
-                    </table>
-                </md-table-container>
-                <!-- <md-table-pagination md-limit="allCategoryListCtrl.query.limit" md-limit-options="[5, 10, 15]" 
-                                    md-page="allCategoryListCtrl.query.page" md-total="{{category.count}}" 
-                                    md-on-paginate="getDesserts" md-page-select>
-                </md-table-pagination> -->
-                <md-table-pagination md-limit="allCategoryListCtrl.query.limit" md-limit-options="allCategoryListCtrl.limitOptions" 
-                    md-page="allCategoryListCtrl.query.page" md-total="{{allCategoryListCtrl.categoryList.length}}" 
-                    md-page-select="allCategoryListCtrl.options.pageSelect" md-boundary-links="allCategoryListCtrl.options.boundaryLinks" 
-                    md-on-paginate="logPagination">
-                </md-table-pagination>
+                </table>
+            </md-table-container>
+
+            <md-table-pagination md-limit="allCategoryListCtrl.query.limit" md-limit-options="allCategoryListCtrl.limitOptions" 
+                md-page="allCategoryListCtrl.query.page" md-total="{{allCategoryListCtrl.categoryList.length}}" 
+                md-page-select="allCategoryListCtrl.options.pageSelect" md-boundary-links="allCategoryListCtrl.options.boundaryLinks" 
+                md-on-paginate="logPagination">
+            </md-table-pagination>
                 
             <div layout="row" layout-align="center center"> 
                 <div class="alert alert-danger" ng-if="allCategoryListCtrl.errMsg">
                     {{allCategoryListCtrl.errMsg}}
                 </div>
-            </div>    
+            </div>
+              
         </md-card>
     </md-content>
 </div>

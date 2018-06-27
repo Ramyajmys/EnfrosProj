@@ -1,1 +1,48 @@
-<div>This is the addProductSubCategory view.</div>
+<div class="container-fluid btmSpace">
+    <md-content>
+        <md-card>
+            <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="start start" layout-align-sm="center center">
+                <h4>Category</h4>
+                <button type="button" class="btn btn-success" ng-click="addProductSubCategoryCtrl.New()">New Sub-Category</button>
+            </div>
+            <md-table-container>
+                <table md-table>
+                    <thead md-head md-order="addProductSubCategoryCtrl.query.order">
+                        <tr md-row>
+                            <th md-column>Sub-category</th> 
+                            <th md-column>Description</th>
+                            <th md-column>Category</th> 
+                            <th md-column>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>   
+                        <tr md-row md-auto-select ng-repeat="subcategory in addProductSubCategoryCtrl.subCategoryList
+                                                            | orderBy: addProductSubCategoryCtrl.query.order 
+                                                            | limitTo: addProductSubCategoryCtrl.query.limit : (addProductSubCategoryCtrl.query.page -1) * addProductSubCategoryCtrl.query.limit">
+                            <td md-cell>{{subcategory.sub_category_name}}</td>
+                            <td md-cell>{{subcategory.sub_category_description}}</td> 
+                            <td md-cell>{{subcategory.ProductCategory.category_name}}</td> 
+                            <td md-cell>
+                                <button type="button" class="btn btn-info"  ng-click="addProductSubCategoryCtrl.edit(subcategory)">Edit</button>
+                                <button type="button" class="btn btn-danger"  ng-click="addProductSubCategoryCtrl.confirmDelete(subcategory, $event)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+
+            <md-table-pagination md-limit="addProductSubCategoryCtrl.query.limit" md-limit-options="addProductSubCategoryCtrl.limitOptions" 
+                md-page="addProductSubCategoryCtrl.query.page" md-total="{{addProductSubCategoryCtrl.subCategoryList.length}}" 
+                md-page-select="addProductSubCategoryCtrl.options.pageSelect" md-boundary-links="addProductSubCategoryCtrl.options.boundaryLinks" 
+                md-on-paginate="logPagination">
+            </md-table-pagination>
+                
+            <div layout="row" layout-align="center center"> 
+                <div class="alert alert-danger" ng-if="addProductSubCategoryCtrl.errMsg">
+                    {{addProductSubCategoryCtrl.errMsg}}
+                </div>
+            </div>
+              
+        </md-card>
+    </md-content>
+</div>

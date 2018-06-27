@@ -36,14 +36,17 @@ var all = {
     session: 'testproj-secret'
   },
 
-  // MongoDB connection options
-  mongo: {
-    options: {
-      db: {
-        safe: true
-      }
-    }
-  }
+  service: 'Godaddy',
+  mailHost: 'smtpout.secureserver.net',
+  mailPort: 465,
+  secureConnection: true,
+  mailSenderId: 'info@enfros.co.in',
+  mailSecure: false,
+  email: 'info@enfros.co.in',
+  password: 'abcd12345',
+
+  default_password: 'User@1234',
+  domain: 'http://localhost:3000/'
 };
 
 // Export the config object based on the NODE_ENV

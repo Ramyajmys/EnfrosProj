@@ -25,9 +25,14 @@ export default function(sequelize, DataTypes) {
         isEmail: true
       }
     },
-    role: {
+    mobilenumber: {
       type: DataTypes.STRING,
-      defaultValue: 'user'
+      unique: {
+        msg: 'The specified Mobile Number is already in use, try with different Mobile Number'
+      }
+    },
+    role: {
+      type: DataTypes.STRING
     },
     password: {
       type: DataTypes.STRING,
@@ -36,8 +41,11 @@ export default function(sequelize, DataTypes) {
       }
     },
     provider: DataTypes.STRING,
-    salt: DataTypes.STRING
-
+    salt: DataTypes.STRING,
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
 
     /**

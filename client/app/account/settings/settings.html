@@ -1,4 +1,77 @@
-<div class="container">
+<div class="container-fluid btmSpace">
+  <md-content>
+    <md-card>
+      <md-card-content>
+        <div class="row">
+          <div class="col-sm-12">
+            <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <div class="form-horizontal topSpace">
+                        <div class="form-group">
+                          <label class="control-label col-sm-3 col-md-3 col-md-offset-2">Current Password</label>
+                            <div class="col-sm-6">
+                              <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword" mongoose-error/>
+                                <div class="has-error">
+                                  <p class="help-block" ng-show="form.password.$error.mongoose">{{ vm.errors.other }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-3 col-md-3 col-md-offset-2">New Password</label>
+                            <div class="col-sm-6">
+                              <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
+                                ng-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/"
+                                required/>
+                                <div class="has-error">
+                                  <p class="help-block" ng-show="(form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">Password required.</p>
+                                  <p class="help-block" ng-show="(form.newPassword.$error.pattern) && (form.newPassword.$dirty || vm.submitted)">
+                                    Password must be at least 8 charcters and include a combination uppercase, lowercase letters, special charcters and numbers
+                                  </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-3 col-md-3 col-md-offset-2">Confirm New Password</label>
+                            <div class="col-sm-6">
+                              <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
+                                match="vm.user.newPassword"
+                                ng-minlength="3"
+                                required=""/>
+                                <div class="has-error">
+                                  <p class="help-block"
+                                    ng-show="form.confirmPassword.$error.match && vm.submitted">
+                                    Passwords must match.
+                                  </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-3 col-md-3 col-md-offset-2"></label>
+                          <div class="col-sm-6">
+                            <button class="btn btn-md btn-primary" type="submit">Save changes</button>         
+                          </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+                <div layout="row" layout-align="center center" class="alert alert-danger" ng-if="vm.errMsg">
+                    {{vm.errMsg}}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </md-content>
+</div>
+
+
+
+
+<!-- <div class="container">
   <div class="row">
     <div class="col-sm-12">
       <h1>Change Password</h1>
@@ -48,4 +121,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->

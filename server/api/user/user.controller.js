@@ -3,6 +3,13 @@
 import {User} from '../../sqldb';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
+import {UserProfile} from '../../sqldb';
+var nodemailer = require('nodemailer');
+import crypto from 'crypto';
+
+// var base64 = require('base-64');
+// var utf8 = require('utf8');
+// var fs = require('fs'); 
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -23,14 +30,16 @@ function handleError(res, statusCode) {
  * restriction: 'admin'
  */
 export function index(req, res) {
-  return User.findAll({
+  return User.findAll({where: {role: req.body.role},
     attributes: [
       '_id',
       'name',
       'email',
       'role',
+      'mobilenumber',
+      'active',
       'provider'
-    ]
+    ], include: [{model: UserProfile}]
   })
     .then(users => {
       res.status(200).json(users);
@@ -38,22 +47,137 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+function sendEmailNotification(id, email, name, msg) {
+
+  var transporter = nodemailer.createTransport({
+    service: config.service,
+    host: config.mailHost,
+    port: config.mailPort,
+    secureConnection: config.secureConnection,
+    auth: {
+      user: config.email,
+      pass: config.password
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+  
+  var id = String(id);
+  var cipher = crypto.createCipher("aes192", "password");
+  var encrypted = cipher.update(id, 'utf8', 'hex') + cipher.final('hex');
+  var url = config.domain + 'setpassword/' +encrypted;
+  
+  var mailOptions = {
+    from: config.mailSenderId,
+    to: email, 
+    subject: 'Welcome, '+ name + '!', 
+    text: name + ',\n\nThanks for joining our community. If you have any questions, please don\'t hesitate to send them our way. Feel free to reply to this email directly.\n\nSincerely,\nThe Management',
+    html: '<head><meta charset="ISO-8859-1"><title>Invitation URL</title>' +
+    '</head><body><p style="padding:0"></p> ' +
+    '<p id="demo"style="float:right"></p>' +
+    '<script>var d = new Date(); var n = d.toDateString(); document.getElementById("demo").innerHTML = n;</script>' +
+    '<table style="background: #F5F6F7; width: 100%;">\
+      <tbody>\
+        <tr>\
+          <td>\
+              <table style="width: 700px; margin: auto; margin-top: 50px; border-radius: 7px;">\
+                <tbody>\
+                  <tr>\
+                    <td style="border-top-left-radius: 6px; border-top-right-radius: 6px; background: #263238;\
+                            background-size: 300px; background-position: 100%; background-repeat: no-repeat;\
+                            line-height: 55px; padding-top: 40px; text-align: center; color: #ffffff;\
+                            display: block; margin: 0 auto; clear: both">\
+                            <h2 style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                                  margin-bottom: 15px; color: #47505e; margin: 0px 0 10px; line-height: 1.2;\
+                                  font-weight: 200; line-height: 45px; margin-bottom: 30px;\
+                                  font-size: 25px; line-height: 40px; margin-bottom: 10px; font-weight: 400;\
+                                  color: #ffffff; padding-left: 40px; padding-right: 40px; padding-top: 40px;\
+                                  padding-top: 0px; color: #009688">Enfros Solution</h2>\
+                            <h1 style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                                      margin-bottom: 15px; color: #47505e; margin: 0px 0 10px; line-height: 1.2;\
+                                      font-weight: 200; line-height: 45px; font-weight: bold; margin-bottom: 30px;\
+                                      font-size: 28px; line-height: 40px; margin-bottom: 10px; font-weight: 400;\
+                                      color: #ffffff; padding-left: 40px; padding-right: 40px; padding-top: 40px;\
+                                      padding-bottom: 40px; padding-top: 0px;">Welcome, '+ name + '</h1>\</td></tr>\
+                  <tr><td style="background: #fff; border-top-left-radius: 6px; border-top-right-radius: 6px;\
+                      padding-bottom: 40px; margin: 0 aut0; clear: both;">\
+                      <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                              font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                              font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;">\
+                              ' + msg + '</p>\
+                      <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                              font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                              font-size: 15px; color: #47505e; text-align: center; padding-left: 40px; padding-right: 40px;">\
+                              <a href="' + url + '" style="word-wrap: break-word; color: #009688;\
+                                  font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                                  text-decoration: none; background-color: #009688; border: solid #009688;\
+                                  line-height: 2; max-width: 100%; font-size: 14px; padding: 8px 40px 8px 40px;\
+                                  margin-top: 30px; margin-bottom: 30px; font-weight: 600; display: inline-block;\
+                                  border-radius: 30px; margin-left: auto; margin-right: auto; text-align: center;\
+                                  color: #ffffff;">Activate</a></p>\
+                      <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                              font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                              font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;"> \
+                              Once Activated, you will be able to login to your account with your Email address</p>\
+                      <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                              font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                              font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;\
+                              margin-bottom: 0; padding-bottom: 0;">\
+                              Regards,\
+                              <br>\
+                              Enfros team</p>\
+                      </td>\
+                  </tr>\
+              </tbody>\
+          </table>\
+          <div style="padding-top: 20px; padding-bottom: 30px; width: 100%; text-align: center; clear: both;">\
+              <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                      font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                      font-size: 12px; color: #47505e; color: #666; margin-top: 0px;">\
+                      Copyright © Enfros Solution. All right reserved.</p>\
+          </div>\
+          <br>\
+        </td>\
+      </tr>\
+    </tbody>\
+  </table>'
+  };
+    
+  transporter.sendMail(mailOptions, (error, success) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Mail sent');
+  });
+}
 /**
  * Creates a new user
  */
 export function create(req, res) {
   var newUser = User.build(req.body);
   newUser.setDataValue('provider', 'local');
-  newUser.setDataValue('role', 'user');
+  newUser.setDataValue('password', config.default_password);
+  var profile = req.body;
+  
   return newUser.save()
     .then(function(user) {
-      var token = jwt.sign({ _id: user._id }, config.secrets.session, {
-        expiresIn: 60 * 60 * 5
-      });
-      res.json({ token });
+      profile['user_id'] = user._id;
+      UserProfile.create(profile).then(function() {
+        var msg = 'You are successfully added. Please activate your account by clicking the button below';
+        sendEmailNotification(user._id, user.email, req.body.name, msg);
+        res.json({message: 'Successfully Added'});
+      })
+      .catch(handleError(res));
+      // var token = jwt.sign({ _id: user._id }, config.secrets.session, {
+      //   expiresIn: 60 * 60 * 5
+      // });
+      // res.json({ token });
     })
     .catch(validationError(res));
 }
+
+
 
 /**
  * Get a single user
@@ -146,4 +270,29 @@ export function me(req, res, next) {
  */
 export function authCallback(req, res) {
   res.redirect('/');
+}
+
+export function createPassword(req, res) {
+  var id = req.body.userid;
+  var userId = String(id);
+
+  var decipher = crypto.createDecipher('aes192', 'password')
+  var decrypted  = decipher.update(userId, 'hex', 'utf8') + decipher.final('utf8');
+  var newPassword = req.body.newPassword;
+  var defaultIterations = 10000;
+  var defaultKeyLength = 64;
+
+  return User.findOne({where:{_id: decrypted, active: false}}).then(function(response){
+    var salt = new Buffer(response.salt, 'base64');
+    var encodedPwd = crypto.pbkdf2Sync(newPassword, salt, defaultIterations, defaultKeyLength, 'sha512').toString('base64');
+    var details = {
+      password: encodedPwd,
+      active: true
+    }
+    return User.update(details,{where: {_id: decrypted}}).then(function(response){
+       return res.status(200).json({message: 'Password Created. Now You Can Login !!'});
+    })
+    .catch(handleError(res));
+  })
+  .catch(handleError(res));
 }

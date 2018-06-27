@@ -28,13 +28,17 @@ import AddProductCategoryComponent from './addProductCategory/addProductCategory
 import AddProductSubCategoryComponent from './addProductSubCategory/addProductSubCategory.component';
 import ProductPageComponent from './productPage/productPage.component';
 import AllCategoryListComponent from './allCategoryList/allCategoryList.component';
-
+import DistributorComponent from './distributor/distributor.component';
+import CustomerComponent from './customer/customer.component';
+import SetpasswordComponent from './setpassword/setpassword.component';
+import 'angular-base64-upload';
 import './app.scss';
 
 angular.module('testprojApp', [
  'ngAnimate',
  'ngMaterial',
   require('angular-material-data-table'),
+  'naif.base64',
   ngCookies,
   ngResource,
   ngSanitize,
@@ -57,7 +61,10 @@ angular.module('testprojApp', [
   AddProductCategoryComponent,
   AddProductSubCategoryComponent,
   ProductPageComponent,
-  AllCategoryListComponent
+  AllCategoryListComponent,
+  DistributorComponent,
+  CustomerComponent,
+  SetpasswordComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

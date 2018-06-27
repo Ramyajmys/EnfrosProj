@@ -1,0 +1,77 @@
+<div class="container-fluid btmSpace">
+    <md-content ng-hide="customerCtrl.flag">
+        <md-card>
+            <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="center center" layout-align-sm="center center">
+                <h4>Customer</h4>
+                <button type="button" class="btn btn-success" ng-click="customerCtrl.clickNew()">New Customer</button>
+                <!-- <h3>Customer</h3> 
+                <div layout="row" layout-align="end start" layout-xs="column" layout-sm="column"  layout-align-xs="center center" layout-align-sm="center center"> 
+                    <md-input-container class="selectContainer">
+                        <select class="form-control selectLoc" ng-model="adduserCtrl.export" name="location" ng-change="adduserCtrl.exportUserDetails(adduserCtrl.export)">
+                            <option value="" disabled>Export as</option>
+                            <option value="1">PDF</option>
+                            <option value="2">CSV</option>
+                        </select> 
+                    </md-input-container> 
+                    <md-input-container class="selectContainer">
+                        <select class="form-control selectLoc" ng-model="adduserCtrl.locationid"  name="location" ng-change="adduserCtrl.locationV(adduserCtrl.locationid)">
+                            <option value="">All Location</option>
+                            <option ng-repeat="location in adduserCtrl.allLocation" value="{{location.id}}">{{location.locationName}}</option>
+                        </select> 
+                    </md-input-container>
+                </div> -->
+            </div> 
+            <!-- <md-virtual-repeat-container  class="scrollbar" ng-style='listStyle' md-top-index="topIndex" md-orient-vertical md-fix-head>   -->
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column>Photo</th> 
+                                <th md-column>Name</th>
+                                <th md-column>Email</th>
+                                <th md-column>Mobile Number</th>
+                                <th md-column>Address</th>
+                                <th md-column>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>   
+                             <!-- <div id="loader">
+                                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                            </div>  -->
+                                 <tr md-row md-auto-select ng-repeat="users in adduserCtrl.allUsers">
+
+                                    <!-- <td md-cell ><div class="imgDiv"><img ng-src="{{(users.User.ProfilePicture == null) ? (users.User.genger == 'male') ? '/assets/images/b.svg': 
+                                                    (users.User.gender == 'female') ? '/assets/images/g.svg': '/assets/images/def.svg' : users.User.ProfilePicture.profilepic}}" class="img-circle img-responsive tblImg"/></div></td>
+                                    <td md-cell>{{users.User.name}}</td>
+                                    <td md-cell>{{users.User.gender}}</td>
+                                    <td md-cell>{{users.User.email}}</td>
+                                    <td md-cell>{{users.User.Userprofile.country_id == null ? users.User.mobilenumber: '+' + users.User.Userprofile.Country.telephoneCode +'-'+ users.User.mobilenumber}}</td>
+                                    <td md-cell>{{users.User.role}}</td>
+                                    <td md-cell>{{users.CompanyLocation.locationName}}</span>
+                                     </td> 
+                                    <td md-cell>
+                                        <button type="submit" class="btn btn-primary editable-table-button btnEditDel" ng-disabled="users.User.role === 'admin'" ng-click="adduserCtrl.uEdit(users)">Edit</button>
+                                        <button hide-xs hide-sm type="button" class="btn btn-danger editable-table-button btnEditDel" ng-disabled="users.User.role === 'admin'" ng-click="adduserCtrl.uDelete(users, $event)">Delete</button>
+                                    </td> -->
+                                </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            <!-- </md-virtual-repeat-container>   -->
+            <div layout="row" layout-align="center center"> 
+                <div class="alert alert-danger" ng-if="adduserCtrl.errMsg">
+                     {{adduserCtrl.errMsg}}
+                </div>
+            </div>    
+        </md-card>
+    </md-content>
+
+    <md-content ng-hide="customerCtrl.flag">
+        <addcustomer></addcustomer>
+    </md-content>
+</div>
+
+
+<input type="text" name="country_code" 
+                             pattern="[a-zA-Z]+"
+                            oninvalid="setCustomValidity('Plz enter on Alphabets ')">

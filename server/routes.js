@@ -9,6 +9,11 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/UserProfiles', require('./api/UserProfile'));
+  app.use('/api/Roles', require('./api/Role'));
+  app.use('/api/Citys', require('./api/City'));
+  app.use('/api/States', require('./api/State'));
+  app.use('/api/Countrys', require('./api/Country'));
   app.use('/api/ProductSubCategorys', require('./api/ProductSubCategory'));
   app.use('/api/ProductCategorys', require('./api/ProductCategory'));
   app.use('/api/things', require('./api/thing'));
