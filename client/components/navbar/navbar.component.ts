@@ -9,6 +9,8 @@ export class NavbarComponent {
   }];
   isLoggedIn: Function;
   isAdmin: Function;
+  isCustomer: Function;
+  isDistributor: Function;
   getCurrentUser: Function;
   isCollapsed = true;
 
@@ -16,6 +18,8 @@ export class NavbarComponent {
     'ngInject';
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
+    this.isCustomer = Auth.isCustomerSync;
+    this.isDistributor = Auth.isDistributorSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
   }
 

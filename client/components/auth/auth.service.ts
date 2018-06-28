@@ -202,6 +202,22 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
       return Auth.hasRoleSync('admin');
     },
 
+
+    isCustomer(...args) {
+      return Auth.hasRole(Reflect.apply([].concat, ['Customer'], args));
+    },
+
+     /**
+      * Check if a user is an Customer
+      *
+      * @return {Bool}
+      */
+    isCustomerSync() {
+      // eslint-disable-next-line no-sync
+      return Auth.hasRoleSync('Customer');
+    },
+
+
     /**
      * Get auth token
      *

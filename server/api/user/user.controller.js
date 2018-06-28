@@ -151,6 +151,7 @@ function sendEmailNotification(id, email, name, msg) {
     console.log('Mail sent');
   });
 }
+
 /**
  * Creates a new user
  */
@@ -177,6 +178,33 @@ export function create(req, res) {
     .catch(validationError(res));
 }
 
+/**
+ * Update a new user
+ */
+export function updateUser(req, res) {
+
+  var id = req.body._id;
+  var userObj = {
+    name: req.body.name,
+    email: req.body.email,
+    mobilenumber: req.body.mobilenumber,
+  };
+  var userProfile = {
+    address: req.body.address,
+    city_id: req.body.city_id,
+    state_id: req.body.state_id,
+    country_id: req.body.country_id,
+    zip: req.body.zip,
+    profilepic: req.body.profilepic
+  };
+  return User.update(userObj, {where: {_id: id}}).then(function() {
+    return UserProfile.update(userProfile, {where: {user_id: id}}).then(function() {
+      return res.status(200).json({message: 'User Details Updated'});
+    })
+    .catch(validationError(res));
+  })
+  .catch(validationError(res));
+}
 
 
 /**

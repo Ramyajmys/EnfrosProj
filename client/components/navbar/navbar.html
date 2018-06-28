@@ -14,7 +14,10 @@
         <li ng-repeat="item in $ctrl.menu" ui-sref-active="active">
             <a ui-sref="{{item.state}}">{{item.title}}</a>
         </li>
-        <li ng-show="$ctrl.isAdmin()" ui-sref-active="active"><a ui-sref="admin">Admin</a></li>
+        <!-- <li ng-show="$ctrl.isAdmin()" ui-sref-active="active"><a ui-sref="admin">Admin</a></li> -->
+        <li ng-if= "$ctrl.getCurrentUser().role == 'Customer'" ui-sref-active="active"><a ui-sref="customerDashboard">Customer</a></li>
+        <li ng-if= "$ctrl.getCurrentUser().role == 'Distributor'" ui-sref-active="active"><a ui-sref="distributorDashboard">Distributor</a></li>
+        <li ng-if= "$ctrl.isAdmin()" ui-sref-active="active"><a ui-sref="admin">Admin</a></li>
      
         <li ng-hide="$ctrl.isLoggedIn()" ui-sref-active="active"><a ui-sref="signup">Sign up</a></li>
         <li ng-hide="$ctrl.isLoggedIn()" ui-sref-active="active"><a ui-sref="login">Login</a></li>

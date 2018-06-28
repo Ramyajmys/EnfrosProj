@@ -31,6 +31,10 @@ import AllCategoryListComponent from './allCategoryList/allCategoryList.componen
 import DistributorComponent from './distributor/distributor.component';
 import CustomerComponent from './customer/customer.component';
 import SetpasswordComponent from './setpassword/setpassword.component';
+import CustomerDashboardComponent from './customerDashboard/customerDashboard.component';
+import DistributorDashboardComponent from './distributorDashboard/distributorDashboard.component';
+import MyrouteComponent from './myroute/myroute.component';
+
 import 'angular-base64-upload';
 import './app.scss';
 
@@ -64,7 +68,10 @@ angular.module('testprojApp', [
   AllCategoryListComponent,
   DistributorComponent,
   CustomerComponent,
-  SetpasswordComponent
+  SetpasswordComponent,
+  CustomerDashboardComponent,
+  DistributorDashboardComponent,
+  MyrouteComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

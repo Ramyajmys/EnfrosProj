@@ -30,8 +30,8 @@
                                     <td md-cell>{{customer.UserProfile.address}}</td>
 
                                     <td md-cell>
-                                        <button type="button" class="btn btn-info"  ng-click="customerCtrl.edit(subcategory)">Edit</button>
-                                        <button type="button" class="btn btn-danger"  ng-click="customerCtrl.confirmDelete(subcategory, $event)">Delete</button>
+                                        <button type="button" class="btn btn-info"  ng-click="customerCtrl.edit(customer)">Edit</button>
+                                        <button type="button" class="btn btn-danger"  ng-click="customerCtrl.confirmDelete(customer, $event)">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -107,7 +107,8 @@
                                             <div class="col-sm-6">
                                                 <select class="form-control" ng-model="customerCtrl.user.country_id" name="companyCountry" ng-change="customerCtrl.user.state_id=null; customerCtrl.user.city_id=null; customerCtrl.getStates(customerCtrl.user.country_id)" required>
                                                     <option value="">Select Country</option>
-                                                    <option ng-repeat="country in customerCtrl.country" value="{{country._id}}">{{country.countryName}}</option>
+                                                    <option ng-repeat="country in customerCtrl.country" ng-if="!customerCtrl.isEdit" value="{{country._id}}">{{country.countryName}}</option>
+                                                    <option ng-repeat="country in customerCtrl.country" ng-if="customerCtrl.isEdit" ng-value="{{country._id}}">{{country.countryName}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -116,7 +117,8 @@
                                             <div class="col-sm-6">
                                                 <select class="form-control" ng-model="customerCtrl.user.state_id" name="companyState" ng-change="customerCtrl.user.city_id=null; customerCtrl.getCities(customerCtrl.user.state_id)" required>
                                                     <option value="">Select State</option>
-                                                    <option ng-repeat="state in customerCtrl.states" value="{{state._id}}">{{state.stateName}}</option>
+                                                    <option ng-repeat="state in customerCtrl.states" ng-if="!customerCtrl.isEdit" value="{{state._id}}">{{state.stateName}}</option>
+                                                    <option ng-repeat="state in customerCtrl.states" ng-if="customerCtrl.isEdit" ng-value="{{state._id}}">{{state.stateName}}</option>
                                                 </select>
                                               </div>
                                         </div>
@@ -125,7 +127,8 @@
                                             <div class="col-sm-6">
                                                 <select class="form-control" name"companyCity" ng-model="customerCtrl.user.city_id">
                                                     <option value="">Select City</option>
-                                                    <option ng-repeat="city in customerCtrl.cities" value="{{city._id}}">{{city.cityName}}</option>
+                                                    <option ng-repeat="city in customerCtrl.cities" ng-if="!customerCtrl.isEdit" value="{{city._id}}">{{city.cityName}}</option>
+                                                    <option ng-repeat="city in customerCtrl.cities" ng-if="customerCtrl.isEdit" ng-value="{{city._id}}">{{city.cityName}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -138,7 +141,8 @@
                                         <div class="form-group">
                                             <label class="control-label col-sm-3 col-md-3"></label>
                                             <div class="col-sm-6">
-                                                <md-button class="md-raised md-primary btnWidth" type="submit">Add</md-button>
+                                                <md-button class="md-raised md-primary btnWidth" ng-if="!customerCtrl.isEdit" type="submit">Add</md-button>
+                                                <md-button class="md-raised md-primary btnWidth" ng-if="customerCtrl.isEdit" type="submit">Save</md-button>
                                                 <md-button class="md-raised md-accent btnWidth" ng-click="customerCtrl.cancel()">Cancel</md-button>                    
                                             </div>
                                         </div>

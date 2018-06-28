@@ -30,7 +30,7 @@ export class CustomerComponent {
     limit: 5,
     page: 1
   };
-  flag: boolean = false;
+  flag: boolean = false; isEdit: boolean = false;
   def: string;
   profilepic: any;
   user = {} ;
@@ -47,8 +47,7 @@ export class CustomerComponent {
     this.$state = $state;
     this.Auth = Auth;
     this.$mdToast = $mdToast;
-    this.def = '/assets/images/def.svg';
-    this.user['role'] = 'Customer';
+    
     this.getRoles();
     this.getCountry();
     this.get();
@@ -109,7 +108,10 @@ export class CustomerComponent {
   }
 
   clickNew() {
+    this.user = {};
     this.flag = true;
+    this.def = '/assets/images/def.svg';
+    this.user['role'] = 'Customer';
   }
 
   picChange(pic) {
@@ -120,15 +122,92 @@ export class CustomerComponent {
   }
 
   save() {
-    this.$http.post('/api/users/', this.user).then(response => {
-      if(response.status === 200) {
+    if(!this.isEdit) {
+      this.$http.post('/api/users/', this.user).then(response => {
+        if(response.status === 200) {
+          this.$mdToast.show(
+            this.$mdToast.simple()
+            .textContent(response.data.message)
+            .position('bottom right')
+            .hideDelay(3000)
+          );
+          this.cancel();
+          this.get();
+        }
+      }, err => {
+        if(err.data.message) {
+          this.errMsg = err.data.message;
+        } else if(err.status === 500) {
+          this.errMsg = 'Internal Server Error';
+        } else if(err.status === 404) {
+          this.errMsg = 'Not Found';
+        } else {
+          this.errMsg = err;
+        }
+      });
+    } else {
+      this.$http.post('/api/users/updateUser', this.user).then(response => {
+        if(response.status === 200) {
+          this.$mdToast.show(
+            this.$mdToast.simple()
+            .textContent(response.data.message)
+            .position('bottom right')
+            .hideDelay(3000)
+          );
+          this.cancel();
+          this.get();
+        }
+      }, err => {
+        if(err.data.message) {
+          this.errMsg = err.data.message;
+        } else if(err.status === 500) {
+          this.errMsg = 'Internal Server Error';
+        } else if(err.status === 404) {
+          this.errMsg = 'Not Found';
+        } else {
+          this.errMsg = err;
+        }
+      });
+    }
+    
+  }
+
+  edit(dObj) {
+    this.flag = true;
+    this.isEdit = true;
+
+    if(dObj.UserProfile.profilepic != null) {
+      this.def = dObj.UserProfile.profilepic;
+    } else {
+      this.def = '/assets/images/def.svg';
+    }
+    this.user['_id'] = dObj._id;
+    this.user['name'] = dObj.name;
+    this.user['email'] = dObj.email;
+    this.user['mobilenumber'] = dObj.mobilenumber;
+    this.user['address'] = dObj.UserProfile.address;
+    if(dObj.UserProfile.country_id != null) {
+      this.user['country_id'] = dObj.UserProfile.country_id;
+      this.getStates(dObj.UserProfile.country_id);
+    }
+    if(dObj.UserProfile.state_id != null) {
+      this.user['state_id'] = dObj.UserProfile.state_id;
+      this.getCities(dObj.UserProfile.state_id);
+    }
+  
+    this.user['city_id'] = dObj.UserProfile.city_id;
+    this.user['zip'] = dObj.UserProfile.zip;
+  }
+
+  delete(dObj) {
+    this.$http.delete('/api/users/'+dObj._id).then(response => {
+      if(response.status === 204) {
         this.$mdToast.show(
           this.$mdToast.simple()
-          .textContent(response.data.message)
+          .textContent('Successfully Deleted')
           .position('bottom right')
           .hideDelay(3000)
         );
-        this.cancel();
         this.get();
       }
     }, err => {
@@ -143,9 +222,25 @@ export class CustomerComponent {
       }
     });
   }
+
+  confirmDelete(dObj, ev) {
+    var confirm = this.$mdDialog.confirm()
+    .title('Are you sure?')
+    .textContent('You want to delete this customer? This action cannot be undone.')
+    .targetEvent(ev)
+    .ok('Yes')
+    .cancel('No');
+    var vm = this;
+    this.$mdDialog.show(confirm).then(function(success) {
+      vm.delete(dObj);
+    }, err => {
+      this.cancel();
+    });
+  }
  
   cancel() {
     this.flag = false;
+    this.errMsg = undefined;
   }
 }
 
