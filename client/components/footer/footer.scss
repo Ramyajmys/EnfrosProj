@@ -1,14 +1,110 @@
-.footer-new {
-  background-color: #343a40 !important; 
-  color: white;
-  position: fixed;
-  left: 0;
-  bottom: 0;
+.footer-style {
+  font-size: 13px;
+  font-family: "Montserrat", arial, sans-serif;
+  background: #222831;
+  color: #878c93;
+  float: left;
   width: 100%;
+  letter-spacing: 1px;
 }
-.footer-new p {
-  padding: 5px;
-  margin: 0;
-  text-align: center;
+.footer-header-title {
+  font-size: 13px;
+  font-family: "Montserrat", arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #fff;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.footer-links {
+  padding-left: 0;
+  margin-left: 0;
+}
+.footer-links li {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 .8em 0;
+  line-height: 16px;
+  font-size: 15px;
+}
+.footer-links li a {
+  text-decoration: none;
+  color: #878c93;
+}
+.footer-links li a:hover {
+  color: rgb(153, 185, 37);
+}
+.social-link > i {
+  margin-right: 5px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.address h3 {
+  font-size: 16px;
+  color: #aaaeb3;
+}
+.address p {
   font-size: 14px;
 }
+.footer-copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2.5em;
+  margin-top: 2.5em;
+  padding-bottom: 2.5rem;
+}
+.footer-social li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+.footer-social li a {
+  font-size: 25px;
+  padding: 4px 7px;
+  color: #878c93;
+}
+.padding-left-60 {
+  padding-left: 60px;
+}
+.padding-top-40 {
+  padding-top: 40px;
+}
+#twitter-color:hover {
+  color: #0084b4;
+}
+#fb-color:hover {
+  color: #3b5998;
+}
+#google-color:hover {
+  color: #d34836;
+}
+#ln-color:hover {
+  color: #0077B5;
+}
+.copt-text {
+  color: #878c93;
+}
+.copt-text:hover {
+  color: rgb(153, 185, 37);
+  text-decoration: none;
+}
+
+
+// .footer-new {
+//   background-color: #343a40 !important; 
+//   color: white;
+//   position: fixed;
+//   left: 0;
+//   bottom: 0;
+//   width: 100%;
+// }
+// .footer-new p {
+//   padding: 5px;
+//   margin: 0;
+//   text-align: center;
+//   font-size: 14px;
+// }
+

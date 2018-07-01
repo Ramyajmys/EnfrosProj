@@ -9,6 +9,13 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/ProductKeyNotes', require('./api/ProductKeyNote'));
+  app.use('/api/ProductSplFeatures', require('./api/ProductSplFeature'));
+  app.use('/api/ProductBrochures', require('./api/ProductBrochure'));
+  app.use('/api/ProductMechanicalDatas', require('./api/ProductMechanicalData'));
+  app.use('/api/ProductElectricalDatas', require('./api/ProductElectricalData'));
+  app.use('/api/HSNs', require('./api/HSN'));
+  app.use('/api/ProductDetails', require('./api/ProductDetail'));
   app.use('/api/UserProfiles', require('./api/UserProfile'));
   app.use('/api/Roles', require('./api/Role'));
   app.use('/api/Citys', require('./api/City'));

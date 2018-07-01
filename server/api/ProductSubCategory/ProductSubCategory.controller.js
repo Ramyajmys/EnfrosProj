@@ -84,6 +84,18 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+// Gets a single ProductSubCategory from the DB
+export function getsubcategory(req, res) {
+  return ProductSubCategory.findAll({
+    where: {
+      category_id: req.body.id
+    }
+  })
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Creates a new ProductSubCategory in the DB
 export function create(req, res) {
   return ProductSubCategory.create(req.body)

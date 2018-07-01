@@ -8,6 +8,7 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
+    gst_number: DataTypes.STRING,
     address: DataTypes.STRING,
     zip: DataTypes.STRING,
     profilepic: DataTypes.TEXT,

@@ -14,6 +14,7 @@ export default function seedDatabaseIfNeeded() {
     let Country = sqldb.Country;
     let State = sqldb.State;
     let City = sqldb.City;
+    let Category = sqldb.ProductCategory;
 
     User.destroy({ where: {} })
       .then(() => User.bulkCreate([{
@@ -37,6 +38,34 @@ export default function seedDatabaseIfNeeded() {
         .then(() => console.log('finished populating roles'))
         .catch(err => console.log('error populating roles', err)));
 
+    Category.destroy({where: {} })
+      .then(() => Category.bulkCreate([{
+        _id: 1,
+        category_name: 'EPC',
+        category_description: 'EPC'
+      }, {
+        _id: 2,
+        category_name: 'SOLAR PANELS',
+        category_description: 'Solar panels'
+      }, {
+        _id: 3,
+        category_name: 'SOLAR INVERTERS',
+        category_description: 'Solar inverters'
+      }, {
+        _id: 4,
+        category_name: 'SOLAR KITS',
+        category_description: 'Solar kits'
+      }, {
+        _id: 5,
+        category_name: 'BOS',
+        category_description: 'battery specifications'
+      }, {
+        _id: 6,
+        category_name: 'KNOWLEDGE',
+        category_description: 'Knowledge'
+      }])
+    )
+ 
     Country.destroy({ where: {} })
       .then(() => Country.bulkCreate([{
         _id: 1,

@@ -1,8 +1,10 @@
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid" style="padding-left: 0; padding-right: 0;">
+    <div class="full-width" style="width: 100%">
         <div class="sidetab-menu">
             <div class="tab">
                 <button id="b1" class="tablinks active" ng-click="admin.openCity('b1','Dashboard')"><i class="fa fa-home sidetab-icon" aria-hidden="true"></i>Dashboard</button>
+                <button id="b6" class="tablinks" ng-click="admin.openCity('b6','Category')"><i class="fa fa-home sidetab-icon" aria-hidden="true"></i>Category</button>
+                <button id="b7" class="tablinks" ng-click="admin.openCity('b7','Sub-category')"><i class="fa fa-home sidetab-icon" aria-hidden="true"></i>Sub-category</button>
                 <button id="b2" class="tablinks" ng-click="admin.openCity('b2', 'Product')"><i class="fa fa-product-hunt sidetab-icon" aria-hidden="true"></i>Product</button>
                 <button id="b3" class="tablinks" ng-click="admin.openCity('b3', 'Distributor')"><i class="fa fa-users sidetab-icon" aria-hidden="true"></i>Distributor</button>
                 <button id="b4" class="tablinks" ng-click="admin.openCity('b4', 'Customer')"><i class="fa fa-user-plus sidetab-icon" aria-hidden="true"></i>Customer</button>
@@ -13,6 +15,12 @@
         <div class="tab-content">
             <div id="Dashboard" class="tabcontent">
                 <div>Dashboard view</div>
+            </div>
+            <div id="Category" class="tabcontent">
+                <all-category-list></all-category-list>
+            </div>
+            <div id="Sub-category" class="tabcontent">
+                <add-product-sub-category></add-product-sub-category>
             </div>
             <div id="Product" class="tabcontent">
                 <product-page></product-page>

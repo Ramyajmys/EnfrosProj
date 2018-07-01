@@ -1,0 +1,361 @@
+<div class="container-fluid btmSpace">
+    <div class="row">
+        <form class="form-horizontal">
+            <div class="col-lg-12"><h3>Add Product<hr></h3></div>
+            <div class="col-lg-4">
+                <div class="product-img-cover"><img class="form-group product-img-style" ng-src="{{productPageCtrl.solar_default}}"></div>
+                <input type='file'  maxsize="3072" ng-model='productPageCtrl.profilepic' accept="image/*" ng-change="productPageCtrl.picChange(productPageCtrl.profilepic)" base-sixty-four-input>
+                <div class="has-error" layout="row" layout-align="center center">
+                    <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 3 Mb</p>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="category">Category:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" ng-model="productPageCtrl.productObj.category_id" name="category_id" ng-change="productPageCtrl.onCategoryChange(productPageCtrl.productObj.category_id)" required>
+                            <option value="">Select Category</option>
+                            <option ng-repeat="category in productPageCtrl.categoryList" value="{{category._id}}">{{category.category_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="subcategory">Sub-category:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" ng-model="productPageCtrl.productObj.sub_category_id" name="sub_category_id" required>
+                            <option value="">Select Sub-category</option>
+                            <option ng-repeat="sub in productPageCtrl.subCategoryList" value="{{sub._id}}">{{sub.sub_category_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="productname">Product Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="productPageCtrl.productObj.product_name" placeholder="Enter Product name" name="productname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="productdesc">Description:</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" row="3" class="form-control" ng-model="productPageCtrl.productObj.product_description" placeholder="Enter Description" name="productdesc"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="productname">Quantity:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="productPageCtrl.productObj.quantity" placeholder="Enter Quantity" name="quantity">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="productname">Unit price:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="productPageCtrl.productObj.unitprice" placeholder="Enter Unit price" name="unitprice">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="category">HSN code:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" ng-model="productPageCtrl.subCategoryObj.category_id" name="category_id" required>
+                            <option value="">Select HSN code</option>
+                            <option ng-repeat="category in productPageCtrl.categoryList" value="{{category._id}}">{{category.category_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="productname">Discount:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Enter Discount" name="productname">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12"></div>
+
+            <div ng-if="productPageCtrl.productObj.category_id == 2">
+                <div class="col-lg-12"><h4>Product specifications<hr></h4></div>
+                <div class="col-lg-12" style="text-align: center;"><h4>Electrical Data<hr></h4></div>
+                <div class="col-lg-6">
+                    
+                    <div class="form-group">
+                        <label class="col-lg-7 control-label">Peak Power Watts-PMAX (Wp)</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" name="name"
+                                ng-model="productPageCtrl.electrical_data.wp" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Maximum Power Voltage-VMPP (V)</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="employees"
+                                ng-model="productPageCtrl.electrical_data.v" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Maximum Power Current-IMPP (A)</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    <div class="form-group">	
+                        <div class="col-md-7"></div>						
+                        <div class="col-md-4">
+                            <input type="submit" value="Add" class="btn btn-primary btn-block" ng-click="productPageCtrl.addRow()"/>
+                        </div>
+                    </div>
+                        
+                </div>
+                <div class="col-lg-6">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Peak Power Watts-PMAX (Wp)</th>
+                            <th>Maximum Power Voltage-VMPP (V)</th>
+                            <th>Maximum Power Current-IMPP (A)</th>
+                        </tr>
+                        <tr ng-repeat="list in productPageCtrl.elist">
+                            <td>{{list.wp}}</td>
+                            <td>{{list.v}}</td>
+                            <td>{{list.a}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-lg-12" style="text-align: center;"><h4><hr>Mechanical Data<hr></h4></div>
+
+                <div class="col-lg-12 col-lg-offset-2">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="productname">Soloar Cell</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Enter Product name" name="productname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="productdesc">Cell Orientation</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Enter Quantity" name="productname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="productname">Module Dimensions</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Enter Quantity" name="productname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="productname">Weight</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Enter Unit price" name="productname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="productname">Glass</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Enter Unit price" name="productname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="productname">Brochure</label>
+                            <div class="col-sm-6">
+                                <input type="file" name="pic" accept="image/*">
+                            </div>
+                        </div>
+
+                </div>
+
+                <div class="col-lg-12" style="text-align: center;"><h4><hr>Special Features<hr></h4></div>
+
+                <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Feature</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="headoffice"
+                                    ng-model="productPageCtrl.spl_feature.feature" />
+                            </div>
+                        </div>
+                        <div class="form-group">	
+                            <div class="col-md-4"></div>						
+                            <div class="col-md-6">
+                                <input type="submit" value="Add" class="btn btn-primary btn-block" ng-click="productPageCtrl.addFeature()"/>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-lg-6">
+                        <ul ng-repeat="spl in productPageCtrl.slist">
+                            <li>{{spl.feature}}</li>
+                        </ul> 
+                </div>
+            </div>
+
+            <div ng-if="productPageCtrl.productObj.category_id == 3">
+                <div class="col-lg-12"><h4>Product specifications<hr></h4></div>
+                <div class="col-lg-12" style="text-align: center;"><h4>Input DC<hr></h4></div>
+                <div class="col-lg-6">
+                    
+                    <div class="form-group">
+                        <label class="col-lg-7 control-label">Model</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" name="name"
+                                ng-model="productPageCtrl.electrical_data.wp" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Max DC Power</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="employees"
+                                ng-model="productPageCtrl.electrical_data.v" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Operating Voltage Range</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">MPP Voltage range</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Startup Voltage</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Max input Current</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    <div class="form-group">	
+                        <div class="col-md-7"></div>						
+                        <div class="col-md-4">
+                            <input type="submit" value="Add" class="btn btn-primary btn-block" ng-click="productPageCtrl.addRow()"/>
+                        </div>
+                    </div>
+                        
+                </div>
+                <div class="col-lg-6">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Model</th>
+                            <th>Max DC Power</th>
+                            <th>Operating Voltage range</th>
+                            <th>MPP Voltage range</th>
+                            <th>Startup Voltage</th>
+                            <th>Max input current</th>
+                        </tr>
+                        <tr ng-repeat="list in productPageCtrl.elist">
+                            <td>{{list.wp}}</td>
+                            <td>{{list.v}}</td>
+                            <td>{{list.a}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-lg-12" style="text-align: center;"><h4><hr>Output DC<hr></h4></div>
+              
+                <div class="col-lg-6">
+                    
+                    <div class="form-group">
+                        <label class="col-lg-7 control-label">Model</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" name="name"
+                                ng-model="productPageCtrl.electrical_data.wp" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Output Power</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="employees"
+                                ng-model="productPageCtrl.electrical_data.v" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Frequency Range</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Nominal Power</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-7 control-label">Max Power</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="headoffice"
+                                ng-model="productPageCtrl.electrical_data.a" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">	
+                        <div class="col-md-7"></div>						
+                        <div class="col-md-4">
+                            <input type="submit" value="Add" class="btn btn-primary btn-block" ng-click="productPageCtrl.addRow()"/>
+                        </div>
+                    </div>
+                        
+                </div>
+                <div class="col-lg-6">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Model</th>
+                            <th>Output Power</th>
+                            <th>frequency range</th>
+                            <th>Nominal per</th>
+                            <th>Max power</th>
+                        </tr>
+                        <tr ng-repeat="list in productPageCtrl.elist">
+                            <td>{{list.wp}}</td>
+                            <td>{{list.v}}</td>
+                            <td>{{list.a}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-lg-12" style="text-align: center;"><h4><hr>Brochure<hr></h4></div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="productname">Brochure</label>
+                    <div class="col-sm-6">
+                        <input type="file" name="pic" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="col-lg-12" style="text-align: center;"><h4><hr>Special Features<hr></h4></div>
+
+                <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Feature</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="headoffice"
+                                    ng-model="productPageCtrl.spl_feature.feature" />
+                            </div>
+                        </div>
+                        <div class="form-group">	
+                            <div class="col-md-4"></div>						
+                            <div class="col-md-6">
+                                <input type="submit" value="Add" class="btn btn-primary btn-block" ng-click="productPageCtrl.addFeature()"/>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-lg-6">
+                        <ul ng-repeat="spl in productPageCtrl.slist">
+                            <li>{{spl.feature}}</li>
+                        </ul> 
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
