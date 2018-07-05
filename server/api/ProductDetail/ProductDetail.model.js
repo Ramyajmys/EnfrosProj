@@ -8,9 +8,9 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    model_name: DataTypes.STRING,
-    model_description: DataTypes.STRING,
-    model_photo: DataTypes.TEXT,
+    product_name: DataTypes.STRING,
+    product_description: DataTypes.STRING,
+    product_photo: DataTypes.TEXT,
     quantity: DataTypes.BIGINT,
     unitprice: DataTypes.BIGINT,
     discount: DataTypes.INTEGER,

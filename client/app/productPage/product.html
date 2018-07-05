@@ -1,0 +1,18 @@
+<div class="container" style="padding-top: 30px;">
+    <div class="row">
+      <div class="col-sm-6 col-md-4" ng-repeat="prod in productPageCtrl.productList">
+        <div class="latest-news">
+          <div class="latest-date-img">
+            <!-- <h4 class="date">3<br>Feb</h4> -->
+            <img src="{{prod.product_photo}}" alt="img" class="latest-img"/>
+            <div class="overlay-4"></div>
+          </div>
+          <div class="latest-desc">
+            <h4 class="title">{{prod.product_name}}</h4>
+            <div class="author"><span>By </span>Arun Solar</div>
+            <p class="desc">{{prod.product_description}}</p>
+            <div class="latest-link"><a href="#">Read More</a></div>
+          </div>
+        </div>
+    </div>
+</div>

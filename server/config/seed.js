@@ -15,6 +15,7 @@ export default function seedDatabaseIfNeeded() {
     let State = sqldb.State;
     let City = sqldb.City;
     let Category = sqldb.ProductCategory;
+    let HSN = sqldb.HSN;
 
     User.destroy({ where: {} })
       .then(() => User.bulkCreate([{
@@ -37,6 +38,17 @@ export default function seedDatabaseIfNeeded() {
       }])
         .then(() => console.log('finished populating roles'))
         .catch(err => console.log('error populating roles', err)));
+
+    HSN.destroy({ where: {} })
+      .then(() => HSN.bulkCreate([{
+        hsn_code: 'AB001',
+        hsn_percentage: 28
+      }, {
+        hsn_code: 'AB002',
+        hsn_percentage: 18
+      }])
+        .then(() => console.log('finished populating hsn'))
+        .catch(err => console.log('error populating hsn', err)))
 
     Category.destroy({where: {} })
       .then(() => Category.bulkCreate([{
@@ -78,7 +90,7 @@ export default function seedDatabaseIfNeeded() {
 
     setTimeout(function() {
       statedata()
-    }, 2000);
+    }, 1000);
 
     function statedata() {
       State.destroy({ where: {} })
@@ -93,7 +105,7 @@ export default function seedDatabaseIfNeeded() {
 
       setTimeout(function() {
         citydata()
-      }, 2000);
+      }, 1000);
     }
 
     function citydata(callback) {

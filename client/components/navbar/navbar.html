@@ -30,15 +30,21 @@
 
 
 <header>
-  <div class="row1">
+  <div class="container-fluid">
     <div class="logo">
-        <a href="/"><img src="./assets/images/logo.png" alt="logo" style="height: 65px;"/></a>
+        <a href="/"><img src="./assets/images/logo.png" alt="logo" style="height: 70px; width: 200px;"/></a>
     </div>
+
+    <!-- <div class="row">
+      <div class="logo">
+          <a href="/"><img src="./assets/images/logo.png" alt="logo" style="height: 70px; width: 200px;"/></a>
+      </div> -->
   
     <nav id="main-nav-wrap">
       <ul class="main-navigation">
         <li><a href="home.html#intro" du-smooth-scroll du-scrollspy duration="800" offset="50">Home</a></li>
         <li ng-hide="$ctrl.isLoggedIn()"><a href="home.html#about" du-smooth-scroll du-scrollspy duration="800" offset="50">About</a></li>
+        <li><a href="/product" du-smooth-scroll du-scrollspy duration="800" offset="50">Product</a></li>
         <li ng-hide="$ctrl.isLoggedIn()"><a href="home.html#contact" du-smooth-scroll du-scrollspy duration="800" offset="50">Contact</a></li>
         <li ng-hide="$ctrl.isLoggedIn()" class="highlight"><a href="/login" title="">Login</a></li>	
        

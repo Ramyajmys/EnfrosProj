@@ -12,6 +12,10 @@
 
 import jsonpatch from 'fast-json-patch';
 import {ProductDetail} from '../../sqldb';
+import {ProductElectricalData} from '../../sqldb';
+import {ProductMechanicalData} from '../../sqldb';
+import {ProductSplFeature} from '../../sqldb';
+import {ProductBrochure} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -85,9 +89,32 @@ export function show(req, res) {
 
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
-  return ProductDetail.create(req.body)
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
+  // return ProductDetail.create(req.body)
+  //   .then(respondWithResult(res, 201))
+  //   .catch(handleError(res));
+  return ProductDetail.create(req.body).then(function(prod) {
+    if(prod) {
+      if(req.body.e_data.length != 0) {
+        var eObj, eRes, sObj, sRes, mRes;
+        for(var i=0; i<req.body.e_data.length; i++) {
+          eObj = req.body.e_data[i];
+          eObj['product_detail_id'] = prod._id;
+          eRes = ProductElectricalData.create(eObj);
+        }
+        for(var i=0; i<req.body.features.length; i++) {
+          sObj = req.body.features[i];
+          sObj['product_detail_id'] = prod._id;
+          sRes = ProductSplFeature.create(sObj);
+        }
+        req.body.m_data.product_detail_id = prod._id;
+        mRes = ProductMechanicalData.create(req.body.m_data);
+
+        if(eRes && sRes && mRes) {
+          return res.status(200).json({message: "product added"})
+        }
+      }
+    }
+  })
 }
 
 // Upserts the given ProductDetail in the DB at the specified ID

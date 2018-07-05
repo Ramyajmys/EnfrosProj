@@ -50,32 +50,32 @@ header {
 	top: 0;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 
-	.row1 {
+	.row {
 		width: auto;
 		height: 70px;
 		position: relative;
 	}
-	.logo {
-		z-index: 600;
-		position: absolute;
-		top: 50%;
-		-webkit-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		transform: translateY(-50%);
+	// .logo {
+	// 	z-index: 600;
+	// 	position: absolute;
+	// 	top: 50%;
+	// 	-webkit-transform: translateY(-50%);
+	// 	-ms-transform: translateY(-50%);
+	// 	transform: translateY(-50%);
 
-		a {
-			@extend .padding-margin-0;
-			display: block;
-			border: none;
-			font: 0/0 a;
-			text-shadow: none;
-			color: transparent;
-			// width: 340px;
-			// height: 65px;
-			// background: url("/assets/images/logo.png") no-repeat center;
-			text-decoration: none;
-		}
-	}
+	// 	a {
+	// 		@extend .padding-margin-0;
+	// 		display: block;
+	// 		border: none;
+	// 		font: 0/0 a;
+	// 		text-shadow: none;
+	// 		color: transparent;
+	// 		// width: 340px;
+	// 		// height: 65px;
+	// 		// background: url("/assets/images/logo.png") no-repeat center;
+	// 		text-decoration: none;
+	// 	}
+	// }
 }
 
 #main-nav-wrap {

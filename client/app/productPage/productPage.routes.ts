@@ -14,5 +14,9 @@ export default function($stateProvider) {
     .state('productlist', {
       url: '/productlist',
       template: '<productlist></productlist>'
+    })
+    .state('product', {
+      url: '/product',
+      template: '<product></product>'
     });
 }
