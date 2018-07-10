@@ -1,4 +1,9 @@
 <div class="container" style="padding-top: 30px;">
+    <!-- <div class="row">
+      <div class="alert alert-success">
+        <strong>Success!</strong> Indicates a successful or positive action.
+      </div>
+    </div> -->
     <div class="row">
       <div class="col-sm-6 col-md-4" ng-repeat="prod in productPageCtrl.productList">
         <div class="latest-news">
@@ -9,9 +14,9 @@
           </div>
           <div class="latest-desc">
             <h4 class="title">{{prod.product_name}}</h4>
-            <div class="author"><span>By </span>Arun Solar</div>
-            <p class="desc">{{prod.product_description}}</p>
-            <div class="latest-link"><a href="#">Read More</a></div>
+            <div class="author"><span>Rs. </span>{{prod.unitprice}}</div>
+            <!-- <p class="desc">{{prod.product_description}}</p> -->
+            <div class="latest-link"><a href="#" ng-click="productPageCtrl.addToCart(prod)">ADD TO CART</a></div>
           </div>
         </div>
     </div>

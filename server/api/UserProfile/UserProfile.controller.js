@@ -12,6 +12,7 @@
 
 import jsonpatch from 'fast-json-patch';
 import {UserProfile} from '../../sqldb';
+import {User} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -131,4 +132,20 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+// Get User Gst
+export function getGST(req, res) {
+  if(req.body.id) {
+    return UserProfile.find({ where: {_id: req.body.id }, attributes:['gst_number']})
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  } else {
+    return UserProfile.find({ where: {user_id: 1 }, attributes:['gst_number']})
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
+  
 }

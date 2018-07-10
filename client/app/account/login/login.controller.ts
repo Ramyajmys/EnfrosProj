@@ -54,9 +54,9 @@ export default class LoginController {
       if(vm.role === 'admin') {
         vm.$state.go('admin');
       } else if(vm.role === 'Distributor') {
-        vm.$state.go('Distributor');
+        vm.$state.go('distributorDashboard');
       } else if(vm.role === 'Customer') {
-        vm.$state.go('Customer');
+        vm.$state.go('customerDashboard');
       } else {
         vm.$state.go('main');
       }

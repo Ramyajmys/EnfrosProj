@@ -15,14 +15,16 @@ export class NavbarComponent {
   isDistributor: Function;
   getCurrentUser: Function;
   isCollapsed = true;
+  $state;
 
-  constructor(Auth) {
+  constructor(Auth, $state) {
     'ngInject';
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.isCustomer = Auth.isCustomerSync;
     this.isDistributor = Auth.isDistributorSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
+    this.$state = $state;
 
     jQuery(window).on('scroll', function() {
       var y = jQuery(window).scrollTop();
@@ -66,6 +68,10 @@ export class NavbarComponent {
 
   backtoTop() {
     jQuery("html, body").animate({ scrollTop: "0px" }, 1000);
+  }
+
+  cart() {
+    this.$state.go('cartdetails', {reload: false});
   }
 
 }

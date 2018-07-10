@@ -18,5 +18,10 @@ export default function($stateProvider) {
     .state('product', {
       url: '/product',
       template: '<product></product>'
+    })
+    .state('cartdetails', {
+      url: '/cartdetails',
+      params: {prod: null},
+      template: '<cartdetails></cartdetails>'
     });
 }

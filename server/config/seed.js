@@ -10,6 +10,7 @@ import config from './environment/';
 export default function seedDatabaseIfNeeded() {
   if(config.seedDB) {
     let User = sqldb.User;
+    let UserProfile = sqldb.UserProfile;
     let Role = sqldb.Role;
     let Country = sqldb.Country;
     let State = sqldb.State;
@@ -19,6 +20,7 @@ export default function seedDatabaseIfNeeded() {
 
     User.destroy({ where: {} })
       .then(() => User.bulkCreate([{
+        _id: 1,
         provider: 'local',
         role: 'admin',
         name: 'Admin',
@@ -28,6 +30,20 @@ export default function seedDatabaseIfNeeded() {
         .then(() => console.log('finished populating users'))
         .catch(err => console.log('error populating users', err)));
 
+    setTimeout(function() {
+      userprofile()
+    }, 1000);
+
+    function userprofile() {
+      UserProfile.destroy({ where: {} })
+      .then(() => UserProfile.bulkCreate([{
+        gst_number: '123456',
+        user_id: 1
+      }])
+        .then(() => console.log('finished userprofile'))
+        .catch(err => console.log('error userprofile', err)));  
+    }
+    
     Role.destroy({ where: {} })
       .then(() => Role.bulkCreate([{
         roleName: 'Distributor',
