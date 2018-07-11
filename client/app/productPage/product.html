@@ -1,9 +1,37 @@
 <div class="container" style="padding-top: 30px;">
-    <!-- <div class="row">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Page 1-1</a></li>
+                <li><a href="#">Page 1-2</a></li>
+                <li><a href="#">Page 1-3</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
+          </ul>
+        </div>
+      </nav>
+    <div class="row" ng-if="productPageCtrl.cartArr.length != 0">
       <div class="alert alert-success">
-        <strong>Success!</strong> Indicates a successful or positive action.
+        <div layout="row" layout-align="space between center">
+          <div>
+            <div><strong style="padding-right: 20px;">Added to Cart</strong>Cart subtotal ({{productPageCtrl.cartArr.length}} items): <i class="fa fa-inr" aria-hidden="true"></i>{{productPageCtrl.cartTotal}}</div>        
+          </div>
+          <div>
+            <button class="btn btn-primary" ng-click="productPageCtrl.viewcart()">Cart</button>
+          </div>
+        </div>
       </div>
-    </div> -->
+    </div>
     <div class="row">
       <div class="col-sm-6 col-md-4" ng-repeat="prod in productPageCtrl.productList">
         <div class="latest-news">

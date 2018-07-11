@@ -1,16 +1,26 @@
 <div class="container-fluid">
     <div class="row" style="padding-top: 60px; padding-bottom: 50px;">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <table class="table table-bordered">
                 <thead>
-                    <tr>
+                    <!-- <tr>
                         <th>Product</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                    </tr> -->
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>CGST</th>
+                        <th>SGST</th>
+                        <th>IGST</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    <tr ng-repeat="cart in productPageCtrl.cartArr">
+                <tbody>
+                    <tr ng-repeat="cart in productPageCtrl.cInfo">
                         <td>
                             <div layout="row">
                                 <div><img src="{{cart.product_photo}}" alt="Product" style="width: 100px; height: 100px;"/></div> 
@@ -22,16 +32,22 @@
                             </div>
                         </td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.discountprice}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? cart.tax/2 : 0}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? 0 : cart.tax/2}}</p></div></td>
                         <td>
                             <input type="number" class="form-control" value="1" min="1" ng-model="productPageCtrl.quantityNum" ng-change="productPageCtrl.quantityChange(productPageCtrl.quantityNum)"/>
                             <div style="padding-top: 10px;" ng-if="productPageCtrl.showUpdateBtn"><button type="button" class="btn btn-primary">Update</button></div> 
                         </td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.totalprice}}</p></div></td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="text-align: right">Subtotal:  {{cart.unitprice}}</td>
+                        <td colspan="8" style="text-align: right">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{productPageCtrl.finaltotal}}</td>
                     </tr>
-                </tbody> -->
-                <tbody>
+                </tbody>
+
+                <!-- <tbody>
                     <tr>
                         <td>
                             <div layout="row">
@@ -52,13 +68,13 @@
                     <tr>
                         <td colspan="3" style="text-align: right">Subtotal:  {{productPageCtrl.cartList.unitprice}}</td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
 
             
         </div>
         
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div style="padding: 30px; border: 1px solid #e6e6e6;">
                 <h4>Cart Totals</h4>
 
@@ -89,7 +105,7 @@
                     Proceed to Checkout
                 </button>
             </div>
-        </div>
+        </div> -->
                 
 
         <!-- <form style="padding-top: 75px; padding-bottom: 85px;">

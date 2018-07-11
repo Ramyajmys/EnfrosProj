@@ -16,6 +16,7 @@ import {ProductElectricalData} from '../../sqldb';
 import {ProductMechanicalData} from '../../sqldb';
 import {ProductSplFeature} from '../../sqldb';
 import {ProductBrochure} from '../../sqldb';
+import {HSN} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -70,7 +71,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of ProductDetails
 export function index(req, res) {
-  return ProductDetail.findAll()
+  return ProductDetail.findAll({include: [{model: HSN}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

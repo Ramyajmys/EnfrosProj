@@ -37,6 +37,7 @@ import MyrouteComponent from './myroute/myroute.component';
 
 import 'angular-base64-upload';
 import './app.scss';
+import myServiceService from './myService/myService.service';
 
 angular.module('testprojApp', [
  'ngAnimate',
@@ -71,7 +72,8 @@ angular.module('testprojApp', [
   SetpasswordComponent,
   CustomerDashboardComponent,
   DistributorDashboardComponent,
-  MyrouteComponent
+  MyrouteComponent,
+  myServiceService
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

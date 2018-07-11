@@ -7,11 +7,13 @@ export class MainController {
 
   awesomeThings = [];
   newThing = '';
+  helloService;
 
   /*@ngInject*/
-  constructor($http) {
+  constructor($http, helloService) {
     this.$http = $http;
-
+    this.helloService = helloService;
+    // helloService.sayHello();
   }
 
   $onInit() {
