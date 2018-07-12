@@ -39,14 +39,16 @@ export class CustomerComponent {
   states: any;
   cities: any;
   customerList: any;
+  myService;
 
   /*@ngInject*/
-  constructor($mdDialog, $http, $state, Auth, $mdToast) {
+  constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
     this.$mdDialog = $mdDialog;
     this.$http = $http;
     this.$state = $state;
     this.Auth = Auth;
     this.$mdToast = $mdToast;
+    this.myService = myService;
     
     this.getRoles();
     this.getCountry();
@@ -93,6 +95,7 @@ export class CustomerComponent {
     this.$http.post('/api/users/get', {role: 'Customer'}).then(response => {
       if(response.status === 200) {
         this.customerList = response.data;
+        this.myService.saveCustomerList(this.customerList);
       }
     }, err => {
       if(err.data.message) {

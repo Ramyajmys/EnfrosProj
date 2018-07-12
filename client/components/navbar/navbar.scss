@@ -164,7 +164,7 @@ a.menu-toggle {
 		a {
 			color: $black-color;
 			text-transform: none;
-			padding: 5px 5px 4px;
+			padding: 5px 5px 4px !important;
 			display: block;
 			line-height: 15px;
 		}
@@ -368,62 +368,4 @@ a.menu-toggle {
 	}
 }
 
-#ex4 .p1[data-count]:after{
-	position:absolute;
-	right:10%;
-	top:8%;
-	content: attr(data-count);
-	font-size:40%;
-	padding:.2em;
-	border-radius:50%;
-	line-height:1em;
-	color: white;
-	background:rgba(255,0,0,.85);
-	text-align:center;
-	min-width: 1em;
-	//font-weight:bold;
-  }
 
-
-
-// header.position-absolute {
-//     position: absolute;
-//     top: 0;
-//     width: 100%;
-//     z-index: 10;
-// }
-// .background-white.background-transparent, .primary-color-white .background-primary.background-transparent {
-//     background-color: rgba(255, 255, 255, 0.85) !important;
-//   }
-//   .background-primary.background-transparent, .primary-color-primary .background-primary.background-transparent {
-//     background-color: rgba(200, 16, 16, 0.85) !important;
-//   }
-//   .background-dark.background-transparent, .primary-color-dark .background-primary.background-transparent {
-//     background-color: rgba(0, 38, 51, 0.85) !important;
-//   }
-// .background-transparent-hightlight .top-nav .active-item > a, .background-transparent-hightlight .top-nav li a:hover, .background-transparent-hightlight .aside-nav li a:hover, .background-transparent-hightlight .aside-nav > ul > li.active-item > a:link, .background-transparent-hightlight .aside-nav > ul > li.active-item > a:visited {
-//     color: #000;
-// }
-// .background-transparent {
-//     background: none;
-//   }
-
-//   .full-width:after {
-//     clear:both;
-//     content:".";
-//     display:block;
-//     height:0;
-//     line-height:0;
-//     visibility:hidden;
-//   }
-//   .full-width > .line {
-//       padding: 0 1.875rem;
-//   }
-
-//   .sticky {
-//     transition: all 0.20s linear 0s;
-//     -o-transition: all 0.20s linear 0s;
-//     -ms-transition: all 0.20s linear 0s;
-//     -moz-transition: all 0.20s linear 0s;
-//     -webkit-transition: all 0.20s linear 0s;
-//   }

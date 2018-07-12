@@ -1,0 +1,120 @@
+<div class="container" print-section>
+        <div style="text-align: center;">
+            <h1>ENFROS SOLUTION</h1>
+            <h4>ADDRESS</h4>
+            <h4>Bangalore</h4>
+            <h3>GSTIN: {{printinvoiceCtrl.admin.gst_number}}</h3>
+        </div><hr>
+    
+        <div class="row" style="font-size: 17px;">
+            <div class="col-md-6" style="float: left; border-right:1px solid #eee ">
+                <p>Reverse Charges:</p>
+                <p>Invoice No:</p>
+                <p>Invoice Date:</p>
+                <p>State: Karnataka</p>
+            </div>
+    
+            <div class="col-md-6" >
+                <p>Transportation Mode:</p>
+                <p>Vehicle Number:</p>
+                <p>Date of Supply:</p>
+                <p>Place of Supply:</p>
+            </div>
+        </div><hr>
+    
+        <div class="row" style="font-size: 17px;">
+            <div class="col-md-6" style="float: left; border-right:1px solid #eee ">
+                <p style="font-weight: bold; text-align: center;">Details of Receiver / Billed to</p>
+                <p>Name: {{printinvoiceCtrl.custInfo.User.name}}</p>
+                <p>Address: {{printinvoiceCtrl.custInfo.address}}, {{printinvoiceCtrl.custInfo.City.cityName}}, 
+                    {{printinvoiceCtrl.custInfo.State.stateName}}, {{printinvoiceCtrl.custInfo.Country.countryName}}</p>
+                <p>GSTIN: {{printinvoiceCtrl.custInfo.gst_number}}</p>
+                <p>State: {{printinvoiceCtrl.custInfo.State.stateName}}</p>
+            </div>
+    
+            <div class="col-md-6" >
+                <p style="font-weight: bold; text-align: center;">Details of Consignee / Shipped to</p>
+                <p>Name: {{printinvoiceCtrl.custInfo.User.name}}</p>
+                <p>Address: {{printinvoiceCtrl.custInfo.address}}, {{printinvoiceCtrl.custInfo.City.cityName}}, 
+                    {{printinvoiceCtrl.custInfo.State.stateName}}, {{printinvoiceCtrl.custInfo.Country.countryName}}</p>
+                <p>GSTIN: {{printinvoiceCtrl.custInfo.gst_number}}</p>
+                <p>State: {{printinvoiceCtrl.custInfo.State.stateName}}</p>
+            </div>
+        </div><hr>
+    
+    
+        <table class="table table-bordered">
+                <thead>
+                    <!-- <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr> -->
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>CGST</th>
+                        <th>SGST</th>
+                        <th>IGST</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cart in printinvoiceCtrl.cInfo">
+                        <td>
+                            <div layout="row">
+                                <div><img src="{{cart.product_photo}}" alt="Product" style="width: 100px; height: 100px;"/></div> 
+                                <div style="padding-left: 10px;">
+                                    <p>{{cart.product_name}}</p>
+                                    <!-- <p style="color: green">In stock</p>
+                                    <a href="#">Delete</a> -->
+                                </div> 
+                            </div>
+                        </td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.discountprice}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{printinvoiceCtrl.gStatus == true ? cart.tax/2 : 0}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{printinvoiceCtrl.gStatus == true ? 0 : cart.tax/2}}</p></div></td>
+                        <td>
+                            <input type="number" class="form-control" min="1" ng-model="printinvoiceCtrl.quantityNum" disabled />
+                            <!-- <div style="padding-top: 10px;" ng-if="printinvoiceCtrl.showUpdateBtn"><button type="button" class="btn btn-primary">Update</button></div>  -->
+                        </td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.totalprice}}</p></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" style="text-align: right; font-weight: bold;">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{printinvoiceCtrl.finaltotal}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;"><a href="#" class="btn btn-success" print-btn>Print</a> </td>
+                    </tr>
+                </tbody>
+    
+                <!-- <tbody>
+                    <tr>
+                        <td>
+                            <div layout="row">
+                                <div><img src="{{printinvoiceCtrl.cartList.product_photo}}" alt="Product" style="width: 100px; height: 100px;"/></div> 
+                                <div style="padding-left: 10px;">
+                                    <p>{{printinvoiceCtrl.cartList.product_name}}</p>
+                                    <p>In stock</p>
+                                    <a href="#">Delete</a>
+                                </div> 
+                            </div>
+                        </td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{printinvoiceCtrl.cartList.unitprice}}</p></div></td>
+                        <td>
+                            <input type="number" class="form-control" value="1" min="1" ng-model="printinvoiceCtrl.quantityNum" ng-change="printinvoiceCtrl.quantityChange(printinvoiceCtrl.quantityNum)"/>
+                            <div style="padding-top: 10px;" ng-if="printinvoiceCtrl.showUpdateBtn"><button type="button" class="btn btn-primary">Update</button></div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: right">Subtotal:  {{printinvoiceCtrl.cartList.unitprice}}</td>
+                    </tr>
+                </tbody> -->
+            </table>
+        
+    </div>
+    

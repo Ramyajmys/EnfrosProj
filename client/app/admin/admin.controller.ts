@@ -4,17 +4,44 @@ const $ = require('jquery');
 export default class AdminController {
   users: Object[];
   view_tab: any;
+  getCurrentUser: Function;
+  currentUser: any;
+  Auth;
+  myService;
+  $http;
+  userInfo;
+  errMsg;
 
   /*@ngInject*/
-  constructor(User) {
+  constructor(User, Auth, myService, $http) {
+    this.Auth = Auth;
+    this.myService = myService;
+    this.$http = $http;
     // Use the User $resource to fetch all users
     //this.users = User.query();
     this.openCity('b1','Dashboard');
+
+    var vm = this;
+    this.getCurrentUser = this.Auth.getCurrentUser;
+    this.getCurrentUser(function(data){
+      vm.currentUser = data;
+      vm.getUserInfo(vm.currentUser._id);
+    });
   }
 
-  delete(user) {
-    user.$remove();
-    this.users.splice(this.users.indexOf(user), 1);
+  getUserInfo(id) {
+    this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
+      this.userInfo = response.data;
+      this.myService.saveCurrentUser(this.userInfo);
+    }, err => {
+      if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
   }
 
   openCity(bid, cityName) {

@@ -3,15 +3,39 @@ const angular = require('angular');
 
 /*@ngInject*/
 export function myServiceService() {
-  // AngularJS will instantiate a singleton by calling "new" on this function
-  var meaningOfLife = 42;
+  var currentuser, cart, customer, distributor;
+  
+  this.getCurrentUser = function() {
+    return currentuser;
+  }
 
-  // Public API here
-  return {
-    some: function () {
-      alert(meaningOfLife);
-    }
-  };
+  this.saveCurrentUser = function(val) {
+    currentuser = val;
+  }
+
+  this.getCartInfo = function() { 
+    return cart;
+  }
+
+  this.saveCartInfo = function(val) {
+    cart = val;
+  }
+
+  this.getDistributorList = function() {
+    return distributor;
+  }
+
+  this.saveDistributorList = function(val) {
+    distributor = val;
+  }
+
+  this.getCustomerList = function() {
+    return customer;
+  }
+
+  this.saveCustomerList = function(val) {
+    customer = val;
+  }
 }
 
 export default angular.module('enfrosProjApp.myService', [])

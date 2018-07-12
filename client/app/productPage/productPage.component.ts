@@ -4,6 +4,7 @@ const angular = require('angular');
 const uiRouter = require('angular-ui-router');
 
 import routes from './productPage.routes';
+const swal = require('sweetalert');
 
 export class ProductPageComponent {
   $mdDialog: any;
@@ -50,18 +51,19 @@ export class ProductPageComponent {
   hsnInfo;
   getCurrentUser: Function;
   currentUser: any;
-  mainGST;
-  custGST;
+  mainGST; custGST; distGST; custInfo; distInfo;
   total; cgst; sgst; igst; finaltotal; hsn_div; cgst_per; sgst_per; igst_per;
   isUser = false;
   cartArr = [];
   cartTotal = 0;
-  helloService;
   cInfo;
   gStatus: boolean;
+  myService;
+  customerList; distributorList; 
+  showInvoice: boolean = false;
 
   /*@ngInject*/
-  constructor($mdDialog, $http, $state, Auth, $mdToast, helloService) {
+  constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
     this.$mdDialog = $mdDialog;
     this.$http = $http;
     this.$state = $state;
@@ -71,45 +73,36 @@ export class ProductPageComponent {
     this.getCategoryList();
     this.getHSN();
     this.def = './assets/images/solar.jpg'
-    this.helloService = helloService;
-    this.cInfo =  this.helloService.sayHello();
-    this.gStatus = this.helloService.getStatus();
+    this.myService = myService;
+    this.cInfo =  this.myService.getCartInfo();
+
+    this.getCurrentUser = Auth.getCurrentUserSync;
   }
 
   $onInit() {
-    //if(this.cInfo) {
-      //this.cartList = this.$state.params.prod;
-      //this.getHsnById(this.cartList.hsn_id);
-      var vm = this;
-      this.getCurrentUser = this.Auth.getCurrentUser;
-      this.getCurrentUser(function(data){
-        vm.currentUser = data;
-        if(vm.currentUser._id != '') {
-          vm.isUser = true;
-          vm.getCustomerGst(vm.currentUser._id)
-          vm.getAdminGst();
-        }
-      });
-    //}
+
+    this.customerList = this.myService.getCustomerList();
+    this.distributorList = this.myService.getDistributorList();
+    this.currentUser = this.myService.getCurrentUser();
 
     if(this.cInfo) {
       this.calculate();
     }
+    
   }
 
-  getAdminGst() {
-    this.$http.post('/api/UserProfiles/getGST', {id: null}).then(response => {
-      this.mainGST = response.data.gst_number.substring(0, 2);
+  onCustomerChange(id) {
+    this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
+      this.custInfo = response.data;
+      this.custGST = response.data.gst_number.substring(0, 2);
+      this.mainGST = this.currentUser.gst_number.substring(0, 2);
       if(this.custGST && this.mainGST) {
-        //this.cal();
-
         if(this.custGST == this.mainGST) {
-          this.helloService.gStatus(true);
+          this.gStatus = true;
         } else {
-          this.helloService.gStatus(false)
+          this.gStatus = false;
         }
       }
-      
     }, err => {
       if(err.status === 500) {
         this.errMsg = 'Internal Server Error';
@@ -121,9 +114,10 @@ export class ProductPageComponent {
     });
   }
 
-  getCustomerGst(id) {
-    this.$http.post('/api/UserProfiles/getGST', {id: id}).then(response => {
-      this.custGST = response.data.gst_number.substring(0, 2);
+  onDistributorChange(id) {
+    this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
+      this.distInfo = response.data;
+      this.distGST = response.data.gst_number.substring(0, 2);
     }, err => {
       if(err.status === 500) {
         this.errMsg = 'Internal Server Error';
@@ -296,7 +290,11 @@ export class ProductPageComponent {
   }
 
   addToCart(product) {
-    //this.$state.go('cartdetails', {prod: product});
+    swal({
+      title: "Added",
+      text: product.product_name + " is added to quote!",
+      icon: "success",
+    });
     var tax =  parseInt(product.unitprice)  * (product.HSN.hsn_percentage/100);
     var discount = parseInt(product.unitprice) * (product.discount /100);
     var price = parseInt(product.unitprice) + tax - discount;
@@ -313,7 +311,7 @@ export class ProductPageComponent {
   }
 
   viewcart() {
-    this.helloService.cartinfo(this.cartArr)
+    this.myService.saveCartInfo(this.cartArr);
     this.$state.go('cartdetails');
   }
 
@@ -328,6 +326,17 @@ export class ProductPageComponent {
       final = final + obj['totalprice'];
     }
     this.finaltotal = final;
+  }
+
+  showCal() {
+    this.showInvoice = true;
+  }
+
+  confirmOrder() {
+    this.$state.go('printinvoice', {
+      cart: this.cInfo, gStatus: this.gStatus, finaltotal: this.finaltotal, 
+      custInfo: this.custInfo, distInfo: this.distInfo, admin: this.currentUser
+    });
   }
 
   cancel() {
@@ -366,26 +375,6 @@ export default angular.module('enfrosProjApp.productPage', [uiRouter])
     template: require('./cartdetails.html'),
     controller: ProductPageComponent,
     controllerAs: 'productPageCtrl'
-  })
-  .service('helloService', function(){
-    var data, gst_status;
-    
-    this.sayHello = function() { 
-      return data;
-    }
-
-    this.cartinfo = function(value) {
-      data = value;
-      console.log(data)
-    }
-
-    this.gStatus = function(val) {
-      gst_status = val;
-    }
-
-    this.getStatus = function() {
-      return gst_status;
-    }
   })
   .name;
 

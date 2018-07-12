@@ -39,15 +39,17 @@ export class DistributorComponent {
   states: any;
   cities: any;
   distributorList: any;
+  myService;
 
   /*@ngInject*/
-  constructor($mdDialog, $http, $state, Auth, $mdToast) {
+  constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
     this.$mdDialog = $mdDialog;
     this.$http = $http;
     this.$state = $state;
     this.Auth = Auth;
     this.$mdToast = $mdToast;
-    
+    this.myService = myService;
+
     this.getRoles();
     this.getCountry();
     this.get();
@@ -93,6 +95,7 @@ export class DistributorComponent {
     this.$http.post('/api/users/get', {role: 'Distributor'}).then(response => {
       if(response.status === 200) {
         this.distributorList = response.data;
+        this.myService.saveDistributorList(this.distributorList);
       }
     }, err => {
       if(err.data.message) {

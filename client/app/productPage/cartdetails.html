@@ -1,6 +1,26 @@
 <div class="container-fluid">
     <div class="row" style="padding-top: 60px; padding-bottom: 50px;">
         <div class="col-md-12">
+            <div class="col-sm-4">
+                <select class="form-control" ng-model="customer" name="customer" ng-change="productPageCtrl.onCustomerChange(customer)" required>
+                    <option value="">Select Customer</option>
+                    <option ng-repeat="customer in productPageCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <select class="form-control" ng-model="distributor" name="distributor" ng-change="productPageCtrl.onDistributorChange(distributor)" required>
+                    <option value="">Select Distributor</option>
+                    <option ng-repeat="distributor in productPageCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-info btn-block" ng-click="productPageCtrl.showCal()" ng-disabled="customer == undefined || distributor == undefined">Generate Invoice</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 60px; padding-bottom: 50px;" ng-if="productPageCtrl.showInvoice">
+        <div class="col-md-12">
             <table class="table table-bordered">
                 <thead>
                     <!-- <tr>
@@ -26,24 +46,27 @@
                                 <div><img src="{{cart.product_photo}}" alt="Product" style="width: 100px; height: 100px;"/></div> 
                                 <div style="padding-left: 10px;">
                                     <p>{{cart.product_name}}</p>
-                                    <p>In stock</p>
+                                    <p style="color: green">In stock</p>
                                     <a href="#">Delete</a>
                                 </div> 
                             </div>
                         </td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.discountprice}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? cart.tax/2 : 0}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? 0 : cart.tax/2}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice|  number : 2}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.discountprice | number : 2}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2 | number : 2}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? (cart.tax/2 | number : 2) : 0}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? 0 : (cart.tax/2 | number : 2)}}</p></div></td>
                         <td>
-                            <input type="number" class="form-control" value="1" min="1" ng-model="productPageCtrl.quantityNum" ng-change="productPageCtrl.quantityChange(productPageCtrl.quantityNum)"/>
-                            <div style="padding-top: 10px;" ng-if="productPageCtrl.showUpdateBtn"><button type="button" class="btn btn-primary">Update</button></div> 
+                            <input type="number" class="form-control" min="1" ng-model="productPageCtrl.quantityNum" ng-change="productPageCtrl.quantityChange(productPageCtrl.quantityNum)"/>
+                            <!-- <div style="padding-top: 10px;" ng-if="productPageCtrl.showUpdateBtn"><button type="button" class="btn btn-primary">Update</button></div>  -->
                         </td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.totalprice}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.totalprice | number : 2}}</p></div></td>
                     </tr>
                     <tr>
-                        <td colspan="8" style="text-align: right">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{productPageCtrl.finaltotal}}</td>
+                        <td colspan="8" style="text-align: right; font-weight: bold;">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{productPageCtrl.finaltotal | number : 2}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;"><a href="#" ng-click="productPageCtrl.confirmOrder()" class="btn btn-success">Confirm Order</a> </td>
                     </tr>
                 </tbody>
 

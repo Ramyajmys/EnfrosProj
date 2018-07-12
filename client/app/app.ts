@@ -34,16 +34,20 @@ import SetpasswordComponent from './setpassword/setpassword.component';
 import CustomerDashboardComponent from './customerDashboard/customerDashboard.component';
 import DistributorDashboardComponent from './distributorDashboard/distributorDashboard.component';
 import MyrouteComponent from './myroute/myroute.component';
+import PrintinvoiceComponent from './printinvoice/printinvoice.component';
 
 import 'angular-base64-upload';
 import './app.scss';
 import myServiceService from './myService/myService.service';
+
+import 'angular-print';
 
 angular.module('testprojApp', [
  'ngAnimate',
  'ngMaterial',
   require('angular-material-data-table'),
   'naif.base64',
+  'AngularPrint',
   ngCookies,
   ngResource,
   ngSanitize,
@@ -73,7 +77,8 @@ angular.module('testprojApp', [
   CustomerDashboardComponent,
   DistributorDashboardComponent,
   MyrouteComponent,
-  myServiceService
+  myServiceService,
+  PrintinvoiceComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

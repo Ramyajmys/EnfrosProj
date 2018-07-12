@@ -70,10 +70,6 @@ export class NavbarComponent {
     jQuery("html, body").animate({ scrollTop: "0px" }, 1000);
   }
 
-  cart() {
-    this.$state.go('cartdetails', {reload: false});
-  }
-
 }
 
 export default angular.module('directives.navbar', ['duScroll'])
