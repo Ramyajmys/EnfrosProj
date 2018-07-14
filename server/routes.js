@@ -28,7 +28,6 @@ export default function(app) {
   app.use('/api/ProductCategorys', require('./api/ProductCategory'));
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
-  app.use('/api/Status', require('./api/Status'));
 
   app.use('/auth', require('./auth').default);
 
