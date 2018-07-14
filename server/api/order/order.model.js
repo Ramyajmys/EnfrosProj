@@ -15,6 +15,7 @@ export default function(sequelize, DataTypes) {
     payment_date: DataTypes.DATE,
     total: DataTypes.BIGINT,
     discount: DataTypes.INTEGER,
+    payment_details: DataTypes.STRING,
     active: DataTypes.BOOLEAN,
     paid_flag: DataTypes.BOOLEAN
   });

@@ -9,6 +9,7 @@ export default function(sequelize, DataTypes) {
       autoIncrement: true
     },
     order_name: DataTypes.STRING,
+    product_name: DataTypes.STRING,
     quantity: DataTypes.BIGINT,
     product_total: DataTypes.BIGINT,
     product_discount: DataTypes.INTEGER,
