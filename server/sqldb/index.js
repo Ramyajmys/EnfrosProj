@@ -14,6 +14,9 @@ var db = {
 };
 
 // Insert models below
+db.OrderDetail = db.sequelize.import('../api/orderDetail/orderDetail.model');
+db.Order = db.sequelize.import('../api/order/order.model');
+db.Status = db.sequelize.import('../api/Status/Status.model');
 db.ProductKeyNote = db.sequelize.import('../api/ProductKeyNote/ProductKeyNote.model');
 db.ProductSplFeature = db.sequelize.import('../api/ProductSplFeature/ProductSplFeature.model');
 db.ProductBrochure = db.sequelize.import('../api/ProductBrochure/ProductBrochure.model');
@@ -206,6 +209,42 @@ db.ProductKeyNote.belongsTo(db.ProductDetail, {
 db.ProductDetail.hasMany(db.ProductKeyNote, {
   foreignKey: {
     name: 'product_detail_id'
+  }
+});
+
+
+// Order details association
+//db.ProductDetails.belongsTo(db.OrderDetail, {
+//  foreignKey: {
+//    name: 'product_detail_id'
+//  }
+//});
+//db.OrderDetail.hasMany(db.ProductDetails, {
+//  foreignKey: {
+//    name: 'product_detail_id'
+//  }
+//});
+
+// Order association with status and Order Details
+db.OrderDetail.belongsTo(db.Order, {
+  foreignKey: {
+    name: 'order_detail_id'
+  }
+});
+db.Order.hasMany(db.OrderDetail, {
+  foreignKey: {
+    name: 'order_detail_id'
+  }
+});
+
+db.Status.belongsTo(db.Order, {
+  foreignKey: {
+    name: 'status'
+  }
+});
+db.Order.hasMany(db.Status, {
+  foreignKey: {
+    name: 'status'
   }
 });
 

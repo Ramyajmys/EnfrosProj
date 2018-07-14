@@ -17,6 +17,7 @@ export default function seedDatabaseIfNeeded() {
     let City = sqldb.City;
     let Category = sqldb.ProductCategory;
     let HSN = sqldb.HSN;
+    let Status = sqldb.Status;
 
     User.destroy({ where: {} })
       .then(() => User.bulkCreate([{
@@ -94,6 +95,41 @@ export default function seedDatabaseIfNeeded() {
       }])
     )
  
+    Status.destroy({ where: {} })
+      .then(() => Status.bulkCreate([{
+        _id: 1,
+        name: 'Created',
+        info: 'Intial state',
+        active: false
+      }, {
+        _id: 2,
+        name: 'Assigned',
+        info: 'Assigned to distributor',
+        active: false
+      }, {
+        _id: 3,
+        name: 'Shipped',
+        info: 'Shipped to customer',
+        active: false
+      }, {
+        _id: 4,
+        name: 'Delivered',
+        info: 'Delivered to customer',
+        active: false
+      }, {
+        _id: 5,
+        name: 'Complete',
+        info: 'Order completed',
+        active: false
+      }, {
+        _id: 6,
+        name: 'Return',
+        info: 'Order returned by customer',
+        active: false
+      }])
+        .then(() => console.log('finished populating Status'))
+        .catch(err => console.log('error populating Status', err)));
+
     Country.destroy({ where: {} })
       .then(() => Country.bulkCreate([{
         _id: 1,
