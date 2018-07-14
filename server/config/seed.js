@@ -98,33 +98,33 @@ export default function seedDatabaseIfNeeded() {
     Status.destroy({ where: {} })
       .then(() => Status.bulkCreate([{
         _id: 1,
-        name: 'Created',
-        info: 'Intial state',
+        status_name: 'Created',
+        status_info: 'Intial state',
         active: false
       }, {
         _id: 2,
-        name: 'Assigned',
-        info: 'Assigned to distributor',
+        status_name: 'Assigned',
+        status_info: 'Assigned to distributor',
         active: false
       }, {
         _id: 3,
-        name: 'Shipped',
-        info: 'Shipped to customer',
+        status_name: 'Shipped',
+        status_info: 'Shipped to customer',
         active: false
       }, {
         _id: 4,
-        name: 'Delivered',
-        info: 'Delivered to customer',
+        status_name: 'Delivered',
+        status_info: 'Delivered to customer',
         active: false
       }, {
         _id: 5,
-        name: 'Complete',
-        info: 'Order completed',
+        status_name: 'Complete',
+        status_info: 'Order completed',
         active: false
       }, {
         _id: 6,
-        name: 'Return',
-        info: 'Order returned by customer',
+        status_name: 'Return',
+        status_info: 'Order returned by customer',
         active: false
       }])
         .then(() => console.log('finished populating Status'))

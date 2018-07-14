@@ -150,7 +150,7 @@ db.HSN.hasMany(db.ProductDetail, {
   foreignKey: {
     name: 'hsn_id'
   }
-})
+});
 
 // product electrical data association
 db.ProductElectricalData.belongsTo(db.ProductDetail, {
@@ -226,25 +226,25 @@ db.ProductDetail.hasMany(db.ProductKeyNote, {
 //});
 
 // Order association with status and Order Details
-db.OrderDetail.belongsTo(db.Order, {
+db.Order.belongsTo(db.Status, {
   foreignKey: {
-    name: 'order_detail_id'
+    name: 'status_id'
   }
 });
-db.Order.hasMany(db.OrderDetail, {
+db.Status.hasMany(db.Order, {
   foreignKey: {
-    name: 'order_detail_id'
+    name: 'status_id'
   }
 });
 
-db.Status.belongsTo(db.Order, {
+db.Order.hasMany(db.OrderDetail, {
   foreignKey: {
-    name: 'status'
+    name: 'order_id'
   }
 });
-db.Order.hasMany(db.Status, {
+db.OrderDetail.belongsTo(db.Order, {
   foreignKey: {
-    name: 'status'
+    name: 'order_id'
   }
 });
 

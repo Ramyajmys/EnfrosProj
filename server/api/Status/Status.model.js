@@ -8,8 +8,8 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    name: DataTypes.STRING,
-    info: DataTypes.STRING,
+    status_name: DataTypes.STRING,
+    status_info: DataTypes.STRING,
     active: DataTypes.BOOLEAN
   });
 }
