@@ -237,6 +237,26 @@ db.Status.hasMany(db.Order, {
   }
 });
 
+db.Order.belongsTo(db.User, {
+  foreignKey: {
+    name: 'customer_id'
+  }
+});
+db.User.hasMany(db.Order, {
+  foreignKey: {
+    name: 'customer_id'
+  }
+});
+db.Order.belongsTo(db.User, {
+  foreignKey: {
+    name: 'distributor_id'
+  }
+});
+db.User.hasMany(db.Order, {
+  foreignKey: {
+    name: 'distributor_id'
+  }
+});
 db.Order.hasMany(db.OrderDetail, {
   foreignKey: {
     name: 'order_id'
