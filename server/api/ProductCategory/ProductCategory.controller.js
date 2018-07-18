@@ -12,6 +12,7 @@
 
 import jsonpatch from 'fast-json-patch';
 import {ProductCategory} from '../../sqldb';
+import {ProductSubCategory} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -66,7 +67,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of ProductCategorys
 export function index(req, res) {
-  return ProductCategory.findAll()
+  return ProductCategory.findAll({include: [{model: ProductSubCategory}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

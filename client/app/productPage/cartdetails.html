@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row" style="padding-top: 60px; padding-bottom: 50px;">
+    <!-- <div class="row" style="padding-top: 60px; padding-bottom: 50px;" ng-if="!productPageCtrl.showInvoice">
         <div class="col-md-12">
             <div class="col-sm-4">
                 <select class="form-control" ng-model="customer" name="customer" ng-change="productPageCtrl.onCustomerChange(customer)" required>
@@ -17,9 +17,30 @@
                 <button class="btn btn-info btn-block" ng-click="productPageCtrl.showCal()" ng-disabled="customer == undefined || distributor == undefined">Generate Invoice</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="row" style="padding-top: 60px; padding-bottom: 50px;" ng-if="productPageCtrl.showInvoice">
+    <!-- <div class="row" style="font-size: 17px; padding-top: 60px; padding-bottom: 50px;" ng-if="productPageCtrl.showInvoice"> -->
+        <div class="row" style="font-size: 17px; padding-top: 60px; padding-bottom: 50px;">
+        <div class="col-md-6" style="float: left; border-right:1px solid #eee ">
+            <p style="font-weight: bold; text-align: center;">Details of Customer</p>
+            <p>Name: {{productPageCtrl.custInfo.User.name}}</p>
+            <p>Address: {{productPageCtrl.custInfo.address}}, {{productPageCtrl.custInfo.City.cityName}}, 
+                {{productPageCtrl.custInfo.State.stateName}}, {{productPageCtrl.custInfo.Country.countryName}}</p>
+            <p>GSTIN: {{productPageCtrl.custInfo.gst_number}}</p>
+            <p>State: {{productPageCtrl.custInfo.State.stateName}}</p>
+        </div>
+
+        <div class="col-md-6" >
+            <p style="font-weight: bold; text-align: center;">Details of Distributor</p>
+            <p>Name: {{productPageCtrl.distInfo.User.name}}</p>
+            <p>Address: {{productPageCtrl.distInfo.address}}, {{productPageCtrl.distInfo.City.cityName}}, 
+                {{productPageCtrl.distInfo.State.stateName}}, {{productPageCtrl.distInfo.Country.countryName}}</p>
+            <p>GSTIN: {{productPageCtrl.distInfo.gst_number}}</p>
+            <p>State: {{productPageCtrl.distInfo.State.stateName}}</p>
+        </div>
+    </div><hr>
+
+    <div class="row" style="padding-top: 60px; padding-bottom: 50px;">
         <div class="col-md-12">
             <table class="table table-bordered">
                 <thead>
@@ -30,7 +51,7 @@
                     </tr> -->
                     <tr>
                         <th>Product</th>
-                        <th>Price</th>
+                        <th>Unitprice</th>
                         <th>Discount</th>
                         <th>CGST</th>
                         <th>SGST</th>
@@ -47,26 +68,28 @@
                                 <div style="padding-left: 10px;">
                                     <p>{{cart.product_name}}</p>
                                     <p style="color: green">In stock</p>
-                                    <a href="#">Delete</a>
+                                    <a href="#" ng-click="productPageCtrl.removeProduct(cart)">Delete</a>
                                 </div> 
                             </div>
                         </td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice|  number : 2}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.discountprice | number : 2}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2 | number : 2}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? (cart.tax/2 | number : 2) : 0}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? 0 : (cart.tax/2 | number : 2)}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_discount | number : 2}} ({{cart.discount}}%)</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2 | number : 2}} ({{cart.HSN.hsn_percentage/2}} %)</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? (cart.tax/2 | number : 2) : 0}} ({{productPageCtrl.gStatus == true ? (cart.HSN.hsn_percentage/2) : 0}}%)</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{productPageCtrl.gStatus == true ? 0 : (cart.tax/2 | number : 2)}} ({{productPageCtrl.gStatus == true ? 0 : (cart.HSN.hsn_percentage/2)}}%)</p></div></td>
                         <td>
-                            <input type="number" class="form-control" min="1" ng-model="productPageCtrl.quantityNum" ng-change="productPageCtrl.quantityChange(productPageCtrl.quantityNum)"/>
-                            <!-- <div style="padding-top: 10px;" ng-if="productPageCtrl.showUpdateBtn"><button type="button" class="btn btn-primary">Update</button></div>  -->
+                            <input type="number" class="form-control" min="1" value="{{cart.quantity}}" ng-model="quantity" ng-change="productPageCtrl.quantityChange(cart, quantity)"/>
                         </td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.totalprice | number : 2}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_total | number : 2}}</p></div></td>
                     </tr>
                     <tr>
                         <td colspan="8" style="text-align: right; font-weight: bold;">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{productPageCtrl.finaltotal | number : 2}}</td>
                     </tr>
                     <tr>
-                        <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;"><a href="#" ng-click="productPageCtrl.confirmOrder()" class="btn btn-success">Confirm Order</a> </td>
+                        <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;">
+                            <!-- <a href="/product" class="btn btn-success">Continue Shopping</a>  -->
+                            <button ng-click="productPageCtrl.confirmOrder()" class="btn btn-success" ng-disabled="btnClicked == true">Confirm Order</button>
+                         </td>
                     </tr>
                 </tbody>
 

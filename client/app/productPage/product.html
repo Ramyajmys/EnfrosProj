@@ -1,23 +1,16 @@
-<div class="container" style="padding-top: 30px;">
-    <!-- <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">WebSiteName</a>
-          </div>
-          <ul class="nav navbar-nav">
+<nav class="navbar navbar-default product-nav">
+  <div class="container-fluid">
+    
+    <ul class="nav navbar-nav product-nav-links">
+      <li class="active"><a href="#">All</a></li>
+      <li ng-repeat="cat in productPageCtrl.categoryList"><a href="#">{{cat.category_name}}</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container" style="padding-top: 30px; padding-bottom: 80px; background: white;">
 
-            <li uib-dropdown is-open="status.isopen" ng-mouseover="status.isopen = true" ng-mouseleave="status.isopen = false">
-              <a href id="home" uib-dropdown-toggle>Hom</a>
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="home">
-                  <li><a href="" ng-click="$ctrl.profileClick()"><span class="spn">My Profile</span></a></li>
-                  <li><a href="" ng-click="$ctrl.changePassClick()"><span class="spn">Change Password</span></a></li>
-                  <li><a ui-sref="logout"><span class="spn">Logout</span></a></li>
-                </ul>
-            </li>
-            
-          </ul>
-        </div>
-      </nav> -->
+    <!-- <a href="#" ng-click="productPageCtrl.savefile()" class="btn btn-success">Save</a> -->
+
     <!-- <div class="row" ng-if="productPageCtrl.cartArr.length != 0">
       <div class="alert alert-success">
         <div layout="row" layout-align="space between center">
@@ -32,7 +25,25 @@
     </div> -->
     <div class="row" ng-if="productPageCtrl.getCurrentUser().role == 'admin'">
       <div class="col-md-12" style="padding-bottom: 30px; width: 100%;">
-          <div style="float: right;"><a href="#" class="btn btn-primary" ng-click="productPageCtrl.viewcart()" ng-disabled="productPageCtrl.cartArr.length == 0">Generate Invoice</a></div>
+          <div class="col-sm-3">
+              <select class="form-control" ng-model="customer" name="customer" ng-change="productPageCtrl.onCustomerChange(customer)" required>
+                  <option value="">Select Customer</option>
+                  <option ng-repeat="customer in productPageCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
+              </select>
+          </div>
+          <div class="col-sm-3">
+              <select class="form-control" ng-model="distributor" name="distributor" ng-change="productPageCtrl.onDistributorChange(distributor)" required>
+                  <option value="">Select Distributor</option>
+                  <option ng-repeat="distributor in productPageCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
+              </select>
+          </div>
+          <div class="col-sm-3">
+              <button class="btn btn-info btn-block" ng-click="productPageCtrl.viewcart()" ng-disabled="customer == undefined || distributor == undefined || productPageCtrl.cartArr.length == 0">Generate Invoice</button>
+          </div>
+          <!-- <div class="icon-header-item icon-header-noti" data-notify="{{productPageCtrl.len}}">
+              <i class="zmdi zmdi-shopping-cart"></i>
+            </div>
+          <div style="float: right;"><a href="#" class="btn btn-primary" ng-click="productPageCtrl.viewcart()" ng-disabled="productPageCtrl.cartArr.length == 0">VIEW QUOTE</a></div> -->
       </div>
     </div>
     <div class="row">
@@ -46,8 +57,9 @@
           <div class="latest-desc">
             <h4 class="title">{{prod.product_name}}</h4>
             <div class="author"><span>Rs. </span>{{prod.unitprice}}</div>
-            <!-- <p class="desc">{{prod.product_description}}</p> -->
-            <div class="latest-link"><a href="#" ng-click="productPageCtrl.addToCart(prod)" ng-if="productPageCtrl.getCurrentUser().role == 'admin'">ADD TO QUOTE</a></div>
+            <p class="desc">{{prod.product_description}}</p>
+            <div class="latest-link" ng-if="!prod.active"><a href="#" ng-click="productPageCtrl.addToCart(prod)" ng-if="productPageCtrl.getCurrentUser().role == 'admin'">ADD TO QUOTE</a></div>
+            <div class="latest-link" ng-if="prod.active"><button class="btn btn-warn" disabled>Quote Added</button></div>
             <div class="latest-link"><a href="#" ng-click="">View Details</a></div>
           </div>
         </div>

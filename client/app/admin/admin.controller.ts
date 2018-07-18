@@ -11,12 +11,14 @@ export default class AdminController {
   $http;
   userInfo;
   errMsg;
+  $state;
 
   /*@ngInject*/
-  constructor(User, Auth, myService, $http) {
+  constructor(User, Auth, myService, $http, $state) {
     this.Auth = Auth;
     this.myService = myService;
     this.$http = $http;
+    this.$state = $state;
     // Use the User $resource to fetch all users
     //this.users = User.query();
     this.openCity('b1','Dashboard');
@@ -57,5 +59,9 @@ export default class AdminController {
 
     document.getElementById(cityName).style.display = "block";
     $('#'+bid).addClass('active')
+  }
+
+  gotoProduct() {
+    this.$state.go('product')
   }
 }

@@ -12,5 +12,6 @@ router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 router.post('/getUserInfo', controller.getUserInfo);
+router.post('/savefile', controller.savefile);
 
 module.exports = router;

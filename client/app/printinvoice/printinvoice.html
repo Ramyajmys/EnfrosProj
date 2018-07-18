@@ -1,5 +1,6 @@
 <div class="container" print-section>
         <div style="text-align: center;">
+                <!-- <h1>XXX XXXXXXXXXXXS</h1> -->
             <h1>ENFROS SOLUTION</h1>
             <h4>ADDRESS</h4>
             <h4>Bangalore</h4>
@@ -79,7 +80,7 @@
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{printinvoiceCtrl.gStatus == true ? cart.tax/2 : 0}}</p></div></td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{printinvoiceCtrl.gStatus == true ? 0 : cart.tax/2}}</p></div></td>
                         <td>
-                            <input type="number" class="form-control" min="1" ng-model="printinvoiceCtrl.quantityNum" disabled />
+                            <input type="number" class="form-control" min="1" value="{{cart.quantity}}" disabled />
                             <!-- <div style="padding-top: 10px;" ng-if="printinvoiceCtrl.showUpdateBtn"><button type="button" class="btn btn-primary">Update</button></div>  -->
                         </td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.totalprice}}</p></div></td>
@@ -88,7 +89,7 @@
                         <td colspan="8" style="text-align: right; font-weight: bold;">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{printinvoiceCtrl.finaltotal}}</td>
                     </tr>
                     <tr>
-                        <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;"><a href="#" class="btn btn-success" print-btn>Print</a> </td>
+                        <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;"><a href="#" class="btn btn-success" print-btn>Print</a> <a href="#" ng-click="printinvoiceCtrl.save()" class="btn btn-success">Save</a></td>
                     </tr>
                 </tbody>
     
