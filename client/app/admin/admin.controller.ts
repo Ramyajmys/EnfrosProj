@@ -27,24 +27,23 @@ export default class AdminController {
     this.getCurrentUser = this.Auth.getCurrentUser;
     this.getCurrentUser(function(data){
       vm.currentUser = data;
-      vm.getUserInfo(vm.currentUser._id);
     });
   }
 
-  getUserInfo(id) {
-    this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
-      this.userInfo = response.data;
-      this.myService.saveCurrentUser(this.userInfo);
-    }, err => {
-      if(err.status === 500) {
-        this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
-        this.errMsg = 'Not Found';
-      } else {
-        this.errMsg = err;
-      }
-    });
-  }
+  // getUserInfo(id) {
+  //   this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
+  //     this.userInfo = response.data;
+  //     this.myService.saveCurrentUser(this.userInfo);
+  //   }, err => {
+  //     if(err.status === 500) {
+  //       this.errMsg = 'Internal Server Error';
+  //     } else if(err.status === 404) {
+  //       this.errMsg = 'Not Found';
+  //     } else {
+  //       this.errMsg = err;
+  //     }
+  //   });
+  // }
 
   openCity(bid, cityName) {
     var i, tabcontent, tablinks; 

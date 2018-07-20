@@ -282,7 +282,7 @@ export function me(req, res, next) {
       'email',
       'role',
       'provider'
-    ]
+    ], include: [{model: UserProfile}]
   })
     .then(user => { // don't ever give out the password or salt
       if(!user) {

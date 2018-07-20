@@ -76,13 +76,15 @@ export class ProductPageComponent {
     this.def = './assets/images/solar.jpg'
     this.myService = myService;
 
-    this.getCurrentUser = Auth.getCurrentUserSync;
+    
   }
 
   $onInit() {
+  
+
     this.customerList = this.myService.getCustomerList();
     this.distributorList = this.myService.getDistributorList();
-    this.currentUser = this.myService.getCurrentUser();
+    //this.currentUser = this.myService.getCurrentUser();
 
     this.cInfo =  this.myService.getCartInfo();
     this.custInfo = this.myService.getCustomerInfo();
@@ -96,6 +98,12 @@ export class ProductPageComponent {
       this.calculate();
     }
     this.len = this.cartArr.length;
+
+    // var vm = this;
+    // vm.getCurrentUser = vm.Auth.getCurrentUser;
+    // vm.getCurrentUser(function(data){
+    //   vm.currentUser = data;
+    // });
   }
 
   onCustomerChange(id) {
@@ -165,20 +173,6 @@ export class ProductPageComponent {
       }
     });
   }
-
-  // getHsnById(id) {
-  //   this.$http.get('/api/HSNs/'+id).then(response => {
-  //     this.hsnInfo = response.data;
-  //   }, err => {
-  //     if(err.status === 500) {
-  //       this.errMsg = 'Internal Server Error';
-  //     } else if(err.status === 404) {
-  //       this.errMsg = 'Not Found';
-  //     } else {
-  //       this.errMsg = err;
-  //     }
-  //   });
-  // }
 
   onCategoryChange(id) {
     if(id) {
@@ -303,11 +297,10 @@ export class ProductPageComponent {
 
   quantityChange(p, q) {
     if(q) {
-  
+
       var tax =  (parseInt(p.unitprice) * q)  * (p.HSN.hsn_percentage/100);
       var discount = (parseInt(p.unitprice) * q) * (p.discount /100);
       var price = (parseInt(p.unitprice) * q) + tax - discount;
-  
   
       var obj = this.cInfo.find(function (obj) { 
         return obj._id === p._id; 
@@ -324,10 +317,10 @@ export class ProductPageComponent {
         this.myService.saveCartInfo(this.cInfo);
       }
     }
-
   }
 
   removeProduct(p) {
+    // var len = this.cInfo.length;
     // swal({
     //   title: "Are you sure?",
     //   text: "Once deleted, you will not be able to recover this product!",
@@ -338,22 +331,18 @@ export class ProductPageComponent {
     // })
     // .then((willDelete) => {
     //   if (willDelete) {
-    //     var obj = this.cInfo.find(function (obj) { 
-    //       return obj._id === p._id; 
-    //     });
-    //     if (obj !== -1) this.cInfo.splice(obj, 1);
-    //     this.finaltotal = this.finaltotal - obj.totalprice;
-    //     console.log(this.cInfo)
-        
-    //     this.myService.saveCartInfo(this.cInfo);
+    //     this.cInfo.splice(this.cInfo.findIndex(item => item._id === p._id), 1);
+    //     this.finaltotal = this.finaltotal - p.product_total;
 
-    //     swal({
-    //       icon: "success",
-    //       title: "Deleted!",
-    //       text: "Your product has been deleted!",
-    //       type: "success",
-    //       timer: 1000
-    //     });
+    //     if(len != this.cInfo.length) {
+    //       swal({
+    //         icon: "success",
+    //         title: "Deleted!",
+    //         text: "Your product has been deleted!",
+    //         type: "success",
+    //         timer: 1000
+    //       });
+    //     }
     //   } else {
     //     swal("Your product file is safe!");
     //   }
@@ -361,6 +350,9 @@ export class ProductPageComponent {
 
     this.cInfo.splice(this.cInfo.findIndex(item => item._id === p._id), 1);
     this.finaltotal = this.finaltotal - p.product_total;
+    if(this.cInfo.length == 0) {
+      this.$state.go('admin');
+    }
   }
 
   calculate() {
@@ -432,6 +424,7 @@ export class ProductPageComponent {
     this.mech_data = {};
     this.electrical_data = {};
     this.spl_feature = {}; 
+    this.product_def_pic = './assets/images/solar.jpg'
   }
 
   savefile() {

@@ -30,10 +30,20 @@ export default function routes($stateProvider) {
       })
       .state('settings', {
         url: '/settings',
-        template: require('./settings/settings.html'),
-        controller: 'SettingsController',
-        controllerAs: 'vm',
+        template: '<settings></settings>',
+        authenticate: true
+      })
+      .state('editprofile', {
+        url: '/editprofile',
+        template: '<editprofile></editprofile>',
         authenticate: true
       });
+      // .state('settings', {
+      //   url: '/settings',
+      //   template: require('./settings/settings.html'),
+      //   controller: 'SettingsController',
+      //   controllerAs: 'vm',
+      //   authenticate: true
+      // });
 }
 
