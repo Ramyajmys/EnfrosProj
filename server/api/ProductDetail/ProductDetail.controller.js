@@ -87,6 +87,17 @@ export function show(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
+//Get Product Details for this category
+export function getProductCategory(req, res) {
+    return ProductDetail.findAll({
+    where: {
+      category_id: req.body.id
+    }
+  })
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
 
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
