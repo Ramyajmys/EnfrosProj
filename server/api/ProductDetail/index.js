@@ -12,4 +12,6 @@ router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 router.post('/getproductPagecategory', controller.getProductCategory);
+router.post('/getproductdetails', controller.getproductdetails);
+
 module.exports = router;

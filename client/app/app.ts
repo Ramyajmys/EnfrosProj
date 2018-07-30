@@ -24,7 +24,6 @@ import footer from '../components/footer/footer.component';
 import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
-import AddProductCategoryComponent from './addProductCategory/addProductCategory.component';
 import AddProductSubCategoryComponent from './addProductSubCategory/addProductSubCategory.component';
 import ProductPageComponent from './productPage/productPage.component';
 import AllCategoryListComponent from './allCategoryList/allCategoryList.component';
@@ -39,8 +38,15 @@ import PrintinvoiceComponent from './printinvoice/printinvoice.component';
 import 'angular-base64-upload';
 import './app.scss';
 import myServiceService from './myService/myService.service';
+import OrderdetailsComponent from './orderdetails/orderdetails.component';
+import AddProductComponent from './addProduct/addProduct.component';
+import CartDetailsComponent from './cartDetails/cartDetails.component';
+import ProductlistComponent from './productlist/productlist.component';
 
 import 'angular-print';
+import 'angular-material-icons';
+// import * as rzModule from 'angularjs-slider';
+const rzModule = require('angularjs-slider')
 
 angular.module('testprojApp', [
  'ngAnimate',
@@ -48,6 +54,8 @@ angular.module('testprojApp', [
   require('angular-material-data-table'),
   'naif.base64',
   'AngularPrint',
+  'ngMdIcons',
+  rzModule,
   ngCookies,
   ngResource,
   ngSanitize,
@@ -67,7 +75,6 @@ angular.module('testprojApp', [
 
   util,
 
-  AddProductCategoryComponent,
   AddProductSubCategoryComponent,
   ProductPageComponent,
   AllCategoryListComponent,
@@ -78,7 +85,11 @@ angular.module('testprojApp', [
   DistributorDashboardComponent,
   MyrouteComponent,
   myServiceService,
-  PrintinvoiceComponent
+  PrintinvoiceComponent,
+  OrderdetailsComponent,
+  AddProductComponent,
+  CartDetailsComponent,
+  ProductlistComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

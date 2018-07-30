@@ -30,21 +30,21 @@
 
 
 <header>
-  <div class="container-fluid">
+  <!-- <div class="container-fluid">
     <div class="logo">
         <a href="/"><img src="./assets/images/logo.png" alt="logo" style="height: 70px; width: 200px;"/></a>
-    </div>
+    </div> -->
 
-    <!-- <div class="row">
+    <div class="row">
       <div class="logo">
-          <a href="/"><img src="./assets/images/logo.png" alt="logo" style="height: 70px; width: 200px;"/></a>
-      </div> -->
+          <!-- <a href="/"><img src="./assets/images/logo.png" alt="logo" style="height: 70px; width: 200px;"/></a> -->
+      </div>
   
     <nav id="main-nav-wrap">
       <ul class="main-navigation">
         <li><a href="home.html#intro" du-smooth-scroll du-scrollspy duration="800" offset="50">Home</a></li>
         <li ng-hide="$ctrl.isLoggedIn()"><a href="home.html#about" du-smooth-scroll du-scrollspy duration="800" offset="50">About</a></li>
-        <li><a href="/product" du-smooth-scroll du-scrollspy duration="800" offset="50">Product</a></li>
+        <li><a href="/productlist" du-smooth-scroll du-scrollspy duration="800" offset="50">Product</a></li>
         <li ng-hide="$ctrl.isLoggedIn()"><a href="home.html#contact" du-smooth-scroll du-scrollspy duration="800" offset="50">Contact</a></li>
         <li ng-hide="$ctrl.isLoggedIn()" class="highlight"><a href="/login" title="">Login</a></li>	
        
@@ -56,8 +56,9 @@
             <div class="navImg"><img class="img-circle uphoto" ng-src="/assets/images/male.png"/></div>
           </a>
             <ul class="dropdown-menu sub-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-              <li ng-show="$ctrl.isLoggedIn() && $ctrl.getCurrentUser().role == 'admin'"><a href="" ng-click="$ctrl.profileClick()"><span class="spn">My Profile</span></a></li>
-              <li ng-show="$ctrl.isLoggedIn() && $ctrl.getCurrentUser().role == 'admin'"><a href="" ng-click="$ctrl.changePassClick()"><span class="spn">Change Password</span></a></li>
+              <li ng-show="$ctrl.isLoggedIn()"><a href="/editprofile"><span class="spn">My Profile</span></a></li>
+              <li ng-show="$ctrl.isLoggedIn() && $ctrl.getCurrentUser().role != 'admin'"><a href="/orderdetails"><span class="spn">My Orders</span></a></li>
+              <li ng-show="$ctrl.isLoggedIn()"><a href="/changepassword"><span class="spn">Change Password</span></a></li>
               <li ng-show="$ctrl.isLoggedIn()"><a ui-sref="logout"><span class="spn">Logout</span></a></li>
             </ul>
         </li>

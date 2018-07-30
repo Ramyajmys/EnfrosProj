@@ -1,4 +1,4 @@
-<div class="container-fluid" style="padding-left: 0; padding-right: 0;">
+<!-- <div class="container-fluid" style="padding-left: 0; padding-right: 0;">
     <div class="full-width" style="width: 100%">
         <div class="sidetab-menu">
             <div class="tab">
@@ -42,6 +42,149 @@
             <div id="Editprofile" class="tabcontent">
                 <div><editprofile></editprofile></div>
             </div>
+        </div>
+        
+    </div>
+</div> -->
+
+<div class="container">
+    <div layout="row" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 40px;" layout-align="space-between start" ng-cloak>
+        <div layout="column" flex="60">
+            <div layout="row" layout-align="center center">
+                <a ng-href="/productlist" class="label-links">
+                    <div class="bgBlue" md-whiteframe="1" flex="100" layout layout-align="center center" >
+                        <div layout="column"  layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="note_add" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+            
+                        <div layout="column"  layout-align="center center">
+                            <h3 class="rmvSpace">New Quotation</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div layout="row" layout-align="space-between center" >
+                <a ng-href="/orderdetails" class="label-links">
+                    <div class="bgBlue" md-whiteframe="1" layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="view_list" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+            
+                        <div layout="column" flex="70" layout-align="center center">
+                            <h3 class="rmvSpace">Order Details</h3>
+                        </div>
+                    </div>
+                </a>
+
+                <a ng-href="/addProduct" class="label-links">
+                    <div class="bgBlue" md-whiteframe="1"  layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="add_box" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+            
+                        <div layout="column" flex="70" layout-align="end center">
+                            <h3 class="rmvSpace">Products</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div layout="row" layout-align="space-between center">
+                <a ng-href="/allCategoryList" class="label-links">
+                    <div class="bgBlue" md-whiteframe="1" layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="format_list_bulleted" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+            
+                        <div layout="column" flex="70" layout-align="center center">
+                            <h3 class="rmvSpace">Category</h3>
+                        </div>
+                    </div>
+                </a>
+                <a ng-href="/addProductSubCategory" class="label-links">
+                    <div class="bgBlue" md-whiteframe="1" layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="format_list_numbered" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+            
+                        <div layout="column" flex="70" layout-align="end center">
+                            <h3 class="rmvSpace">Sub-category</h3>
+                        </div>
+                    </div>
+                </a>    
+            </div>
+            
+            <div layout="row" layout-align="space-between center">
+                <a ng-href="/customer" class="label-links">
+                    <div class="bgBlue" md-whiteframe="1" layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="account_box" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+            
+                        <div layout="column" flex="70" layout-align="center center">
+                            <h3 class="rmvSpace">Customer</h3>
+                        </div>
+                    </div>
+                </a>
+                <a ng-href="/distributor" class="label-links">   
+                    <div class="bgBlue" md-whiteframe="1" layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="supervisor_account" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+            
+                        <div layout="column" flex="70" layout-align="end center">
+                            <h3 class="rmvSpace">Distributor</h3>
+                        </div>
+                    </div>
+                </a>     
+            </div>
+        </div>
+        
+
+        <div layout="column" flex="30">
+            <div layout="row">
+                <div layout="column" class="padding-10">
+                    <ng-md-icon icon="storage" class="side-icon" size="35px"></ng-md-icon>
+                </div>
+                <div layout="column" class="padding-10 side-text-color">
+                    <p class="side-link-head">Order Details</p>
+                    <a href="#">Completed Orders</a>
+                    <a href="#">Processes Orders</a>
+                    <a href="#">Processes Orders</a>
+                </div>
+            </div>
+            <div layout="row">
+                <div layout="column" class="padding-10">
+                    <ng-md-icon icon="bubble_chart" class="side-icon" size="35px"></ng-md-icon>
+                </div>
+                <div layout="column" class="padding-10 side-text-color">
+                    <p class="side-link-head">Product Details</p>
+                    <a href="/addProduct">Add Product</a>
+                    <a href="/allCategoryList">Category</a>
+                    <a href="/addProductSubCategory">Sub-category</a>
+                </div>
+            </div>
+            <div layout="row">
+                <div layout="column" class="padding-10">
+                    <ng-md-icon icon="settings" class="side-icon" size="35px"></ng-md-icon>
+                </div>
+                <div layout="column" class="padding-10 side-text-color">
+                    <p class="side-link-head">Settings</p>
+                    <a href="/changepassword">Change Password</a>
+                    <a href="/editprofile">Editprofile</a>
+                </div>
+            </div>
+            <!-- <div layout="row">
+                <div layout="column" class="padding-10">
+                    <ng-md-icon icon="list" size="35px"></ng-md-icon>
+                </div>
+                <div layout="column" class="padding-10">
+                    <p class="side-link-head">dshfhgjdhgdg</p>
+                    <p>dshfhgjdhgdg</p>
+                    <p>dshfhgjdhgdg</p>
+                </div>
+            </div> -->
         </div>
         
     </div>

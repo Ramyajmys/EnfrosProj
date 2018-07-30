@@ -1,92 +1,109 @@
-<div class="container-fluid btmSpace" >
-    <md-content>
-        <md-card>
-            <md-card-content>
-                <form name="uForm" ng-submit="vm.userInfoUpdate()" novalidate>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="col-sm-12 col-md-3 col-lg-3">
-                            <div class="imgCover"><img class="form-group img-circle imgStyle" ng-src="{{vm.userinfo.ProfilePicture == null ? '/assets/images/def.svg' : vm.userinfo.ProfilePicture.profilepic}}"></div>
-                            <input type='file' class="form-group chooseFile" name="image" maxsize="500" ng-hide="vm.checkRole == 'security'" ng-model='vm.userinfo.ProfilePicture.profilepic' accept="image/*" ng-change="vm.editPic(vm.userinfo.ProfilePicture.profilepic)" base-sixty-four-input>
-                            <div class="has-error" layout="row" layout-align="center center">
-                                <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 500 KB</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-9 col-lg-9">
-                            <div class="form-horizontal">
-                                <div class="form-group topSpace">
-                                    <label class="control-label col-sm-3 col-md-3">Full Name</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="fullname" class="form-control" placeholder="Full Name" ng-disabled="vm.checkRole == 'security'" ng-model="vm.userinfo.name" ng-pattern="/^[a-zA-Z ]*$/" maxlength="30" minlength="3" required/>
-                                        <p class="tooltips" ng-show="uForm.fullname.$error.required && !uForm.fullname.$pristine"><span>Name is Required</span></p>
-                                        <p class="tooltips" ng-show="uForm.fullname.$error.pattern || uForm.fullname.$error.minlength || uForm.fullname.$error.maxlength"><span>atleast contain 3 letters</span></p>           
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-3">Email</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="email" class="form-control" placeholder="Email" ng-disabled="vm.checkRole == 'security'" ng-model="vm.userinfo.email" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" required/>
-                                        <p class="tooltips" ng-show="uForm.email.$error.required && !uForm.email.$pristine"><span>Email is Required</span></p>
-                                        <p class="tooltips" ng-show="uForm.email.$error.pattern"><span>should look like-xyz@lk.com</span></p>                               
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-3">Mobile Number</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="mobilenumber" class="form-control" placeholder="Mobile Number" ng-disabled="vm.checkRole == 'security'" ng-model="vm.userinfo.mobilenumber" ng-pattern="/^(\+91[\-\s]?)?[0]?(91)?[1-9]\d{9}$/" required/>                                    
-                                            <p class="tooltips" ng-show="uForm.mobilenumber.$error.required && !uForm.mobilenumber.$pristine"><span>Mobile Number is required</span></p>
-                                            <p class="tooltips" ng-show="uForm.mobilenumber.$error.pattern"><span>must contain 10 digits</span></p>                                     
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-3">Address</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="address" class="form-control" placeholder="Address" ng-disabled="vm.checkRole == 'security'" ng-model="vm.userinfo.Userprofile.Address"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-3">Country</label>
-                                    <div class="col-sm-6">
-                                        <select class="form-control" ng-model="vm.userinfo.Userprofile.country_id" ng-disabled="vm.checkRole == 'security'" name="companyCountry" ng-change="vm.userinfo.Userprofile.state_id=null; vm.userinfo.Userprofile.city_id=null; vm.cities = []; vm.getStates(vm.userinfo.Userprofile.country_id)">
-                                            <option value="">Select Country</option>
-                                            <option ng-repeat="country in vm.country" ng-value="{{country.id}}">{{country.countryName}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-3">State</label>
-                                    <div class="col-sm-6">
-                                        <select class="form-control" ng-model="vm.userinfo.Userprofile.state_id" ng-disabled="vm.checkRole == 'security'" name="companyState" ng-change="vm.userinfo.Userprofile.city_id=null; vm.cities = []; vm.getCities(vm.userinfo.Userprofile.state_id)">
-                                            <option value="">Select State</option>
-                                            <option ng-repeat="state in vm.states" ng-value="{{state.id}}">{{state.stateName}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-3">City</label>
-                                    <div class="col-sm-6">
-                                        <select class="form-control" ng-model="vm.userinfo.Userprofile.city_id" ng-disabled="vm.checkRole == 'security'" name="companyCity">
-                                            <option value="">Select City</option>
-                                            <option ng-repeat="city in vm.cities" ng-value="{{city.id}}">{{city.cityName}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-3"></label>
-                                    <div class="col-sm-6">
-                                            <md-button class="md-raised md-primary btnWidth" ng-hide="vm.checkRole == 'security'" type="submit" ng-disabled="uForm.$invalid">Update</md-button>
-                                            <md-button class="md-raised md-accent btnWidth" ng-hide="vm.checkRole == 'security'" ng-click="vm.cancel()">Cancel</md-button>
-                                    </div>
+<div class="container btmSpace" >
+        <div class="row">
+            <div class="col-md-12">
+        <!-- <md-content>
+            <md-card>
+                <md-card-content> -->
+                    <div>
+                        <h1 style="color: rgb(35, 36, 41)"><i class="fa fa-pencil-square-o" aria-hidden="true" style="padding-right: 5px;"></i>Edit Profile<hr></h1>
+                    </div>
+    
+                    <form name="uForm" ng-submit="vm.userInfoUpdate()" novalidate>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="imgCover"><img class="form-group img-circle imgStyle" ng-src="{{vm.userinfo.UserProfile.profilepic == null ? '/assets/images/male.png' : vm.userinfo.UserProfile.profilepic}}"></div>
+                                <input type='file' class="form-group chooseFile" name="image" maxsize="500" ng-model='vm.userinfo.UserProfile.profilepic' accept="image/*" ng-change="vm.editPic(vm.userinfo.UserProfile.profilepic)" base-sixty-four-input>
+                                <div class="has-error" layout="row" layout-align="center center">
+                                    <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 500 KB</p>
                                 </div>
                             </div>
+                            <div class="col-sm-12 col-md-9 col-lg-9">
+                                <div class="form-horizontal">
+                                    <div class="form-group topSpace">
+                                        <label class="control-label col-sm-3 col-md-3">Full Name</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="fullname" class="form-control" placeholder="Full Name" ng-model="vm.userinfo.name" ng-pattern="/^[a-zA-Z ]*$/" maxlength="30" minlength="3" required/>
+                                            <p class="tooltips" ng-show="uForm.fullname.$error.required && !uForm.fullname.$pristine"><span>Name is Required</span></p>
+                                            <p class="tooltips" ng-show="uForm.fullname.$error.pattern || uForm.fullname.$error.minlength || uForm.fullname.$error.maxlength"><span>atleast contain 3 letters</span></p>           
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3">Email</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="email" class="form-control" placeholder="Email" ng-model="vm.userinfo.email" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" required/>
+                                            <p class="tooltips" ng-show="uForm.email.$error.required && !uForm.email.$pristine"><span>Email is Required</span></p>
+                                            <p class="tooltips" ng-show="uForm.email.$error.pattern"><span>should look like-xyz@lk.com</span></p>                               
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3">Mobile Number</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="mobilenumber" class="form-control" placeholder="Mobile Number" ng-model="vm.userinfo.mobilenumber" ng-pattern="/^(\+91[\-\s]?)?[0]?(91)?[1-9]\d{9}$/" required/>                                    
+                                                <p class="tooltips" ng-show="uForm.mobilenumber.$error.required && !uForm.mobilenumber.$pristine"><span>Mobile Number is required</span></p>
+                                                <p class="tooltips" ng-show="uForm.mobilenumber.$error.pattern"><span>must contain 10 digits</span></p>                                     
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3">Address</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="address" class="form-control" placeholder="Address" ng-model="vm.userinfo.UserProfile.address"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3">Country</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" ng-model="vm.userinfo.UserProfile.country_id" name="companyCountry" ng-change="vm.userinfo.UserProfile.state_id=null; vm.userinfo.UserProfile.city_id=null; vm.cities = []; vm.getStates(vm.userinfo.UserProfile.country_id)">
+                                                <option value="">Select Country</option>
+                                                <option ng-repeat="country in vm.country" ng-value="{{country._id}}">{{country.countryName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3">State</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" ng-model="vm.userinfo.UserProfile.state_id" name="companyState" ng-change="vm.userinfo.UserProfile.city_id=null; vm.cities = []; vm.getCities(vm.userinfo.UserProfile.state_id)">
+                                                <option value="">Select State</option>
+                                                <option ng-repeat="state in vm.states" ng-value="{{state._id}}">{{state.stateName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3">City</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" ng-model="vm.userinfo.UserProfile.city_id" name="companyCity">
+                                                <option value="">Select City</option>
+                                                <option ng-repeat="city in vm.cities" ng-value="{{city._id}}">{{city.cityName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3">Zip</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="zip" class="form-control" placeholder="Zip" ng-model="vm.userinfo.UserProfile.zip" required ng-pattern="/^\d{6}$/"/>
+                                            <p class="tooltips" ng-show="uForm.zip.$error.required && !uForm.zip.$pristine"><span>Zip code is Required</span></p>
+                                            <p class="tooltips" ng-show="uForm.zip.$error.pattern"><span>Zip code should be 6 digits</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 col-md-3"></label>
+                                        <div class="col-sm-6">
+                                                <md-button class="md-raised md-primary btnWidth" type="submit" ng-disabled="uForm.$invalid">Update</md-button>
+                                                <md-button class="md-raised md-accent btnWidth" ng-click="vm.cancel()">Cancel</md-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
-                        <div layout="row" layout-align="center center" class="alert alert-danger" ng-if="vm.errMsg">
-                            {{vm.errMsg}}
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+                            <div layout="row" layout-align="center center" class="alert alert-danger" ng-if="vm.errMsg">
+                                {{vm.errMsg}}
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </md-card-content>
-        </md-card>
-    </md-content>
-</div>
+                    </form>
+                <!-- </md-card-content>
+            </md-card>
+        </md-content> -->
+            </div>
+        </div>
+    </div>
+    

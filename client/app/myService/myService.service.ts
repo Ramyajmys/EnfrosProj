@@ -3,10 +3,22 @@ const angular = require('angular');
 
 /*@ngInject*/
 export function myServiceService($http, $cookies, Auth) {
-  var cart = [], customer_list, distributor_list, invoice = false, customer_info, distributor_info;
+  var cart = [], customer_list, distributor_list, invoice = false, customer_info, distributor_info, gstatus, category_list;
 
+  this.getCategories = function() { 
+    return category_list;
+  }
+  this.saveCategories = function(val) {
+    category_list = val;
+  }
 
-
+  this.getGstatus = function() { 
+    return gstatus;
+  }
+  this.saveGstatus = function(val) {
+    gstatus = val;
+  }
+  
   this.getCartInfo = function() { 
     return cart;
   }

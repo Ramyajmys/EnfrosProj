@@ -21,7 +21,7 @@ export default class AdminController {
     this.$state = $state;
     // Use the User $resource to fetch all users
     //this.users = User.query();
-    this.openCity('b1','Dashboard');
+    //this.openCity('b1','Dashboard');
 
     var vm = this;
     this.getCurrentUser = this.Auth.getCurrentUser;

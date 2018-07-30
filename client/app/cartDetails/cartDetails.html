@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="row" style="font-size: 17px; padding-top: 60px; padding-bottom: 50px;">
+        <div class="col-md-6" style="float: left; border-right:1px solid #eee ">
+            <p style="font-weight: bold; text-align: center;">Details of Customer</p>
+            <p>Name: {{cartDetailsCtrl.custInfo.User.name}}</p>
+            <p>Address: {{cartDetailsCtrl.custInfo.address}}, {{cartDetailsCtrl.custInfo.City.cityName}}, 
+                {{cartDetailsCtrl.custInfo.State.stateName}}, {{cartDetailsCtrl.custInfo.Country.countryName}}</p>
+            <p>GSTIN: {{cartDetailsCtrl.custInfo.gst_number}}</p>
+            <p>State: {{cartDetailsCtrl.custInfo.State.stateName}}</p>
+        </div>
+    
+        <div class="col-md-6" >
+            <p style="font-weight: bold; text-align: center;">Details of Distributor</p>
+            <p>Name: {{cartDetailsCtrl.distInfo.User.name}}</p>
+            <p>Address: {{cartDetailsCtrl.distInfo.address}}, {{cartDetailsCtrl.distInfo.City.cityName}}, 
+                {{cartDetailsCtrl.distInfo.State.stateName}}, {{cartDetailsCtrl.distInfo.Country.countryName}}</p>
+            <p>GSTIN: {{cartDetailsCtrl.distInfo.gst_number}}</p>
+            <p>State: {{cartDetailsCtrl.distInfo.State.stateName}}</p>
+        </div>
+    </div><hr>
+
+    <div class="row">
+        <div class="co-sm-12">
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label col-sm-3">Reverse Charges:</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="Enter Reverse Charges" ng-model="cartDetailsCtrl.reversecharge" name="reversecharge" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-3">Transportation Mode:</label>
+                  <div class="col-sm-9">          
+                    <input type="text" class="form-control" placeholder="Enter Transportation Mode" ng-model="cartDetailsCtrl.transportationmode" name="transportationmode" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Vehicle Number:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="Enter Vehicle Number" ng-model="cartDetailsCtrl.vechiclenumber" name="vechiclenumber" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-3">Date of Supply:</label>
+                    <div class="col-sm-9">          
+                      <input type="text" class="form-control" placeholder="Enter Date of Supply" ng-model="cartDetailsCtrl.dateofsupply" name="dateofsupply" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Place of Supply:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="Enter Place of Supply" ng-model="cartDetailsCtrl.placeofsupply" name="placeofsupply" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-3">Email:</label>
+                    <div class="col-sm-9">          
+                      <textarea type="text" rows="3" class="form-control" placeholder="Email text" ng-model="cartDetailsCtrl.emailtext" name="emailtext" required></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+        <div class="row" style="padding-top: 60px; padding-bottom: 50px;">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Unitprice</th>
+                            <th>Discount</th>
+                            <th>CGST</th>
+                            <th>SGST</th>
+                            <th>IGST</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cart in cartDetailsCtrl.cInfo">
+                            <td>
+                                <div layout="row">
+                                    <div><img src="{{cart.product_photo}}" alt="Product" style="width: 100px; height: 100px;"/></div> 
+                                    <div style="padding-left: 10px;">
+                                        <p>{{cart.product_name}}</p>
+                                        <p style="color: green">In stock</p>
+                                        <a href="#" ng-click="cartDetailsCtrl.confirmDelete(cart)">Delete</a>
+                                    </div> 
+                                </div>
+                            </td>
+                            <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice|  number : 2}}</p></div></td>
+                            <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_discount | number : 2}} ({{cart.discount}}%)</p></div></td>
+                            <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2 | number : 2}} ({{cart.HSN.hsn_percentage/2}} %)</p></div></td>
+                            <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cartDetailsCtrl.gStatus == true ? (cart.tax/2 | number : 2) : 0}} ({{cartDetailsCtrl.gStatus == true ? (cart.HSN.hsn_percentage/2) : 0}}%)</p></div></td>
+                            <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cartDetailsCtrl.gStatus == true ? 0 : (cart.tax/2 | number : 2)}} ({{cartDetailsCtrl.gStatus == true ? 0 : (cart.HSN.hsn_percentage/2)}}%)</p></div></td>
+                            <td>
+                                <input type="number" class="form-control" min="1" value="{{cart.quantity}}" ng-model="quantity" ng-change="cartDetailsCtrl.quantityChange(cart, quantity)"/>
+                            </td>
+                            <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_total | number : 2}}</p></div></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="text-align: right; font-weight: bold;">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{cartDetailsCtrl.finaltotal | number : 2}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;">
+                                <!-- <a href="/product" class="btn btn-success">Continue Shopping</a>  -->
+                                <button ng-click="cartDetailsCtrl.confirmOrder()" class="btn btn-success" 
+                                    ng-disabled="btnClicked == true || cartDetailsCtrl.reversecharge == undefined || cartDetailsCtrl.transportationmode == undefined
+                                    || cartDetailsCtrl.vechiclenumber == undefined || cartDetailsCtrl.dateofsupply == undefined ||
+                                    cartDetailsCtrl.placeofsupply == undefined || cartDetailsCtrl.emailtext == undefined">Confirm Order</button>
+                             </td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+                
+            </div>
+            
+
+        </div>
+    </div>
+    
+        

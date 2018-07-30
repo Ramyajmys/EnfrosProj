@@ -1,4 +1,4 @@
-<md-tabs md-selected="admin.serviceSubtab" md-dynamic-height md-border-bottom>
+<!-- <md-tabs md-selected="admin.serviceSubtab" md-dynamic-height md-border-bottom>
     <md-tab md-tabs-content label="Add Product">
         <md-content class="md-padding" style="background: white">
             <addproduct></addproduct>
@@ -7,7 +7,94 @@
     <md-tab label="Product List">
         <md-content class="md-padding">
                 <product></product>
-            <!-- <productlist></productlist> -->
         </md-content>
     </md-tab>
-  </md-tabs>
+  </md-tabs> -->
+<nav class="navbar navbar-default product-nav">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav product-nav-links">
+        <li class="active"><a href="#">All</a></li>
+        <li ng-repeat="cat in productPageCtrl.categoryList"><a href="#">{{cat.category_name}}</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="padding-top: 40px;">
+            <div class="col-md-4">
+                <img src="{{productPageCtrl.product.product_photo}}" style="height: 500px; width: 100%;"/>
+            </div>
+
+            <div class="col-md-8">
+                <h3 style="margin: 0; color: #2fdab8; font-size: 23px;">{{productPageCtrl.product.product_name}}</h3>
+                <h3 style="margin: 0; font-size: 20px; margin-top: 10px;"><i class="fa fa-inr" aria-hidden="true" ></i>{{productPageCtrl.product.unitprice}}</h3>
+            
+                <div ng-if="productPageCtrl.product.category_id == 2">
+                    <div style="padding-top: 20px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="3" style="text-align: center; font-weight: bold;">Electrical data</td>
+                            </tr>
+                            <tr>
+                                <th>Peak Power Watts-PMAX (Wp)</th>
+                                <th>Maximum Power Voltage-VMPP (V)</th>
+                                <th>Maximum Power Current-IMPP (A)</th>
+                            </tr>
+                            <tr ng-repeat="list in productPageCtrl.elist">
+                                <td>{{list.peak_power_watts_pmax}}</td>
+                                <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                <td>{{list.maximum_power_current_impp}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="padding-top: 10px;">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" style="text-align: center; font-weight: bold;">Mechanical data</td>
+                                </tr>
+                                <tr>
+                                    <th>Soloar Cell</th>
+                                    <td>{{productPageCtrl.mlist.solar_cell}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Cell Orientation</th>
+                                    <td>{{productPageCtrl.mlist.cell_orientation}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Module Dimensions</th>
+                                    <td>{{productPageCtrl.mlist.module_dimensions}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Weight</th>
+                                    <td>{{productPageCtrl.mlist.weight}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Glass</th>
+                                    <td>{{productPageCtrl.mlist.glass}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="padding-top: 10px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="1" style="text-align: center; font-weight: bold;">Special features</td>
+                            </tr>
+                            <tr ng-repeat="list in productPageCtrl.flist">
+                                <td>{{list.feature_name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <button class="btn btn-info btn-block">Download Brochure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

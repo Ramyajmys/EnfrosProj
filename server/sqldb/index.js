@@ -238,9 +238,8 @@ db.Status.hasMany(db.Order, {
 });
 
 db.Order.belongsTo(db.User, {
-  foreignKey: {
-    name: 'customer_id'
-  }
+  foreignKey: 'customer_id',
+  as: 'customer'
 });
 db.User.hasMany(db.Order, {
   foreignKey: {
@@ -248,9 +247,8 @@ db.User.hasMany(db.Order, {
   }
 });
 db.Order.belongsTo(db.User, {
-  foreignKey: {
-    name: 'distributor_id'
-  }
+  foreignKey: 'distributor_id',
+  as: 'distributor'
 });
 db.User.hasMany(db.Order, {
   foreignKey: {

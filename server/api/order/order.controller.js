@@ -14,6 +14,12 @@ import jsonpatch from 'fast-json-patch';
 import {Order} from '../../sqldb';
 import {OrderDetail} from '../../sqldb';
 import config from '../../config/environment';
+import {User} from '../../sqldb';
+import {UserProfile} from '../../sqldb';
+import {Status} from '../../sqldb';
+import {Country} from '../../sqldb';
+import {State} from '../../sqldb';
+import {City} from '../../sqldb';
 
 var fs = require('fs');
 var pdf = require('html-pdf');
@@ -71,10 +77,30 @@ function handleError(res, statusCode) {
 }
 
 // Gets a list of Orders
-export function index(req, res) {
-  return Order.findAll()
+// export function index(req, res) {
+//   return Order.findAll({include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+//     .then(respondWithResult(res))
+//     .catch(handleError(res));
+// }
+
+// Gets a list of Orders
+export function getordersbyrole(req, res) {
+  if(req.body.role == 'admin') {
+    return Order.findAll({include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
+  }
+  if(req.body.role == 'Distributor') {
+    return Order.findAll({where:{distributor_id: req.body.id}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
+  if(req.body.role == 'Customer') {
+    return Order.findAll({where:{customer_id: req.body.id}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
+  
 }
 
 // Gets a single Order from the DB
@@ -91,9 +117,6 @@ export function show(req, res) {
 
 // Creates a new Order in the DB
 export function create(req, res) {
-  // return Order.create(req.body)
-  //   .then(respondWithResult(res, 201))
-  //   .catch(handleError(res));
 
   const uniqueRandom = require('unique-random');
   const rand = uniqueRandom(1, 10000000000);
@@ -102,9 +125,13 @@ export function create(req, res) {
   var cart = req.body.cart;
   var customer = req.body.customer;
   var distributor = req.body.distributor;
-  var admin = req.body.admin;
+  var extra = req.body.extra;
+  var ftotal = parseFloat(req.body.total).toFixed(2);
   var test = [];
-  var gStatus = req.body.gStatus;
+
+  var d = new Date();
+  var ampm = d.getHours() >= 12 ? 'pm' : 'am';
+  var today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear() + '  '+ d.getHours() +':'+ d.getMinutes()+ ' ' +ampm;
 
   var orderObj = {
     order_name: ordername,
@@ -119,152 +146,120 @@ export function create(req, res) {
     distributor_id: distributor.User._id
   };
 
-  return Order.create(orderObj).then(function(order) {
+  Order.create(orderObj).then(function(order) {
     if(order) {
 
-      var prod = {}, od = {}, temp = '';
-  //     var temp = '<tr>\
-  //     <td>\
-  //         <div>\
-  //             <div>\
-  //                 <p>'+ cart[i].product_name +'</p>\
-  //             </div> \
-  //         </div>\
-  //     </td>\
-  //     <td><div><p>₹'+ cart[i].unitprice +'</p></div></td>\
-  //     <td><div><p>₹'+ cart[i].product_discount +'</p></div></td>\
-  //     <td><div><p>₹'+ cart[i].tax/2 +'</p></div></td>\
-  //     <td><div><p>₹'+ cart[i].tax/2 +'</p></div></td>\
-  //     <td><div><p>₹'+ cart[i].tax/2 +'</p></div></td>\
-  //     <td><div><p>'+ cart[i].quantity +'</p></div></td>\
-  //     <td><div><p>₹'+cart[i].product_total+'</p></div></td>\
-  // </tr>';
+      var prod = {}, od = {}, temp = '', oRes;
 
       for(var i = 0; i< cart.length; i++) {
         prod = cart[i];
         
         od.order_id = order._id;
         od.order_name = order.order_name;
+        od.unitprice = prod.unitprice;
         od.product_name = prod.product_name;
         od.quantity = prod.quantity;
         od.product_total = prod.product_total;
         od.product_discount = prod.product_discount;
+        od.cgst = prod.cgst,
+        od.sgst = prod.sgst;
+        od.igst = prod.igst;
         test.push(od);
+        oRes = OrderDetail.create(od);
 
-// temp = temp + '<tr>\
-// <td>\
-//     <div>\
-//         <div>\
-//             <p>'+ cart[i].product_name +'</p>\
-//         </div> \
-//     </div>\
-// </td>\
-// <td><div><p>₹'+ cart[i].unitprice +'</p></div></td>\
-// <td><div><p>₹'+ cart[i].product_discount +'</p></div></td>\
-// <td><div><p>₹'+ cart[i].tax/2 +'</p></div></td>\
-// <td><div><p>₹'+ cart[i].tax/2 +'</p></div></td>\
-// <td><div><p>₹'+ cart[i].tax/2 +'</p></div></td>\
-// <td><div><p>'+ cart[i].quantity +'</p></div></td>\
-// <td><div><p>₹'+cart[i].product_total+'</p></div></td>\
-// </tr>';
-if(gStatus) {
-  temp = temp + '<tr><td><div><div><p>'+ cart[i].product_name +'</p></div></div></td><td><div><p>₹'+ cart[i].unitprice +'</p></div></td><td><div><p>₹'+ cart[i].product_discount +'</p></div></td><td><div><p>₹'+ cart[i].tax/2 +'</p></div></td><td><div><p>₹'+ cart[i].tax/2 +'</p></div></td><td><div><p>₹0</p></div></td><td><div><p>'+ cart[i].quantity +'</p></div></td><td><div><p>₹'+cart[i].product_total+'</p></div></td></tr>';
-} else {
-  temp = temp + '<tr><td><div><div><p>'+ cart[i].product_name +'</p></div></div></td><td><div><p>₹'+ cart[i].unitprice +'</p></div></td><td><div><p>₹'+ cart[i].product_discount +'</p></div></td><td><div><p>₹'+ cart[i].tax/2 +'</p></div></td><td><div><p>₹0</p></div></td><td><div><p>₹'+ cart[i].tax/2 +'</p></div></td><td><div><p>'+ cart[i].quantity +'</p></div></td><td><div><p>₹'+cart[i].product_total+'</p></div></td></tr>';
-}
+        temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">'+ cart[i].product_name +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].unitprice +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].product_discount +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].cgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].sgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].igst +'</td><td width="10%" style="border: 1px solid #eee;">'+ cart[i].quantity +'</td><td width="10%" style="border: 1px solid #eee;">₹'+cart[i].product_total+'</td></tr>';
 
-
-
-
-        OrderDetail.create(od).then(function() {
-          
-          if(test.length == cart.length) {
-            createInvoice(customer, distributor, cart, order.order_name, admin, req.body.total, temp);
+        if(test.length == cart.length) {
+          User.findOne({where: {_id: 1}, include: [{model: UserProfile}]}).then(function(admin) {
+            createInvoice(customer, order.order_name, admin, ftotal, temp, extra, today);
             return res.status(200).json({msg: 'Success'});
-            
-          }
-        })
-        .catch(handleError(res));
+          })
+          .catch(handleError(res));
+        }
       }
     }
   })
   .catch(handleError(res));
 }
 
-function createInvoice(customer, distributor, cart, invoice, admin, total, temp) {
-  var html = '<div style="width: 100%;">\
-  <div style="text-align: center;">\
+function createInvoice(customer, invoice, admin, total, temp, extra, date) {
+  var html = '<div style="width: 100%;padding: 10px;font-family: Palatino Linotype, Book Antiqua, Palatino, serif; letter-spacing:1px;">\
+  <div style="text-align: center; color: #263238;">\
       <h1>Enfros Solution</h1>\
       <h4>ADDRESS</h4>\
       <h4>Bangalore</h4>\
-      <h3>GSTIN:'+ admin.gst_number +'</h3>\
-  </div><hr>\
-  <div style="width: 100%; font-size: 17px;">\
-    <div style="width: 50%; float: left">\
-        <p>Reverse Charges:</p>\
-        <p>Invoice No:'+ invoice+'</p>\
-        <p>Invoice Date:'+ invoice +'</p>\
-        <p>State: Karnataka</p>\
+      <h3>GSTIN: '+ admin.UserProfile.gst_number +'</h3>\
+  </div>\
+  <div style="width: 100%; font-size: 16px;">\
+    <div style="width: 50%; float: left;">\
+        <p><strong style"font-weight: bold">Reverse Charges: </strong>'+ extra. reversecharge+'</p>\
+        <p><strong style"font-weight: bold">Invoice No: </strong>'+ invoice+'</p>\
+        <p><strong style"font-weight: bold">Invoice Date: </strong>'+ date +'</p>\
+        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName+'</p>\
     </div>\
     <div style="width: 50%; float: right" >\
-        <p>Transportation Mode:</p>\
-        <p>Vehicle Number:</p>\
-        <p>Date of Supply:</p>\
-        <p>Place of Supply:</p>\
+        <p><strong style"font-weight: bold">Transportation Mode: </strong>'+ extra. transportationmode+'</p>\
+        <p><strong style"font-weight: bold">Vehicle Number: </strong>'+ extra. vechiclenumber+'</p>\
+        <p><strong style"font-weight: bold">Date of Supply: </strong>'+ extra. dateofsupply+'</p>\
+        <p><strong style"font-weight: bold">Place of Supply: </strong>'+ extra. placeofsupply+'</p>\
     </div>\
   </div><hr>\
-  <div style="font-size: 17px; width: 100%; padding: 5px">\
-  <div style="float: left; width: 50%; ">\
-      <p style="font-weight: bold; text-align: center;">Details of Receiver / Billed to</p>\
-      <p>Name: '+ customer.User.name +'</p>\
-      <p>Address: '+ customer.address +', '+ customer.City.cityName +', \
-          '+ customer.State.stateName+', '+ customer.Country.countryName+'</p>\
-      <p>GSTIN: '+ customer.gst_number+'</p>\
-      <p>State: '+ customer.State.stateName+'</p>\
-  </div>\
-  <div style="float: right; width: 50%; ">\
-      <p style="font-weight: bold; text-align: center;">Details of Consignee / Shipped to</p>\
-      <p>Name: '+ customer.User.name +'</p>\
-      <p>Address: '+ customer.address +', '+ customer.City.cityName +', \
-          '+ customer.State.stateName+', '+ customer.Country.countryName+'</p>\
-      <p>GSTIN: '+ customer.gst_number+'</p>\
-      <p>State: '+ customer.State.stateName+'</p>\
-  </div>\
+  <div style="font-size: 16px; width: 100%; padding: 5px">\
+    <div style="float: left; width: 50%;">\
+        <p style="font-weight: bold; text-align: center;">Billed to</p>\
+        <p><strong style"font-weight: bold">Name: </strong>'+ customer.User.name +'</p>\
+        <p><strong style"font-weight: bold">Address: </strong>'+ customer.address +', '+ customer.City.cityName +', \
+            '+ customer.State.stateName+', '+ customer.Country.countryName+'</p>\
+        <p><strong style"font-weight: bold">GSTIN: </strong>'+ customer.gst_number+'</p>\
+        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName+'</p>\
+    </div>\
+    <div style="float: right; width: 50%;">\
+        <p style="font-weight: bold; text-align: center;">Shipped to</p>\
+        <p><strong style"font-weight: bold">Name: </strong>'+ customer.User.name +'</p>\
+        <p><strong style"font-weight: bold">Address: </strong>'+ customer.address +', '+ customer.City.cityName +', \
+            '+ customer.State.stateName+', '+ customer.Country.countryName+'</p>\
+        <p><strong style"font-weight: bold">GSTIN: </strong>'+ customer.gst_number+'</p>\
+        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName+'</p>\
+    </div>\
   </div><hr>\
-  <table class="table table-bordered">\
-    <thead>\
-        <tr>\
-            <th>Product</th>\
-            <th>Price</th>\
-            <th>Discount</th>\
-            <th>CGST</th>\
-            <th>SGST</th>\
-            <th>IGST</th>\
-            <th>Quantity</th>\
-            <th>Total</th>\
-        </tr>\
-    </thead>\
-    <tbody>\
-    <tr>'+temp+'\
-    <tr>\
-        <td colspan="8" style="text-align: right; font-weight: bold;">Total Price: ₹'+total+'</td>\
-    </tr>\
-  </tbody>\
-</table>\
+  <div style="font-size: 16px; width: 100%; padding: 5px">\
+    <table style="border: 1px solid #eee; border-collapse: collapse; width: 100%; text-align:center; padding-right: 10px;">\
+      <thead>\
+          <tr>\
+              <th style="border: 1px solid #eee;">Product</th>\
+              <th style="border: 1px solid #eee;">Price</th>\
+              <th style="border: 1px solid #eee;">Discount</th>\
+              <th style="border: 1px solid #eee;">CGST</th>\
+              <th style="border: 1px solid #eee;">SGST</th>\
+              <th style="border: 1px solid #eee;">IGST</th>\
+              <th style="border: 1px solid #eee;">Qty</th>\
+              <th style="border: 1px solid #eee;">Total</th>\
+          </tr>\
+      </thead>\
+      <tbody>\
+      <tr>'+temp+'\
+      <tr>\
+          <td colspan="8" style="text-align: right; font-weight: bold;">Total Price: ₹'+total+'</td>\
+      </tr>\
+    </tbody>\
+  </table>\
+  </div>\
 </div>'
 
-
-  var options = { format: 'A4'};
+  var options = { format: "A4", orientation: "landscape", border: {
+    right: "10px",
+    bottom: "20px"
+  } };
   var path = './client/assets/invoice/'+invoice+'.pdf';
 
   pdf.create(html, options).toFile(path, function(err, res) {
     if (err) return console.log(err);
-    sendEmailNotification(customer.User.email, customer.User.name, invoice);
+    sendEmailNotification(customer.User.email, customer.User.name, invoice, extra);
   });
 }
 
 
-function sendEmailNotification(email, name, file) {
+function sendEmailNotification(email, name, file, ex) {
 
   var transporter = nodemailer.createTransport({
     service: config.service,
@@ -320,7 +315,7 @@ function sendEmailNotification(email, name, file) {
                               font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                               font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;"> \
                               We will confirm your order once payment is recieved. Please contact us if you have any \
-                              questions regarding your order.</p>\
+                              questions regarding your order.<br><br>'+ex.emailtext+'</p>\
                       <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
                               font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                               font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;\
@@ -394,5 +389,15 @@ export function destroy(req, res) {
   })
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
+    .catch(handleError(res));
+}
+
+export function updatestatus(req, res) {
+  return Order.update({status_id: req.body.status}, {
+    where: {
+      _id: req.body.id
+    }
+  })
+    .then(respondWithResult(res))
     .catch(handleError(res));
 }

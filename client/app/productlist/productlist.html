@@ -1,0 +1,50 @@
+<nav class="navbar navbar-default product-nav">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav product-nav-links">
+      <li class="active"><a href="#">All</a></li>
+      <li ng-repeat="cat in productlistCtrl.categoryList"><a href="#">{{cat.category_name}}</a></li>
+    </ul>
+  </div>
+</nav>
+
+      <div class="container" style="padding-top: 30px; padding-bottom: 80px; background: white;">
+      
+          <div class="row" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">
+            <div class="col-md-12" style="padding-bottom: 30px; width: 100%;">
+                <div class="col-sm-3">
+                    <select class="form-control" ng-model="customer" name="customer" ng-change="productlistCtrl.onCustomerChange(customer)" required>
+                        <option value="">Select Customer</option>
+                        <option ng-repeat="customer in productlistCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <select class="form-control" ng-model="distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(distributor)" required>
+                        <option value="">Select Distributor</option>
+                        <option ng-repeat="distributor in productlistCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-info btn-block" ng-click="productlistCtrl.viewcart()" ng-disabled="customer == undefined || distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
+                </div>
+                
+                <input type='text' ng-model='productlistCtrl.searchText' placeholder="Search" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-md-4" ng-repeat="prod in productlistCtrl.productList | filter:{ 'product_name': productlistCtrl.searchText}">
+              <div class="latest-news">
+                <div class="latest-date-img">
+                  <img src="{{prod.product_photo}}" alt="img" class="latest-img"/>
+                  <div class="overlay-4"></div>
+                </div>
+                <div class="latest-desc">
+                  <h4 class="title">{{prod.product_name}}</h4>
+                  <div class="author"><span>Rs. </span>{{prod.unitprice}}</div>
+                  <p class="desc">{{prod.product_description}}</p>
+                  <div class="latest-link" ng-if="!prod.active"><a href="#" ng-click="productlistCtrl.addToCart(prod)" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">ADD TO QUOTE</a></div>
+                  <div class="latest-link" ng-if="prod.active"><button class="btn btn-warn" disabled>Quote Added</button></div>
+                  <div class="latest-link"><a href="#" ng-click="productlistCtrl.viewproduct(prod)">View Details</a></div>
+                </div>
+              </div>
+          </div>
+      </div>

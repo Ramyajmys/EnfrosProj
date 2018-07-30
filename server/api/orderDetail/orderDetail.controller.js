@@ -71,6 +71,12 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+export function getdetails(req, res) {
+  return OrderDetail.findAll({where: {order_id: req.body.id}})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Gets a single OrderDetail from the DB
 export function show(req, res) {
   return OrderDetail.find({

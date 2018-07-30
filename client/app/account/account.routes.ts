@@ -29,7 +29,7 @@ export default function routes($stateProvider) {
         controllerAs: 'vm'
       })
       .state('settings', {
-        url: '/settings',
+        url: '/changepassword',
         template: '<settings></settings>',
         authenticate: true
       })

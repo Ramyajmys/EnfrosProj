@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" style="padding-top: 40px;">
+            <rzslider rz-slider-model="orderdetailsCtrl.slider.value" rz-slider-options="orderdetailsCtrl.slider.options"></rzslider>
+        </div>
+
+        <div class="col-sm-12" style="font-size: 17px; padding-top: 70px;">
+            <div class="col-md-6" style="float: left; border-right:1px solid #eee" ng-hide="orderdetailsCtrl.currentUser.role == 'Customer'">
+                <p style="font-weight: bold; text-align: center;">Details of Receiver</p>
+                <p>Name: {{orderdetailsCtrl.custInfo.name}}</p>
+                <p>Address: {{orderdetailsCtrl.custInfo.UserProfile.address}}, {{orderdetailsCtrl.custInfo.UserProfile.City.cityName}}, 
+                    {{orderdetailsCtrl.custInfo.UserProfile.State.stateName}}, {{orderdetailsCtrl.custInfo.UserProfile.Country.countryName}}</p>
+                <p>GSTIN: {{orderdetailsCtrl.custInfo.UserProfile.gst_number}}</p>
+                <p>State: {{orderdetailsCtrl.custInfo.UserProfile.State.stateName}}</p>
+            </div>
+    
+            <div class="col-md-6" ng-hide="orderdetailsCtrl.currentUser.role == 'Customer'">
+                <p style="font-weight: bold; text-align: center;">Details of Assignee</p>
+                <p>Name: {{orderdetailsCtrl.distInfo.name}}</p>
+                <p>Address: {{orderdetailsCtrl.distInfo.UserProfile.address}}, {{orderdetailsCtrl.distInfo.UserProfile.City.cityName}}, 
+                    {{orderdetailsCtrl.distInfo.State.UserProfile.stateName}}, {{orderdetailsCtrl.distInfo.Country.UserProfile.countryName}}</p>
+                <p>GSTIN: {{orderdetailsCtrl.distInfo.UserProfile.gst_number}}</p>
+                <p>State: {{orderdetailsCtrl.distInfo.UserProfile.State.stateName}}</p>
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>CGST</th>
+                        <th>SGST</th>
+                        <th>IGST</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cart in orderdetailsCtrl.cInfo">
+                        <td>
+                            <div layout="row"><p>{{cart.product_name}}</p></div> 
+                        </td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_discount}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.cgst}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.sgst}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.igst}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.quantity}}</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_total}}</p></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" style="text-align: right; font-weight: bold;">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{orderdetailsCtrl.orderObj.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

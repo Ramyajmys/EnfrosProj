@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+                <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="space-between center" layout-align-sm="center center">
+                    <h3>Order List</h3>
+                    <md-input-container>
+                        <label>Search order</label>
+                        <input ng-model="searchBylocation">
+                    </md-input-container>
+                        <!-- <input ng-model="searchBylocation"/> -->
+                        <!-- <button type="button" class="btn btn-success" ng-click="orderdetailsCtrl.clickNew()">New Distributor</button> -->
+                    </div>
+                    <md-table-container>
+                            <table md-table>
+                                <thead md-head>
+                                    <tr md-row>
+                                        <th md-column>Order Name</th> 
+                                        <th md-column>Date</th>
+                                        <th md-column>Total</th>
+                                        <th md-column>Paid</th>
+                                        <th md-column>Status</th>
+                                        <th md-column ng-show="orderdetailsCtrl.currentUser.role != 'Customer'">Customer</th>
+                                        <th md-column ng-show="orderdetailsCtrl.currentUser.role == 'admin'">Distributor</th>
+                                        <th md-column>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody md-body>   
+                                    <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
+                                                                        | orderBy: 'time':true
+                                                                        | filter: filter.search 
+                                                                        | filter: searchBylocation
+                                                                        | filter: search 
+                                                                        | orderBy: orderdetailsCtrl.query.order 
+                                                                        | limitTo: orderdetailsCtrl.query.limit : (orderdetailsCtrl.query.page -1) * orderdetailsCtrl.query.limit">
+                                        
+                                        <td md-cell>{{order.order_name}}</td>
+                                        <td md-cell>{{order.order_date | date}}</td>
+                                        <td md-cell>{{order.total}}</td>
+                                        <td md-cell>{{order.paid_flag}}</td>
+                                        <td md-cell>{{order.Status.status_name}}</td>
+                                        <td md-cell ng-show="orderdetailsCtrl.currentUser.role != 'Customer'">{{order.customer.name}}</td>
+                                        <td md-cell ng-show="orderdetailsCtrl.currentUser.role == 'admin'">{{order.distributor.name}}</td>
+        
+                                        <td md-cell>
+                                            <button type="button" class="btn btn-info"  ng-click="orderdetailsCtrl.view(order)">View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+        
+                        <md-table-pagination md-limit="orderdetailsCtrl.query.limit" md-limit-options="orderdetailsCtrl.limitOptions" 
+                            md-page="orderdetailsCtrl.query.page" md-total="{{orderdetailsCtrl.orderList.length}}" 
+                            md-page-select="orderdetailsCtrl.options.pageSelect" md-boundary-links="orderdetailsCtrl.options.boundaryLinks" 
+                            md-on-paginate="logPagination">
+                        </md-table-pagination>
+        
+                    <div layout="row" layout-align="center center"> 
+                        <div class="alert alert-danger" ng-if="orderdetailsCtrl.errMsg">
+                             {{orderdetailsCtrl.errMsg}}
+                        </div>
+                    </div>    
+        </div>
+    </div>
+</div>

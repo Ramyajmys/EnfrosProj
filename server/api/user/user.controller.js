@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import {UserProfile} from '../../sqldb';
 var nodemailer = require('nodemailer');
 import crypto from 'crypto';
+var twilio = require('twilio');
 
 // var base64 = require('base-64');
 // var utf8 = require('utf8');
@@ -190,12 +191,12 @@ export function updateUser(req, res) {
     mobilenumber: req.body.mobilenumber,
   };
   var userProfile = {
-    address: req.body.address,
-    city_id: req.body.city_id,
-    state_id: req.body.state_id,
-    country_id: req.body.country_id,
-    zip: req.body.zip,
-    profilepic: req.body.profilepic
+    address: req.body.UserProfile.address,
+    city_id: req.body.UserProfile.city_id,
+    state_id: req.body.UserProfile.state_id,
+    country_id: req.body.UserProfile.country_id,
+    zip: req.body.UserProfile.zip,
+    profilepic: req.body.UserProfile.profilepic
   };
   return User.update(userObj, {where: {_id: id}}).then(function() {
     return UserProfile.update(userProfile, {where: {user_id: id}}).then(function() {
@@ -257,6 +258,7 @@ export function changePassword(req, res) {
         user.password = newPass;
         return user.save()
           .then(() => {
+            sendSMS(user.mobilenumber)
             res.status(204).end();
           })
           .catch(validationError(res));
@@ -264,6 +266,25 @@ export function changePassword(req, res) {
         return res.status(403).end();
       }
     });
+}
+
+function sendSMS(mobilenumber) {
+  // console.log("------------------------------")
+  // console.log(mobilenumber)
+
+var accountSid = 'AC2cc3d2acf5b98721cef6c2274231bc17'; // Your Account SID from www.twilio.com/console
+var authToken = '6bc173cb73158a5d9bc0c402b47ecf12';   // Your Auth Token from www.twilio.com/console
+
+var client = new twilio(accountSid, authToken);
+
+// console.log(client)
+
+client.messages.create({
+    body: 'Your password successfully changed.',
+    to: '+91'+mobilenumber,  // Text this number
+    from: '+12345678901' // From a valid Twilio number
+})
+.then((message) => console.log(message.sid));
 }
 
 /**
@@ -281,7 +302,8 @@ export function me(req, res, next) {
       'name',
       'email',
       'role',
-      'provider'
+      'provider',
+      'mobilenumber'
     ], include: [{model: UserProfile}]
   })
     .then(user => { // don't ever give out the password or salt

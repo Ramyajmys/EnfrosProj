@@ -101,32 +101,51 @@ export function getProductCategory(req, res) {
 
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
-  // return ProductDetail.create(req.body)
-  //   .then(respondWithResult(res, 201))
-  //   .catch(handleError(res));
-  return ProductDetail.create(req.body).then(function(prod) {
-    if(prod) {
-      if(req.body.e_data.length != 0) {
-        var eObj, eRes, sObj, sRes, mRes;
-        for(var i=0; i<req.body.e_data.length; i++) {
-          eObj = req.body.e_data[i];
-          eObj['product_detail_id'] = prod._id;
-          eRes = ProductElectricalData.create(eObj);
-        }
-        for(var i=0; i<req.body.features.length; i++) {
-          sObj = req.body.features[i];
-          sObj['product_detail_id'] = prod._id;
-          sRes = ProductSplFeature.create(sObj);
-        }
-        req.body.m_data.product_detail_id = prod._id;
-        mRes = ProductMechanicalData.create(req.body.m_data);
-
-        if(eRes && sRes && mRes) {
-          return res.status(200).json({message: "product added"})
+  if(req.body.category_id == 2) {
+    return ProductDetail.create(req.body).then(function(prod) {
+      if(prod) {
+        if(req.body.e_data.length != 0) {
+          var eObj, eRes, sObj, sRes, mRes;
+          for(var i=0; i<req.body.e_data.length; i++) {
+            eObj = req.body.e_data[i];
+            eObj['product_detail_id'] = prod._id;
+            eRes = ProductElectricalData.create(eObj);
+          }
+          for(var i=0; i<req.body.features.length; i++) {
+            sObj = req.body.features[i];
+            sObj['product_detail_id'] = prod._id;
+            sRes = ProductSplFeature.create(sObj);
+          }
+          req.body.m_data.product_detail_id = prod._id;
+          mRes = ProductMechanicalData.create(req.body.m_data);
+  
+          if(eRes && sRes && mRes) {
+            return res.status(200).json({message: "product added"})
+          }
         }
       }
-    }
-  })
+    })
+    .catch(handleError(res));
+  }
+
+}
+
+export function getproductdetails(req, res) {
+  var category_id = req.body.cid;
+  var product_detail_id = req.body.pid;
+
+  if(category_id == 2) {
+    return ProductElectricalData.findAll({where: {product_detail_id: product_detail_id}}).then(function(elist) {
+      return ProductMechanicalData.findOne({where: {product_detail_id: product_detail_id}}).then(function(mlist) {
+        return ProductSplFeature.findAll({where: {product_detail_id: product_detail_id}}).then(function(flist) {
+          return res.status(200).json({elist: elist, mlist: mlist, flist: flist});
+        })
+        .catch(handleError(res));
+      })
+      .catch(handleError(res));
+    })
+    .catch(handleError(res));
+  }
 }
 
 // Upserts the given ProductDetail in the DB at the specified ID

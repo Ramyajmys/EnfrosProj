@@ -10,9 +10,13 @@ export default function(sequelize, DataTypes) {
     },
     order_name: DataTypes.STRING,
     product_name: DataTypes.STRING,
+    unitprice: DataTypes.DECIMAL,
     quantity: DataTypes.BIGINT,
-    product_total: DataTypes.BIGINT,
-    product_discount: DataTypes.INTEGER,
+    product_total: DataTypes.DECIMAL,
+    product_discount: DataTypes.DECIMAL,
+    cgst: DataTypes.DECIMAL,
+    sgst: DataTypes.DECIMAL,
+    igst: DataTypes.DECIMAL,
     active: DataTypes.BOOLEAN
   });
 }
