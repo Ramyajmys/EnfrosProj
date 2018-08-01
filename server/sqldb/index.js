@@ -42,6 +42,7 @@ db.ProductCategory.hasMany(db.ProductSubCategory, {
 db.ProductSubCategory.belongsTo(db.ProductCategory, {
   foreignKey: {
     name: 'category_id',
+    as: 'subcategory'
   }
 });
 

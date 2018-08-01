@@ -61,6 +61,6 @@ export default class AdminController {
   }
 
   gotoProduct() {
-    this.$state.go('product')
+    this.$state.go('productlist')
   }
 }

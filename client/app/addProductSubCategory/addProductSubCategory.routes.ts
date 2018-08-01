@@ -5,6 +5,7 @@ export default function($stateProvider) {
   $stateProvider
     .state('addProductSubCategory', {
       url: '/addProductSubCategory',
-      template: '<add-product-sub-category></add-product-sub-category>'
+      template: '<add-product-sub-category></add-product-sub-category>',
+      authenticate: true
     });
 }

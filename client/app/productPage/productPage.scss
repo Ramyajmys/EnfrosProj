@@ -9,20 +9,7 @@
     width: 300px;
 }
 
-.product-nav {
-    border-radius: 0px;
-    background: #ffffff;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.09);
-}
-.product-nav-links {
-    width: 100%;
-    text-align: center;
-    > li {
-      float: none;
-      display: inline-block;
-    }
-}
+
 
 .icon-header-item {
     // position: relative;
@@ -56,7 +43,7 @@
 //         @extend .section-content;
         .latest-news {
             margin-bottom: 40px;   
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            //font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             .latest-date-img {
                 position: relative;
                 height: 250px; 
@@ -98,7 +85,7 @@
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    height: 80px;
+                    height: 79px;
                 }
                 .author {
                     text-transform: none;

@@ -92,15 +92,31 @@ export function getProductCategory(req, res) {
     return ProductDetail.findAll({
     where: {
       category_id: req.body.id
-    }
+    },
+    include: [{model: HSN}]
   })
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
+//Get Product Details for this category
+export function getProductsubCategory(req, res) {
+  return ProductDetail.findAll({
+  where: {
+    category_id: req.body.cid, sub_category_id: req.body.sid
+  },
+  include: [{model: HSN}]
+})
+  .then(handleEntityNotFound(res))
+  .then(respondWithResult(res))
+  .catch(handleError(res));
+}
+
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
+  var brochure = req.body.brochure;
+
   if(req.body.category_id == 2) {
     return ProductDetail.create(req.body).then(function(prod) {
       if(prod) {
@@ -120,6 +136,13 @@ export function create(req, res) {
           mRes = ProductMechanicalData.create(req.body.m_data);
   
           if(eRes && sRes && mRes) {
+            var base64 = require('file-base64');
+ 
+ 
+            var base64String = brochure.base64;
+            base64.decode(base64String, './client/assets/brochure/'+brochure.filename, function(err, output) {
+              console.log('success');
+            });
             return res.status(200).json({message: "product added"})
           }
         }

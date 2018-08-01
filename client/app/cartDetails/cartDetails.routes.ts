@@ -5,6 +5,7 @@ export default function($stateProvider) {
   $stateProvider
     .state('cartDetails', {
       url: '/cartDetails',
-      template: '<cart-details></cart-details>'
+      template: '<cart-details></cart-details>',
+      authenticate: true
     });
 }

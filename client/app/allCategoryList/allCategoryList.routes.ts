@@ -5,6 +5,7 @@ export default function($stateProvider) {
   $stateProvider
     .state('allCategoryList', {
       url: '/allCategoryList',
-      template: '<all-category-list></all-category-list>'
+      template: '<all-category-list></all-category-list>',
+      authenticate: true
     });
 }

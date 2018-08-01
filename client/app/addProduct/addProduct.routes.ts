@@ -5,6 +5,7 @@ export default function($stateProvider) {
   $stateProvider
     .state('addProduct', {
       url: '/addProduct',
-      template: '<add-product></add-product>'
+      template: '<add-product></add-product>',
+      authenticate: true
     });
 }

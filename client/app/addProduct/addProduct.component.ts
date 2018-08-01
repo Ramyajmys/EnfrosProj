@@ -101,6 +101,7 @@ export class AddProductComponent {
   // }
   brochureChange(brochure) {
     console.log(brochure)
+    this.brochurefiles = brochure;
   }
 
   addRow() {
@@ -124,6 +125,7 @@ export class AddProductComponent {
     this.productObj['e_data'] = this.elist;
     this.productObj['m_data'] = this.mech_data;
     this.productObj['features'] = this.slist;
+    this.productObj['brochure'] = this.brochurefiles;
 
     this.$http.post('/api/ProductDetails/', this.productObj).then(response => {
       if(response.status === 200) {

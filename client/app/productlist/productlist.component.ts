@@ -36,6 +36,11 @@ export class ProductlistComponent {
 
   searchText;
 
+  selectedIndex = 0;
+  catList;
+  subList;
+  noData: boolean = false;
+
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
     this.$mdDialog = $mdDialog;
@@ -51,10 +56,19 @@ export class ProductlistComponent {
     this.getDistributorList();
   }
 
+  $onInit() {
+
+  }
+
   get() {
     this.$http.get('/api/ProductDetails/').then(response => {
       if(response.status === 200) {
         this.productList = response.data;
+        if(this.productList.length == 0) {
+          this.noData = true;
+        } else {
+          this.noData = false;
+        }
       }
     }, err => {
       if(err.data.message) {
@@ -72,6 +86,8 @@ export class ProductlistComponent {
   getCategoryList() {
     this.$http.get('/api/ProductCategorys').then(response => {
       this.categoryList = response.data;
+      this.catList = this.categoryList;
+      this.catList.unshift({category_name: 'All', _id: 0})
       this.myService.saveCategories(this.categoryList);
     }, err => {
       if(err.status === 500) {
@@ -201,8 +217,65 @@ export class ProductlistComponent {
     this.$state.go('productPage', {product: p});
   }
 
-  showhide() {
-    
+  getcat(i, cat) {
+    this.selectedIndex=i;
+    if(cat._id != 0) {
+      this.subList = cat.ProductSubCategories;
+      this.getproductsBycategory(cat);
+    } else {
+      this.get();
+    }
+  }
+
+  getsubcat(i, sub) {
+    this.getproductsBysubcategory(sub);
+  }
+
+  getproductsBycategory(cat) {
+    this.$http.post('/api/ProductDetails/getproductPagecategory', {id: cat._id}).then(response => {
+      if(response.status === 200) {
+        this.productList = response.data;
+        if(this.productList.length == 0) {
+          this.noData = true;
+        } else {
+          this.noData = false;
+        }
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
+  }
+
+  getproductsBysubcategory(sub) {
+    this.$http.post('/api/ProductDetails/getProductsubCategory', {sid: sub._id, cid: sub.category_id}).then(response => {
+      if(response.status === 200) {
+        this.productList = response.data;
+        console.log(response.data)
+        if(this.productList.length == 0) {
+          this.noData = true;
+        } else {
+          this.noData = false;
+        }
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
   }
 }
 

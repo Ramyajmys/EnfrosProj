@@ -67,7 +67,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of ProductCategorys
 export function index(req, res) {
-  return ProductCategory.findAll({include: [{model: ProductSubCategory}]})
+  return ProductCategory.findAll({order: [ ['_id', 'ASC']], include: [{model: ProductSubCategory}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

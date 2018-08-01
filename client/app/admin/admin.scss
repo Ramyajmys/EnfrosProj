@@ -3,7 +3,7 @@
     height: 100%;
     position: fixed;
     // background-color: #122f3b;
-    background-color: #ffffff;
+    background-color: #1C2B36;
     border-right: 1px solid rgba(0, 0, 0, 0.09);
 }
 .tab-content {
@@ -15,7 +15,7 @@
 }
 .tab button {
     display: block;
-    background-color: #343a40;
+    background-color: #1C2B36;
     color: white;
     padding: 10px 10px;
     width: 100%;
@@ -34,6 +34,8 @@
 }
 .tab button.active {
     color: #CDDC39;
+    // background: #209e91;
+    // color: white;
 }
 .tabcontent {
     float: left;
@@ -60,7 +62,8 @@
     background-color: #FF9800;
 }
 .bgBlue {
-    background-color: #00BCD4;
+    // background-color: #00BCD4;
+    background-color: #546E7A;
 }
 .bgGreen {
     background-color: #8BC34A;
@@ -75,7 +78,8 @@
     background-color: white;
 }
 .side-icon svg {
-    fill : #00BCD4;
+    // fill : #00BCD4;
+    fill : #546E7A;
 }
 .side-link-head {
     font-size: 25px;

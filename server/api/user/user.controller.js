@@ -191,12 +191,12 @@ export function updateUser(req, res) {
     mobilenumber: req.body.mobilenumber,
   };
   var userProfile = {
-    address: req.body.UserProfile.address,
-    city_id: req.body.UserProfile.city_id,
-    state_id: req.body.UserProfile.state_id,
-    country_id: req.body.UserProfile.country_id,
-    zip: req.body.UserProfile.zip,
-    profilepic: req.body.UserProfile.profilepic
+    address: req.body.address,
+    city_id: req.body.city_id,
+    state_id: req.body.state_id,
+    country_id: req.body.country_id,
+    zip: req.body.zip,
+    profilepic: req.body.profilepic
   };
   return User.update(userObj, {where: {_id: id}}).then(function() {
     return UserProfile.update(userProfile, {where: {user_id: id}}).then(function() {
