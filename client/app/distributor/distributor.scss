@@ -34,8 +34,8 @@ $p-hover: #37474F;
     border-color: $p-color;
 }
 .new-btn:hover {
-    background-color: $p-hover; 
-    border-color: $p-hover;
+    background-color: $p-hover !important; 
+    border-color: $p-hover !important;
 }
 .cancel-btn {
     border-radius: 0px; 
@@ -60,18 +60,25 @@ $p-hover: #37474F;
 .hr-width {
     width: 100%;
 }
-.card-img {
+.card-i-div {
     height: 120px; 
     width: 120px;
+    .card-img {
+        height: 120px; 
+        width: 120px;
+    }
 }
-.padding-left-20 {
-    padding-left: 20px;
-}
-.card-p-email {
-    color: #263238; 
-    font-size: 17px;
-}
-.card-p-num {
-    color: #263238; 
-    font-size: 14px;
+.card-content-div {
+    padding: 1px 20px;
+    .card-p-email {
+        color: #263238; 
+        font-size: 15px;
+    }
+    .card-p-num {
+        color: #263238; 
+        font-size: 14px;
+    }
+    .card-btn {
+        width: 100px;
+    }
 }

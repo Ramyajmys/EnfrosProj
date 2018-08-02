@@ -29,6 +29,7 @@ export class AddProductComponent {
   slist = [];
   productObj = {};
   brochurefiles;
+  brochure;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, $scope) {
@@ -100,7 +101,6 @@ export class AddProductComponent {
   //   this.$scope.$apply();
   // }
   brochureChange(brochure) {
-    console.log(brochure)
     this.brochurefiles = brochure;
   }
 
@@ -125,7 +125,7 @@ export class AddProductComponent {
     this.productObj['e_data'] = this.elist;
     this.productObj['m_data'] = this.mech_data;
     this.productObj['features'] = this.slist;
-    this.productObj['brochure'] = this.brochurefiles;
+    this.productObj['brochurefiles'] = this.brochurefiles;
 
     this.$http.post('/api/ProductDetails/', this.productObj).then(response => {
       if(response.status === 200) {
@@ -159,6 +159,7 @@ export class AddProductComponent {
     this.spl_feature = {}; 
     this.def = './assets/images/solar.jpg';
     this.product_def_pic = undefined;
+    this.brochure = undefined;
   }
 }
 

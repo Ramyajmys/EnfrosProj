@@ -115,7 +115,7 @@ export function getProductsubCategory(req, res) {
 
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
-  var brochure = req.body.brochure;
+  var brochure = req.body.brochurefiles;
 
   if(req.body.category_id == 2) {
     return ProductDetail.create(req.body).then(function(prod) {
@@ -138,12 +138,16 @@ export function create(req, res) {
           if(eRes && sRes && mRes) {
             var base64 = require('file-base64');
  
- 
             var base64String = brochure.base64;
+            var filepath = './assets/brochure/'+brochure.filename;
             base64.decode(base64String, './client/assets/brochure/'+brochure.filename, function(err, output) {
-              console.log('success');
+              if(output) {
+                ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
+                  return res.status(200).json({message: "product added"})
+                })
+              }
             });
-            return res.status(200).json({message: "product added"})
+            
           }
         }
       }

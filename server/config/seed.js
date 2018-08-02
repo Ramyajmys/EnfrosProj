@@ -27,19 +27,89 @@ export default function seedDatabaseIfNeeded() {
         name: 'Admin',
         email: 'admin@example.com',
         password: 'admin'
+      }, {
+        _id: 2,
+        provider: 'local',
+        role: 'Customer',
+        name: 'Bhaskar',
+        email: 'bhaskar@enfros.com',
+        password: 'User@1234'
+      }, {
+        _id: 3,
+        provider: 'local',
+        role: 'Customer',
+        name: 'Kumari',
+        email: 'kumari@enfros.com',
+        password: 'User@1234'
+      }, {
+        _id: 4,
+        provider: 'local',
+        role: 'Customer',
+        name: 'Shiva',
+        email: 'shiva@enfros.com',
+        password: 'User@1234'
+      }, {
+        _id: 5,
+        provider: 'local',
+        role: 'Customer',
+        name: 'Geetha',
+        email: 'geetha@enfros.com',
+        password: 'User@1234'
+      }, {
+        _id: 6,
+        provider: 'local',
+        role: 'Distributor',
+        name: 'Ramya',
+        email: 'ramya@enfros.com',
+        password: 'User@1234'
+      }, {
+        _id: 7,
+        provider: 'local',
+        role: 'Distributor',
+        name: 'Sandeep',
+        email: 'sandeep@enfros.com',
+        password: 'User@1234'
+      }, {
+        _id: 8,
+        provider: 'local',
+        role: 'Distributor',
+        name: 'Ranga',
+        email: 'ranga@enfros.com',
+        password: 'User@1234'
       }])
         .then(() => console.log('finished populating users'))
         .catch(err => console.log('error populating users', err)));
 
     setTimeout(function() {
       userprofile()
-    }, 1000);
+    }, 1500);
 
     function userprofile() {
       UserProfile.destroy({ where: {} })
       .then(() => UserProfile.bulkCreate([{
         gst_number: '123456',
         user_id: 1
+      }, {
+        gst_number: '232344',
+        user_id: 2
+      }, {
+        gst_number: '124645',
+        user_id: 3
+      }, {
+        gst_number: '767677',
+        user_id: 4
+      }, {
+        gst_number: '128756',
+        user_id: 5
+      }, {
+        gst_number: '456566',
+        user_id: 6
+      }, {
+        gst_number: '765576',
+        user_id: 7
+      }, {
+        gst_number: '878787',
+        user_id: 8
       }])
         .then(() => console.log('finished userprofile'))
         .catch(err => console.log('error userprofile', err)));  
@@ -63,6 +133,9 @@ export default function seedDatabaseIfNeeded() {
       }, {
         hsn_code: 'AB002',
         hsn_percentage: 18
+      }, {
+        hsn_code: 'AB003',
+        hsn_percentage: 5
       }])
         .then(() => console.log('finished populating hsn'))
         .catch(err => console.log('error populating hsn', err)))

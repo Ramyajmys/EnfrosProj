@@ -14,6 +14,7 @@ export default function(sequelize, DataTypes) {
     quantity: DataTypes.BIGINT,
     unitprice: DataTypes.BIGINT,
     discount: DataTypes.INTEGER,
+    brochure: DataTypes.STRING,
     active: DataTypes.BOOLEAN
   });
 }

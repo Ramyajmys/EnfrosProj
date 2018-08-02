@@ -41,6 +41,8 @@ export class CustomerComponent {
   customerList: any;
   myService;
 
+  searchText;
+
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
     this.$mdDialog = $mdDialog;
@@ -189,6 +191,7 @@ export class CustomerComponent {
     this.user['email'] = dObj.email;
     this.user['mobilenumber'] = dObj.mobilenumber;
     this.user['address'] = dObj.UserProfile.address;
+    this.user['gst_number'] = dObj.UserProfile.gst_number;
     if(dObj.UserProfile.country_id != null) {
       this.user['country_id'] = dObj.UserProfile.country_id;
       this.getStates(dObj.UserProfile.country_id);
@@ -244,6 +247,9 @@ export class CustomerComponent {
   cancel() {
     this.flag = false;
     this.errMsg = undefined;
+    this.profilepic = undefined;
+    this.isEdit = false;
+    this.user = {};
   }
 }
 

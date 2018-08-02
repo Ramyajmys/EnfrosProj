@@ -35,12 +35,14 @@ export default class SettingsController {
     this.$http = $http;
     this.myService = myService;
     this.$state = $state;
+  }
 
+  $onInit() {
     var vm = this;
     vm.getCurrentUser = vm.Auth.getCurrentUser;
     vm.getCurrentUser(function(data){
       vm.currentUser = data;
-      vm.userinfo = data;
+      vm.userinfo = vm.currentUser;
       vm.getCountry();
       if(vm.userinfo.UserProfile.country_id != null) {
         vm.getStates(vm.userinfo.UserProfile.country_id)
@@ -48,6 +50,28 @@ export default class SettingsController {
       if(vm.userinfo.UserProfile.state_id != null) {
         vm.getCities(vm.userinfo.UserProfile.state_id)
       }
+      vm.userinfo['_id'] = vm.currentUser._id;
+      vm.userinfo['name'] = vm.currentUser.name;
+      vm.userinfo['email'] = vm.currentUser.email;
+      vm.userinfo['mobilenumber'] = vm.currentUser.mobilenumber;
+      vm.userinfo['address'] = vm.currentUser.UserProfile.address;
+      vm.userinfo['gst_number'] = vm.currentUser.UserProfile.gst_number;
+      if(vm.currentUser.UserProfile.profilepic != null) {
+        vm.userinfo['profilepic'] = vm.currentUser.UserProfile.profilepic;
+      } else {
+        vm.userinfo['profilepic'] = null;
+      }
+      if(vm.currentUser.UserProfile.country_id != null) {
+        vm.userinfo['country_id'] = vm.currentUser.UserProfile.country_id;
+        vm.getStates(vm.currentUser.UserProfile.country_id);
+      }
+      if(vm.currentUser.UserProfile.state_id != null) {
+        vm.userinfo['state_id'] = vm.currentUser.UserProfile.state_id;
+        vm.getCities(vm.currentUser.UserProfile.state_id);
+      }
+    
+      vm.userinfo['city_id'] = vm.currentUser.UserProfile.city_id;
+      vm.userinfo['zip'] = vm.currentUser.UserProfile.zip;
     });
   }
 
@@ -99,7 +123,7 @@ export default class SettingsController {
   }
 
   editPic(pic) {
-    this.userinfo.UserProfile['profilepic'] = 'data:'+pic.filetype+';base64,'+pic.base64;
+    this.userinfo['profilepic'] = 'data:'+pic.filetype+';base64,'+pic.base64;
   }
 
   userInfoUpdate() {

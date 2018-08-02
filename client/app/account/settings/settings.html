@@ -4,7 +4,7 @@
         <h1>Change Password</h1>
     </div> -->
     
-    <div class="col-sm-12">
+    <!-- <div class="col-sm-12">
         <div>
             <h1 style="color: rgb(35, 36, 41)"><i class="fa fa-key" aria-hidden="true" style="padding-right: 5px;"></i>Change Password<hr></h1>
         </div>
@@ -66,6 +66,74 @@
             </div>
           </div>
       </form>
+    </div> -->
+    <div class="col-md-12">
+        <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+            <div>
+                <h1 class="head-line"><i class="fa fa-key" aria-hidden="true" id="icon-right-5"></i>Change Password</h1>
+            </div>
+            <div>
+                <ol class="breadcrumb al-breadcrumb">
+                    <li class="breadcrumb-item" ng-if="vm.getCurrentUser.role == 'admin'"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item" ng-if="vm.getCurrentUser.role != 'admin'"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Change Password</li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-12"><hr class="hr-width"></div>
+
+        <div class="col-md-12">
+            <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
+                <div class="topSpace">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                          <input type="password" name="password" class="form-control" placeholder="Current Password" ng-model="vm.user.oldPassword" mongoose-error/>
+                            <div class="has-error">
+                              <p class="help-block" ng-show="form.password.$error.mongoose">{{ vm.errors.other }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                          <input type="password" name="newPassword" class="form-control" placeholder="New Password" ng-model="vm.user.newPassword"
+                            ng-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/"
+                            required/>
+                            <div class="has-error">
+                              <p class="help-block" ng-show="(form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">Password required.</p>
+                              <p class="help-block" ng-show="(form.newPassword.$error.pattern) && (form.newPassword.$dirty || vm.submitted)">
+                                Password must be at least 8 charcters and include a combination uppercase, lowercase letters, special charcters and numbers
+                              </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                          <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm New Password" ng-model="vm.user.confirmPassword"
+                            match="vm.user.newPassword"
+                            ng-minlength="3"
+                            required=""/>
+                            <div class="has-error">
+                              <p class="help-block"
+                                ng-show="form.confirmPassword.$error.match && vm.submitted">
+                                Passwords must match.
+                              </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 padding-left-right-0" layout="row" layout-align="center center">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block new-btn">Save</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="vm.cancel()">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="vm.errMsg">
+                        {{vm.errMsg}}
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
   </div>
 

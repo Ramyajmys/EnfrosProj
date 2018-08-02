@@ -84,22 +84,27 @@
                         <div class="panel-body">
                             <div layout="row">
                                 <div layout="column" layout-align="center center">
-                                    <img ng-src="{{(distributor.UserProfile.profilepic == null) ? '/assets/images/male.png' : distributor.UserProfile.profilepic}}" class="card-img img-circle">
+                                    <div class="card-i-div">
+                                        <img ng-src="{{(distributor.UserProfile.profilepic == null) ? '/assets/images/male.png' : distributor.UserProfile.profilepic}}" class="card-img img-circle">
+                                    </div>
                                 </div>
-                                <div layout="column" class="padding-left-20">
-                                    <h3>{{distributor.name}}</h3>
-                                    <p class="card-p-email">{{distributor.email}}</p>
-                                    <p class="card-p-num">{{distributor.mobilenumber}}</p>
-                                    <button class="btn btn-default" ng-click="distributorCtrl.edit(distributor)">View Profile</button>
-                                    <!-- <button class="btn btn-default" ng-click="distributorCtrl.edit(distributor)" style="margin-top: 5px;">Delete</button> -->
+                                <div layout="column">
+                                    <div class="card-content-div">
+                                        <h3>{{distributor.name}}</h3>
+                                        <p class="card-p-email">{{distributor.email}}</p>
+                                        <p class="card-p-num">{{distributor.mobilenumber}}</p>
+                                        <button class="btn btn-default card-btn" ng-click="distributorCtrl.edit(distributor)">View Profile</button>
+                                        <!-- <button class="btn btn-default" ng-click="distributorCtrl.edit(distributor)" style="margin-top: 5px;">Delete</button> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="distributorCtrl.errMsg">
+                    {{distributorCtrl.errMsg}}
+                </div>
             </div>
-            
-            
         </div>
     </div>
 

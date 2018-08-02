@@ -10,20 +10,20 @@
         </md-content>
     </md-tab>
   </md-tabs> -->
-<nav class="navbar navbar-default product-nav">
+<!-- <nav class="navbar navbar-default product-nav">
     <div class="container-fluid">
         <ul class="nav navbar-nav product-nav-links">
         <li class="active"><a href="#">All</a></li>
         <li ng-repeat="cat in productPageCtrl.categoryList"><a href="#">{{cat.category_name}}</a></li>
         </ul>
     </div>
-</nav>
+</nav> -->
 
-<div class="container">
+<div class="container btmSpace">
     <div class="row">
         <div class="col-md-12" style="padding-top: 40px;">
             <div class="col-md-4">
-                <img src="{{productPageCtrl.product.product_photo}}" style="height: 500px; width: 100%;"/>
+                <img src="{{productPageCtrl.product.product_photo}}" style="height: 400px; width: 100%;"/>
             </div>
 
             <div class="col-md-8">
@@ -92,7 +92,7 @@
                 </div>
 
                 <div style="padding-top: 10px;">
-                    <button class="btn btn-info btn-block">Download Brochure</button>
+                    <a class="btn btn-info btn-block" target="_self" href="{{productPageCtrl.product.brochure}}" download>Download Brochure</a>
                 </div>
             </div>
         </div>
