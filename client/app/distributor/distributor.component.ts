@@ -249,6 +249,7 @@ export class DistributorComponent {
     this.errMsg = undefined;
     this.profilepic = undefined;
     this.isEdit = false;
+    this.user = [];
   }
 }
 

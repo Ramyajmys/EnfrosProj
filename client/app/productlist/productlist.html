@@ -7,7 +7,7 @@
   </div>
 </nav>
 
-<div class="container-fluid" style="padding-top: 30px; padding-bottom: 80px; background: white;">
+<div class="container-fluid padding-top-40 padding-bottom-80">
   <!-- <div class="row" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">
     <div class="col-md-12" style="padding-bottom: 30px; width: 100%;">
         <div class="col-sm-3">
@@ -69,56 +69,45 @@
     </div>
   </div> -->
   <!-- <div class="row1" style="padding: 0px 100px;"> -->
-      <div class="col-md-12 col-lg-12">
+  <div class="col-md-12 col-lg-12">
     <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="side-menu">
-        <div class="bor17 of-hidden pos-relative">
-          <input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type='text' ng-model='productlistCtrl.searchText' placeholder="Search" style="display: block; outline: none;
-          border: none;">
-
-          <button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04" style="    border: none;
-          background: none;">
-            <i class="zmdi zmdi-search"></i>
-          </button>
+      <div>
+        <div class="search-box">
+          <input class="search-inp" type='text' ng-model='productlistCtrl.searchText' placeholder="Search">
+          <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
         </div>
 
-        <div class="p-t-55" ng-if="productlistCtrl.subList.length > 0 || productlistCtrl.categoryList.length > 0">
-          <h4 class="mtext-112 cl2 p-b-33" style="margin: 0px;">
-            Categories
-          </h4>
+        <div class="side-list padding-top-40" ng-if="productlistCtrl.subList.length > 0 || productlistCtrl.catList.length > 0">
+          <h4 class="left-heading-h4">Categories</h4>
 
           <ul ng-if="productlistCtrl.selectedIndex != 0">
-            <li class="bor18" ng-repeat="sub in productlistCtrl.subList" ng-click="productlistCtrl.getsubcat($index, sub)">
-              <a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-                {{sub.sub_category_name}}
-              </a>
+            <li class="list-box" ng-repeat="sub in productlistCtrl.subList" ng-click="productlistCtrl.getsubcat($index, sub)">
+              <a href="#">{{sub.sub_category_name}}</a>
             </li>
           </ul>
 
           <ul ng-if="productlistCtrl.selectedIndex == 0">
-            <li class="bor18" ng-repeat="sub in productlistCtrl.categoryList" ng-click="productlistCtrl.getsubcat($index, sub)">
-              <a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-                {{sub.category_name}}
-              </a>
+            <li class="list-box" ng-repeat="cat in productlistCtrl.catList" ng-click="productlistCtrl.getcat($index, cat)">
+              <a href="#">{{cat.category_name}}</a>
             </li>
           </ul>
         </div>
 
-        <div ng-if="productlistCtrl.getCurrentUser().role == 'admin'">
-          <div style="padding-top: 20px;">
-            <select style="height: 45px;" class="form-control" ng-model="customer" name="customer" ng-change="productlistCtrl.onCustomerChange(customer)" required>
+        <div ng-if="productlistCtrl.getCurrentUser().role == 'admin'" class="padding-top-20">
+          <div class="form-group">
+            <select class="form-control" ng-model="customer" name="customer" ng-change="productlistCtrl.onCustomerChange(customer)" required>
                 <option value="">Select Customer</option>
                 <option ng-repeat="customer in productlistCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
             </select>
         </div>
-        <div style="padding-top: 20px;">
-            <select style="height: 45px;" class="form-control" ng-model="distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(distributor)" required>
+        <div class="form-group">
+            <select class="form-control" ng-model="distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(distributor)" required>
                 <option value="">Select Distributor</option>
                 <option ng-repeat="distributor in productlistCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
             </select>
         </div>
-        <div style="padding-top: 20px;">
-            <button style="border-radius: 0px; height: 45px; background: #1d323a; border: #1d323a;" class="btn btn-info btn-block" ng-click="productlistCtrl.viewcart()" ng-disabled="customer == undefined || distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
+        <div class="form-group">
+            <button class="btn btn-info btn-block new-btn" ng-click="productlistCtrl.viewcart()" ng-disabled="customer == undefined || distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
         </div>
         </div>
       </div>
