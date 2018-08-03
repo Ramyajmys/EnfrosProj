@@ -1,19 +1,251 @@
-<div class="container btmSpace">
+<div class="container-fluid btmSpace" style="background: white;">
     <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
-                    <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add Product</h1></div>
-                    <div>
-                        <ol class="breadcrumb al-breadcrumb">
-                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                            <li class="breadcrumb-item active">Add Product</li>
-                        </ol>
+        <div class="col-md-12">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add Product</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Add Product</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12"><hr class="hr-width"></div>
+        </div>
+
+        <div class="col-md-12 padding-top-40">
+            <form name="uForm" ng-submit="addProductCtrl.save()">
+                <div>
+                    <div class="product-img-cover"><img class="form-group product-img-style" ng-src="{{addProductCtrl.def}}"></div>
+                    <div layout="row" layout-align="center center" class="md-padding">
+                        <input type='file'  maxsize="3072" ng-model='addProductCtrl.product_def_pic' accept="image/*" ng-change="addProductCtrl.picChange(addProductCtrl.product_def_pic)" required base-sixty-four-input>
+                    </div>
+                    <div class="has-error" layout="row" layout-align="center center">
+                        <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 3 Mb</p>
                     </div>
                 </div>
-                <div class="col-md-12"><hr class="hr-width"></div>
-            </div>
-        <form class="form-horizontal" name="uForm" ng-submit="addProductCtrl.save()">
-            <!-- <div class="col-lg-12"><h3>Add Product<hr></h3></div> -->
+
+                <div class="topSpace">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="addProductCtrl.productObj.category_id" name="category_id" ng-change="addProductCtrl.onCategoryChange(addProductCtrl.productObj.category_id)" required>
+                                <option value="">Select Category</option>
+                                <option ng-repeat="category in addProductCtrl.categoryList" value="{{category._id}}">{{category.category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="addProductCtrl.productObj.sub_category_id" name="sub_category_id" required>
+                                <option value="">Select Sub-category</option>
+                                <option ng-repeat="sub in addProductCtrl.subCategoryList" value="{{sub._id}}">{{sub.sub_category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.product_name" placeholder="Enter Product name" name="productname" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.unitprice" placeholder="Enter Unit price" name="unitprice" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <textarea type="text" rows="2" class="form-control" ng-model="addProductCtrl.productObj.product_description" placeholder="Enter Description" name="productdesc" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.quantity" placeholder="Enter Quantity" name="quantity" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="addProductCtrl.productObj.hsn_id" name="hsn_id" required>
+                                <option value="">Select HSN code</option>
+                                <option ng-repeat="hsn in addProductCtrl.hsnList" value="{{hsn._id}}">{{hsn.hsn_code}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-offset-4">
+                        <label class="control-label col-sm-2">Brochure: </label>
+                        <div class="form-group">
+                            <input type='file' ng-model="addProductCtrl.brochure" ng-change="addProductCtrl.brochureChange(brochure)" base-sixty-four-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topSpace">
+
+                    <!-- Category 2 -->
+                    <div class="col-md-12 padding-left-right-0" ng-if="addProductCtrl.productObj.category_id == 2">
+                        
+                        <div class="col-md-12 padding-left-right-0">
+                            <div class="col-md-12"><h1 class="head-line">Electrical Data<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="peak" placeholder="Peak Power Watts-PMAX (Wp)"
+                                            ng-model="addProductCtrl.electrical_data.peak_power_watts_pmax"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="vmpp" placeholder="Maximum Power Voltage-VMPP (V)"
+                                            ng-model="addProductCtrl.electrical_data.maximum_power_voltage_vmpp"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="impp" placeholder="Maximum Power Current-IMPP (A)"
+                                            ng-model="addProductCtrl.electrical_data.maximum_power_current_impp"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addRow()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Peak Power Watts-PMAX (Wp)</th>
+                                        <th>Maximum Power Voltage-VMPP (V)</th>
+                                        <th>Maximum Power Current-IMPP (A)</th>
+                                    </tr>
+                                    <tr ng-repeat="list in addProductCtrl.elist">
+                                        <td>{{list.peak_power_watts_pmax}}</td>
+                                        <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                        <td>{{list.maximum_power_current_impp}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Mechanical Data<hr></h1></div>
+
+                            <div class="col-md-12 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.mech_data.solar_cell" placeholder="Soloar Cell" name="solarcell" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.mech_data.cell_orientation" placeholder="Cell Orientation" name="orientation" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.mech_data.module_dimensions" placeholder="Module Dimensions" name="module_dimensions" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.mech_data.weight" placeholder="Weight" name="weight" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.mech_data.glass" placeholder="Glass" name="glass" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Special Features<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="spl_feature" placeholder="Special Features"
+                                            ng-model="addProductCtrl.spl_feature.feature_name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul ng-repeat="spl in addProductCtrl.slist">
+                                    <li>{{spl.feature_name}}</li>
+                                </ul> 
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 padding-left-right-0" ng-if="addProductCtrl.productObj.category_id == 3">
+                        <div class="col-md-12 padding-left-right-0">
+                            <div class="col-md-12"><h1 class="head-line">Electrical Data<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="peak" placeholder="Peak Power Watts-PMAX (Wp)"
+                                            ng-model="addProductCtrl.electrical_data.peak_power_watts_pmax"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="vmpp" placeholder="Maximum Power Voltage-VMPP (V)"
+                                            ng-model="addProductCtrl.electrical_data.maximum_power_voltage_vmpp"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="impp" placeholder="Maximum Power Current-IMPP (A)"
+                                            ng-model="addProductCtrl.electrical_data.maximum_power_current_impp"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addRow()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Peak Power Watts-PMAX (Wp)</th>
+                                        <th>Maximum Power Voltage-VMPP (V)</th>
+                                        <th>Maximum Power Current-IMPP (A)</th>
+                                    </tr>
+                                    <tr ng-repeat="list in addProductCtrl.elist">
+                                        <td>{{list.peak_power_watts_pmax}}</td>
+                                        <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                        <td>{{list.maximum_power_current_impp}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save and Cancel Btn -->
+                <div class="topSpace">
+                    <div class="col-md-12 padding-left-right-0 padding-top-40" layout="row" layout-align="center center">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="addProductCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="addProductCtrl.cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Msg -->
+                <div class="col-md-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="addProductCtrl.errMsg">
+                    <p class="tooltips">{{addProductCtrl.errMsg}}</p>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- <form class="form-horizontal" name="uForm" ng-submit="addProductCtrl.save()">
             <div class="col-lg-4">
                 <div class="product-img-cover"><img class="form-group product-img-style" ng-src="{{addProductCtrl.def}}"></div>
                 <input type='file'  maxsize="3072" ng-model='addProductCtrl.product_def_pic' accept="image/*" ng-change="addProductCtrl.picChange(addProductCtrl.product_def_pic)" required base-sixty-four-input>
@@ -83,7 +315,6 @@
                     <label class="control-label col-sm-2">Brochure</label>
                     <div class="col-sm-10">
                         <input type='file' ng-model='brochure' ng-change="addProductCtrl.brochureChange(brochure)" base-sixty-four-input>
-                        <!-- <input type="file" class="bFile" file-input="brochurefiles" onchange="angular.element(this).scope().addProductCtrl.uploadedFile(this)"/> -->
                     </div>
                 </div>
             </div>
@@ -387,6 +618,6 @@
                 </div>
             </div>
 
-        </form>
+        </form> -->
     </div>
 </div>

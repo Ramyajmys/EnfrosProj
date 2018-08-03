@@ -33,7 +33,7 @@ $p-hover: #37474F;
     background-color: $p-color; 
     border-color: $p-color;
 }
-.new-btn:hover {
+.new-btn:hover, .new-btn:focus, .new-btn:active {
     background-color: $p-hover !important; 
     border-color: $p-hover !important;
 }
@@ -45,7 +45,7 @@ $p-hover: #37474F;
     background-color: #dc3545; 
     border-color: #dc3545;
 }
-.cancel-btn:hover {
+.cancel-btn:hover, .cancel-btn:focus, .cancel-btn:active {
     background-color: #da1c2f; 
     border-color: #da1c2f;
 }
