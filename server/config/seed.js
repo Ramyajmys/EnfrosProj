@@ -26,6 +26,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'admin',
         name: 'Admin',
         email: 'admin@example.com',
+        mobilenumber: '9998886660',
         password: 'admin'
       }, {
         _id: 2,
@@ -33,6 +34,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'Customer',
         name: 'Bhaskar',
         email: 'bhaskar@enfros.com',
+        mobilenumber: '9998886661',
         password: 'User@1234'
       }, {
         _id: 3,
@@ -40,6 +42,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'Customer',
         name: 'Kumari',
         email: 'kumari@enfros.com',
+        mobilenumber: '9998886662',
         password: 'User@1234'
       }, {
         _id: 4,
@@ -47,6 +50,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'Customer',
         name: 'Shiva',
         email: 'shiva@enfros.com',
+        mobilenumber: '9998886663',
         password: 'User@1234'
       }, {
         _id: 5,
@@ -54,6 +58,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'Customer',
         name: 'Geetha',
         email: 'geetha@enfros.com',
+        mobilenumber: '9998886664',
         password: 'User@1234'
       }, {
         _id: 6,
@@ -61,6 +66,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'Distributor',
         name: 'Ramya',
         email: 'ramya@enfros.com',
+        mobilenumber: '9998886665',
         password: 'User@1234'
       }, {
         _id: 7,
@@ -68,6 +74,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'Distributor',
         name: 'Sandeep',
         email: 'sandeep@enfros.com',
+        mobilenumber: '9998886666',
         password: 'User@1234'
       }, {
         _id: 8,
@@ -75,6 +82,7 @@ export default function seedDatabaseIfNeeded() {
         role: 'Distributor',
         name: 'Ranga',
         email: 'ranga@enfros.com',
+        mobilenumber: '9998886667',
         password: 'User@1234'
       }])
         .then(() => console.log('finished populating users'))

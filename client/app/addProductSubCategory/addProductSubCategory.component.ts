@@ -44,22 +44,27 @@ export class AddProductSubCategoryComponent {
     this.$mdToast = $mdToast;
     this.get();
     this.getCategoryList();
+    if(this.$state.params.flag != null && this.$state.params.data != null) {
+      this.flag = this.$state.params.flag;
+      this.subCategoryObj = this.$state.params.data;
+    }
   }
 
   New() {
-    this.getCategoryList();
-    this.flag = false;
-    this.subCategoryObj = {};
-    var vm = this;
-    this.$mdDialog.show({
-      controller: () => this,
-      controllerAs: 'addProductSubCategoryCtrl',
-      template: require('./add.html'),
-      clickOutsideToClose: false,
-      onRemoving: function(event) {
-        vm.get();
-      }
-    });
+    this.$state.go('addsub');
+    // this.getCategoryList();
+    // this.flag = false;
+    // this.subCategoryObj = {};
+    // var vm = this;
+    // this.$mdDialog.show({
+    //   controller: () => this,
+    //   controllerAs: 'addProductSubCategoryCtrl',
+    //   template: require('./add.html'),
+    //   clickOutsideToClose: false,
+    //   onRemoving: function(event) {
+    //     vm.get();
+    //   }
+    // });
   }
 
   getCategoryList() {
@@ -101,8 +106,9 @@ export class AddProductSubCategoryComponent {
             .position('bottom right')
             .hideDelay(3000)
           );
-          this.closeDialog();
+          //this.closeDialog();
           this.btnClicked = false;
+          this.$state.go('addProductSubCategory');
         }
       }, err => {
         if(err.data.message) {
@@ -124,8 +130,9 @@ export class AddProductSubCategoryComponent {
             .position('bottom right')
             .hideDelay(3000)
           );
-          this.closeDialog();
+          //this.closeDialog();
           this.btnClicked = false;
+          this.$state.go('addProductSubCategory');
         }
       }, err => {
         if(err.data.message) {
@@ -145,16 +152,17 @@ export class AddProductSubCategoryComponent {
   edit(dObj) {
     this.flag = true;
     this.subCategoryObj = dObj;
-    var vm = this;
-    this.$mdDialog.show({
-      template: require('./add.html'),
-      controller: () => this,
-      controllerAs: 'addProductSubCategoryCtrl',
-      clickOutsideToClose: false,
-      onRemoving: function(event) {
-        vm.get();
-      }
-    });
+    this.$state.go('addsub', {flag: this.flag, data: dObj});
+    // var vm = this;
+    // this.$mdDialog.show({
+    //   template: require('./add.html'),
+    //   controller: () => this,
+    //   controllerAs: 'addProductSubCategoryCtrl',
+    //   clickOutsideToClose: false,
+    //   onRemoving: function(event) {
+    //     vm.get();
+    //   }
+    // });
   }
 
   delete(dObj) {
@@ -198,13 +206,22 @@ export class AddProductSubCategoryComponent {
   
   closeDialog() {
     this.$mdDialog.cancel();
-  };
+  }
+
+  cancel() {
+    this.$state.reload();
+  }
 }
 
 export default angular.module('enfrosProjApp.addProductSubCategory', [uiRouter])
   .config(routes)
   .component('addProductSubCategory', {
     template: require('./addProductSubCategory.html'),
+    controller: AddProductSubCategoryComponent,
+    controllerAs: 'addProductSubCategoryCtrl'
+  })
+  .component('addsub', {
+    template: require('./addsub.html'),
     controller: AddProductSubCategoryComponent,
     controllerAs: 'addProductSubCategoryCtrl'
   })

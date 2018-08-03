@@ -1,50 +1,74 @@
-<div class="container btmSpace">
+<div class="container-fluid btmSpace">
     <div class="row">
         <div class="col-md-12">
-    <!-- <md-content>
-        <md-card> -->
-            <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="start start" layout-align-sm="center center">
-                <h4>Category</h4>
-                <button type="button" class="btn btn-success" ng-click="allCategoryListCtrl.New()">New Category</button>
-            </div>
-            <md-table-container>
-                <table md-table>
-                    <thead md-head md-order="allCategoryListCtrl.query.order">
-                        <tr md-row>
-                            <th md-column>Category</th> 
-                            <th md-column>Description</th>
-                            <th md-column>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody md-body>   
-                        <tr md-row md-auto-select ng-repeat="category in allCategoryListCtrl.categoryList
-                                                            | orderBy: allCategoryListCtrl.query.order 
-                                                            | limitTo: allCategoryListCtrl.query.limit : (allCategoryListCtrl.query.page -1) * allCategoryListCtrl.query.limit">
-                            <td md-cell>{{category.category_name}}</td>
-                            <td md-cell>{{category.category_description}}</td> 
-                            <td md-cell>
-                                <button type="button" class="btn btn-info"  ng-click="allCategoryListCtrl.edit(category)">Edit</button>
-                                <button type="button" class="btn btn-danger"  ng-click="allCategoryListCtrl.confirmDelete(category, $event)">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </md-table-container>
 
-            <md-table-pagination md-limit="allCategoryListCtrl.query.limit" md-limit-options="allCategoryListCtrl.limitOptions" 
-                md-page="allCategoryListCtrl.query.page" md-total="{{allCategoryListCtrl.categoryList.length}}" 
-                md-page-select="allCategoryListCtrl.options.pageSelect" md-boundary-links="allCategoryListCtrl.options.boundaryLinks" 
-                md-on-paginate="logPagination">
-            </md-table-pagination>
-                
-            <div layout="row" layout-align="center center"> 
-                <div class="alert alert-danger" ng-if="allCategoryListCtrl.errMsg">
-                    {{allCategoryListCtrl.errMsg}}
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Category List</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Category List</li>
+                    </ol>
                 </div>
             </div>
+            <div class="col-md-12"><hr class="hr-width"></div>
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <button class="icon-btn" ng-click="allCategoryListCtrl.New()"><i class="fa fa-plus" id="icon-right-5"></i>New Category</button>
+                </div>
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
+                    <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            </div>
+
+            <!-- <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="start start" layout-align-sm="center center">
+                <h4>Category</h4>
+                <button type="button" class="btn btn-success" ng-click="allCategoryListCtrl.New()">New Category</button>
+            </div> -->
+            <div class="col-md-12 padding-top-40 table-data">
+                    <md-table-container>
+                            <table md-table>
+                                <thead md-head md-order="allCategoryListCtrl.query.order">
+                                    <tr md-row>
+                                        <th md-column>Category</th> 
+                                        <th md-column>Description</th>
+                                        <th md-column>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody md-body>   
+                                    <tr md-row md-auto-select ng-repeat="category in allCategoryListCtrl.categoryList
+                                                                        | filter: filter.search 
+                                                                        | filter: searchBylocation
+                                                                        | filter: search 
+                                                                        | orderBy: allCategoryListCtrl.query.order 
+                                                                        | limitTo: allCategoryListCtrl.query.limit : (allCategoryListCtrl.query.page -1) * allCategoryListCtrl.query.limit">
+                                        <td md-cell>{{category.category_name}}</td>
+                                        <td md-cell>{{category.category_description}}</td> 
+                                        <td md-cell>
+                                            <button type="button" class="btn btn-info new-btn"  ng-click="allCategoryListCtrl.edit(category)"><i class="fa fa-edit" id="icon-right-5"></i>Edit</button>
+                                            <button type="button" class="btn btn-danger cancel-btn"  ng-click="allCategoryListCtrl.confirmDelete(category, $event)"><i class="fa fa-trash" id="icon-right-5"></i>Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+            
+                        <md-table-pagination md-limit="allCategoryListCtrl.query.limit" md-limit-options="allCategoryListCtrl.limitOptions" 
+                            md-page="allCategoryListCtrl.query.page" md-total="{{allCategoryListCtrl.categoryList.length}}" 
+                            md-page-select="allCategoryListCtrl.options.pageSelect" md-boundary-links="allCategoryListCtrl.options.boundaryLinks" 
+                            md-on-paginate="logPagination">
+                        </md-table-pagination>
+                            
+                        <div layout="row" layout-align="center center"> 
+                            <div class="alert alert-danger" ng-if="allCategoryListCtrl.errMsg">
+                                {{allCategoryListCtrl.errMsg}}
+                            </div>
+                        </div>
+            </div>
+           
               
-        <!-- </md-card>
-    </md-content> -->
     </div>
     </div>
 </div>

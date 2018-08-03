@@ -54,6 +54,12 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div layout="row" layout-align="center center"> 
+                <div class="alert alert-danger" ng-if="orderdetailsCtrl.errMsg">
+                    {{orderdetailsCtrl.errMsg}}
+                </div>
+            </div>  
         </div>
     </div>
 </div>

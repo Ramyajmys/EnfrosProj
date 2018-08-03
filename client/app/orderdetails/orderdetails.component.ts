@@ -88,7 +88,56 @@ export class OrderdetailsComponent {
     this.$http.get('/api/Status/').then(response => {
       if(response.status === 200) {
         for(var i=0; i<response.data.length; i++) {
-          this.statusArray.push({value: response.data[i]._id, legend: response.data[i].status_name});
+          if(response.data[i]._id == 1) {
+            var d = new Date(this.orderObj.order_date);
+            var legen;
+            if(this.orderObj.order_date != null) {
+              legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+            } else {
+              legen = response.data[i].status_name;
+            }
+            this.statusArray.push({value: response.data[i]._id, legend: legen});
+          }
+          if(response.data[i]._id == 2) {
+            var d = new Date(this.orderObj.order_date);
+            var legen;
+            if(this.orderObj.order_date != null) {
+              legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+            } else {
+              legen = response.data[i].status_name;
+            }
+            this.statusArray.push({value: response.data[i]._id, legend: legen});
+          }
+          if(response.data[i]._id == 3) {
+            var d = new Date(this.orderObj.ship_date);
+            var legen;
+            if(this.orderObj.ship_date != null) {
+              legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+            } else {
+              legen = response.data[i].status_name;
+            }
+            this.statusArray.push({value: response.data[i]._id, legend: legen});
+          }
+          if(response.data[i]._id == 4) {
+            var d = new Date(this.orderObj.delivery_date);
+            var legen;
+            if(this.orderObj.delivery_date != null) {
+              legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+            } else {
+              legen = response.data[i].status_name;
+            }
+            this.statusArray.push({value: response.data[i]._id, legend: legen});
+          }
+          if(response.data[i]._id == 5) {
+            var d = new Date(this.orderObj.delivery_date);
+            var legen;
+            if(this.orderObj.delivery_date != null) {
+              legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+            } else {
+              legen = response.data[i].status_name;
+            }
+            this.statusArray.push({value: response.data[i]._id, legend: legen});
+          }
         }
         var vm = this;
         this.slider = {

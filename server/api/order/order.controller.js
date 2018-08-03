@@ -141,7 +141,7 @@ export function create(req, res) {
     payment_details: 'COD',
     active: true,
     paid_flag: false,
-    status_id: 1,
+    status_id: 2,
     customer_id: customer.User._id,
     distributor_id: distributor.User._id
   };
@@ -393,7 +393,17 @@ export function destroy(req, res) {
 }
 
 export function updatestatus(req, res) {
-  return Order.update({status_id: req.body.status}, {
+  var dObj = {
+    status_id: req.body.status
+  }
+  if(req.body.status == 3) {
+    dObj['ship_date'] = new Date()
+  }
+  if(req.body.status == 4) {
+    dObj['delivery_date'] = new Date()
+  }
+  console.log(dObj)
+  return Order.update(dObj, {
     where: {
       _id: req.body.id
     }

@@ -42,21 +42,27 @@ export class AllCategoryListComponent {
     this.Auth = Auth;
     this.$mdToast = $mdToast;
     this.get();
+
+    if(this.$state.params.flag != null && this.$state.params.data != null) {
+      this.flag = this.$state.params.flag;
+      this.categoryObj = this.$state.params.data;
+    }
   }
 
   New() {
-    this.flag = false;
-    this.categoryObj = {};
-    var vm = this;
-    this.$mdDialog.show({
-      controller: () => this,
-      controllerAs: 'cat',
-      template: require('./addcategory.html'),
-      clickOutsideToClose: false,
-      onRemoving: function(event) {
-        vm.get();
-      }
-    });
+    // this.flag = false;
+    // this.categoryObj = {};
+    this.$state.go('addcat');
+    // var vm = this;
+    // this.$mdDialog.show({
+    //   controller: () => this,
+    //   controllerAs: 'cat',
+    //   template: require('./addcategory.html'),
+    //   clickOutsideToClose: false,
+    //   onRemoving: function(event) {
+    //     vm.get();
+    //   }
+    // });
   }
 
   get() {
@@ -84,8 +90,9 @@ export class AllCategoryListComponent {
             .position('bottom right')
             .hideDelay(3000)
           );
-          this.closeDialog();
+          //this.closeDialog();
           this.btnClicked = false;
+          this.$state.go('allCategoryList');
         }
       }, err => {
         if(err.data.message) {
@@ -107,8 +114,10 @@ export class AllCategoryListComponent {
             .position('bottom right')
             .hideDelay(3000)
           );
-          this.closeDialog();
+          //this.closeDialog();
           this.btnClicked = false;
+
+          this.$state.go('allCategoryList');
         }
       }, err => {
         if(err.data.message) {
@@ -128,16 +137,18 @@ export class AllCategoryListComponent {
   edit(dObj) {
     this.flag = true;
     this.categoryObj = dObj;
-    var vm = this;
-    this.$mdDialog.show({
-      template: require('./addcategory.html'),
-      controller: () => this,
-      controllerAs: 'cat',
-      clickOutsideToClose: false,
-      onRemoving: function(event) {
-        vm.get();
-      }
-    });
+
+    this.$state.go('addcat', {flag: this.flag, data: dObj});
+    // var vm = this;
+    // this.$mdDialog.show({
+    //   template: require('./addcategory.html'),
+    //   controller: () => this,
+    //   controllerAs: 'cat',
+    //   clickOutsideToClose: false,
+    //   onRemoving: function(event) {
+    //     vm.get();
+    //   }
+    // });
   }
 
   delete(dObj) {
@@ -182,12 +193,21 @@ export class AllCategoryListComponent {
   closeDialog() {
     this.$mdDialog.cancel();
   };
+
+  cancel() {
+    this.$state.reload();
+  }
 }
 
 export default angular.module('enfrosProjApp.allCategoryList', [uiRouter, require('angular-material-data-table')])
   .config(routes)
   .component('allCategoryList', {
     template: require('./allCategoryList.html'),
+    controller: AllCategoryListComponent,
+    controllerAs: 'allCategoryListCtrl'
+  })
+  .component('addcat', {
+    template: require('./addcat.html'),
     controller: AllCategoryListComponent,
     controllerAs: 'allCategoryListCtrl'
   })

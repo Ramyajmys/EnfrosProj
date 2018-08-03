@@ -1,0 +1,53 @@
+<div class="container-fluid btmSpace">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div ng-if="!allCategoryListCtrl.flag" class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add Category</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Add Category</li>
+                    </ol>
+                </div>
+            </div>
+            <div ng-if="allCategoryListCtrl.flag" class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-edit" aria-hidden="true" id="icon-right-5"></i>Edit Category</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Edit Category</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12"><hr class="hr-width"></div>
+
+            <div class="col-md-12 padding-top-40">
+                <form name="form" ng-submit="allCategoryListCtrl.save()" validate>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="category" placeholder="Enter Category" ng-model="allCategoryListCtrl.categoryObj.category_name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <textarea rows="3" type="text" class="form-control" name="category_description" placeholder="Enter Category Description" ng-model="allCategoryListCtrl.categoryObj.category_description"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 padding-left-right-0" layout="row" layout-align="center center">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="allCategoryListCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="allCategoryListCtrl.cancel()">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="allCategoryListCtrl.errMsg">
+                        <p class="tooltips">{{allCategoryListCtrl.errMsg}}</p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>            
