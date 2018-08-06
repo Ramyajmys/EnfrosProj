@@ -40,6 +40,8 @@ export class ProductlistComponent {
   catList;
   subList;
   noData: boolean = false;
+  customer;
+  distributor;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
@@ -184,11 +186,6 @@ export class ProductlistComponent {
   }
 
   addToCart(product) {
-    swal({
-      title: "Successfully Added",
-      text: product.product_name + " is added to quote!",
-      icon: "success",
-    });
 
     var tax =  parseInt(product.unitprice)  * (product.HSN.hsn_percentage/100);
     var discount = parseInt(product.unitprice) * (product.discount /100);
@@ -206,6 +203,12 @@ export class ProductlistComponent {
       this.cartArr.push(product);
     }
     this.cartTotal = parseInt(product.unitprice)  + this.cartTotal;
+    
+    swal({
+      title: "Successfully Added",
+      text: product.product_name + " is added to quote!",
+      icon: "success",
+    });
   }
 
   viewcart() {
@@ -258,7 +261,6 @@ export class ProductlistComponent {
     this.$http.post('/api/ProductDetails/getProductsubCategory', {sid: sub._id, cid: sub.category_id}).then(response => {
       if(response.status === 200) {
         this.productList = response.data;
-        console.log(response.data)
         if(this.productList.length == 0) {
           this.noData = true;
         } else {

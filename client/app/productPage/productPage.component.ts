@@ -38,14 +38,12 @@ export class ProductPageComponent {
     if(this.$state.params.product) {
       this.product = this.$state.params.product;
       this.getproductdetails(this.product.category_id, this.product._id);
-      console.log(this.product)
     }
   }
 
   getproductdetails(cid, pid) {
     this.$http.post('/api/ProductDetails/getproductdetails', {cid: cid, pid: pid}).then(response => {
       if(response.status === 200) {
-        console.log(response.data);
         this.elist = response.data.elist;
         this.mlist = response.data.mlist;
         this.flist = response.data.flist;

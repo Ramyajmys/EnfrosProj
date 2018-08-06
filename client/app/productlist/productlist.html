@@ -95,19 +95,19 @@
 
         <div ng-if="productlistCtrl.getCurrentUser().role == 'admin'" class="padding-top-20">
           <div class="form-group">
-            <select class="form-control" ng-model="customer" name="customer" ng-change="productlistCtrl.onCustomerChange(customer)" required>
+            <select class="form-control" ng-model="productlistCtrl.customer" name="customer" ng-change="productlistCtrl.onCustomerChange(productlistCtrl.customer)" required>
                 <option value="">Select Customer</option>
                 <option ng-repeat="customer in productlistCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
             </select>
         </div>
         <div class="form-group">
-            <select class="form-control" ng-model="distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(distributor)" required>
+            <select class="form-control" ng-model="productlistCtrl.distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(productlistCtrl.distributor)" required>
                 <option value="">Select Distributor</option>
                 <option ng-repeat="distributor in productlistCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
             </select>
         </div>
         <div class="form-group">
-            <button class="btn btn-info btn-block new-btn" ng-click="productlistCtrl.viewcart()" ng-disabled="customer == undefined || distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
+            <button class="btn btn-info btn-block new-btn" ng-click="productlistCtrl.viewcart()" ng-disabled="productlistCtrl.customer == undefined || productlistCtrl.distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
         </div>
         </div>
       </div>

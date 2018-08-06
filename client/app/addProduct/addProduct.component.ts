@@ -4,6 +4,7 @@ const angular = require('angular');
 const uiRouter = require('angular-ui-router');
 
 import routes from './addProduct.routes';
+const swal = require('sweetalert');
 
 export class AddProductComponent {
   $mdDialog: any;
@@ -129,12 +130,17 @@ export class AddProductComponent {
 
     this.$http.post('/api/ProductDetails/', this.productObj).then(response => {
       if(response.status === 200) {
-        this.$mdToast.show(
-          this.$mdToast.simple()
-          .textContent(response.data.message)
-          .position('bottom right')
-          .hideDelay(3000)
-        );
+        // this.$mdToast.show(
+        //   this.$mdToast.simple()
+        //   .textContent(response.data.message)
+        //   .position('bottom right')
+        //   .hideDelay(3000)
+        // );
+        swal({
+          title: response.data.message,
+          icon: "success",
+          timer: 1500
+        });
         this.cancel();
       }
     }, err => {

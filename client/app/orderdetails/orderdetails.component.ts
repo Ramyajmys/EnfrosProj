@@ -39,6 +39,9 @@ export class OrderdetailsComponent {
   cInfo;
   readonlyslider;
 
+  emailText;
+  smsText;
+
   /*@ngInject*/
   constructor($http, $state, Auth) {
     this.$http = $http;
@@ -228,6 +231,34 @@ export class OrderdetailsComponent {
         this.errMsg = err;
       }
     });
+  }
+
+  sendEmail(text, email, name) {
+    this.$http.post('/api/orderDetails/sendEmail', {name: name, email: email, text: text}).then(response => {
+      if(response.status == 200) {
+        swal({
+          title: response.data.message,
+          icon: "success",
+          timer: 1500
+        });
+        //this.$state.go('orderdetails');
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
+  }
+
+  sendSMS(text, mobilenumber, name) {
+    console.log(text)
+    console.log(mobilenumber)
   }
  
 }

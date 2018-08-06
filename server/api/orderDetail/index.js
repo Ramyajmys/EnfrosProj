@@ -13,4 +13,6 @@ router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 router.post('/getdetails', controller.getdetails);
 
+router.post('/sendEmail', controller.sendEmail);
+router.post('/sendSMS', controller.sendSMS);
 module.exports = router;

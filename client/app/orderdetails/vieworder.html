@@ -22,7 +22,27 @@
                 <p>GSTIN: {{orderdetailsCtrl.distInfo.UserProfile.gst_number}}</p>
                 <p>State: {{orderdetailsCtrl.distInfo.UserProfile.State.stateName}}</p>
             </div>
+        </div>
 
+        <div class="col-sm-12 padding-left-right-0 padding-top-40">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <textarea rows="5" class="form-control" placeholder="Email Box" ng-model="orderdetailsCtrl.emailText"></textarea>
+                </div>
+                
+                <button type="button" class="btn btn-default btn-block new-btn" ng-disabled="orderdetailsCtrl.emailText == undefined" ng-click="orderdetailsCtrl.sendEmail(orderdetailsCtrl.emailText, orderdetailsCtrl.custInfo.email, orderdetailsCtrl.custInfo.name)">Send Email</button>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <textarea rows="5" class="form-control" placeholder="Message Box" ng-model="orderdetailsCtrl.smsText"></textarea>
+                </div>
+                
+                <button type="button" class="btn btn-default btn-block new-btn" ng-disabled="orderdetailsCtrl.smsText == undefined" ng-click="orderdetailsCtrl.sendSMS(orderdetailsCtrl.smsText, orderdetailsCtrl.custInfo.mobilenumber, orderdetailsCtrl.custInfo.name)">Send SMS</button>
+            </div>
+        </div>
+            
+        <div class="col-sm-12 padding-top-40">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -46,7 +66,7 @@
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.cgst}}</p></div></td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.sgst}}</p></div></td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.igst}}</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.quantity}}</p></div></td>
+                        <td><div layout="row"></i><p>{{cart.quantity}}</p></div></td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_total}}</p></div></td>
                     </tr>
                     <tr>

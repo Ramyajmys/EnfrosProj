@@ -70,10 +70,15 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.discount" placeholder="Enter Discount" name="productdiscount" required/>
+                        </div>
+                    </div>
                     <div class="col-md-6 col-md-offset-4">
                         <label class="control-label col-sm-2">Brochure: </label>
                         <div class="form-group">
-                            <input type='file' ng-model="addProductCtrl.brochure" ng-change="addProductCtrl.brochureChange(brochure)" base-sixty-four-input>
+                            <input type='file' ng-model="addProductCtrl.brochure" ng-change="addProductCtrl.brochureChange(addProductCtrl.brochure)" base-sixty-four-input>
                         </div>
                     </div>
                 </div>
@@ -182,37 +187,105 @@
 
                     <div class="col-md-12 padding-left-right-0" ng-if="addProductCtrl.productObj.category_id == 3">
                         <div class="col-md-12 padding-left-right-0">
-                            <div class="col-md-12"><h1 class="head-line">Electrical Data<hr></h1></div>
+                            <div class="col-md-12"><h1 class="head-line">Input DC<hr></h1></div>
 
                             <div class="col-md-6 padding-left-right-0">
+
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="peak" placeholder="Peak Power Watts-PMAX (Wp)"
-                                            ng-model="addProductCtrl.electrical_data.peak_power_watts_pmax"/>
+                                        <input type="text" class="form-control" name="model" placeholder="Model"
+                                            ng-model="addProductCtrl.input_dc.model" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="vmpp" placeholder="Maximum Power Voltage-VMPP (V)"
-                                            ng-model="addProductCtrl.electrical_data.maximum_power_voltage_vmpp"/>
+                                        <input type="text" class="form-control" name="maxdcpower" placeholder="Max DC Power"
+                                            ng-model="addProductCtrl.input_dc.max_dc_power" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="impp" placeholder="Maximum Power Current-IMPP (A)"
-                                            ng-model="addProductCtrl.electrical_data.maximum_power_current_impp"/>
+                                        <input type="text" class="form-control" name="opv_range" placeholder="Operating Voltage Range"
+                                            ng-model="addProductCtrl.input_dc.operating_voltage_range"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="mppv_range" placeholder="MPP Voltage range"
+                                            ng-model="addProductCtrl.input_dc.mpp_voltage_range" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="startup_votage" placeholder="Startup Voltage"
+                                            ng-model="addProductCtrl.input_dc.startup_votage" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="max_input_current" placeholder="Max input Current"
+                                            ng-model="addProductCtrl.input_dc.max_input_current"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">	
-                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addRow()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addInputDC()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>Peak Power Watts-PMAX (Wp)</th>
-                                        <th>Maximum Power Voltage-VMPP (V)</th>
-                                        <th>Maximum Power Current-IMPP (A)</th>
+                                        <th>Model</th>
+                                        <th>Max DC Power</th>
+                                        <th>Operating Voltage Range</th>
+                                        <th>MPP Voltage Range</th>
+                                        <th>Startup Voltage</th>
+                                        <th>Max input Current</th>
+                                    </tr>
+                                    <tr ng-repeat="list in addProductCtrl.elist">
+                                        <td>{{list.peak_power_watts_pmax}}</td>
+                                        <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                        <td>{{list.maximum_power_current_impp}}</td>
+                                        <td>{{list.peak_power_watts_pmax}}</td>
+                                        <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                        <td>{{list.maximum_power_current_impp}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Output AC<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="opmodel" placeholder="Model"
+                                            ng-model="addProductCtrl.output_dc.model" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="output_power" placeholder="Output Power"
+                                            ng-model="addProductCtrl.output_dc.output_power" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="fq_range" placeholder="Frequency Range"
+                                            ng-model="addProductCtrl.output_dc.frequency_range"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addOutputDC()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Output Power</th>
+                                        <th>Frequency Range</th>
                                     </tr>
                                     <tr ng-repeat="list in addProductCtrl.elist">
                                         <td>{{list.peak_power_watts_pmax}}</td>
@@ -222,6 +295,145 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Special Features<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="spl_feature" placeholder="Special Features"
+                                            ng-model="addProductCtrl.spl_feature.feature_name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul ng-repeat="spl in addProductCtrl.slist">
+                                    <li>{{spl.feature_name}}</li>
+                                </ul> 
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 padding-left-right-0" ng-if="addProductCtrl.productObj.category_id == 4">
+                        <div class="col-md-12 padding-left-right-0">
+                            <div class="col-md-12"><h1 class="head-line">Solar Kits<hr></h1></div>
+    
+                            <div class="col-md-12 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.peak_power" placeholder="Peak Power" name="peakpower" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.solar_panel" placeholder="Solar Panel" name="solarpanel" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.inverter" placeholder="Inverter - Single Phase/Three Phase" name="inverter" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.inverter_max_efficiency" placeholder="Inverter Max Efficiency" name="inverter_max_efficiency" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.dc_wiring" placeholder="DC Wiring" name="dc_wiring" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.ac_wiring" placeholder="AC Wiring" name="ac_wiring" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.grounding_cable" placeholder="Grounding Cable" name="grounding_cable" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.ajb_acdb" placeholder="AJB/ACDB" name="ajb_acdb" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.structure" placeholder="STRUCTURE (FLAT/ TILE / STEEL ROOF)" name="structure" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="addProductCtrl.solarkits.monitoring" placeholder="MONITORING" name="monitoring" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-md-4 col-md-offset-4">	
+                                        <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 padding-top-40">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Peak Power</th>
+                                            <th>Solar Panel</th>
+                                            <th>Inverter</th>
+                                            <th>Inverter Max Efficiency</th>
+                                            <th>DC Wiring</th>
+                                            <th>AC Wiring</th>
+                                            <th>Grounding Cable</th>
+                                            <th>AJB/ACDB</th>
+                                            <th>Structure</th>
+                                            <th>Monitoring</th>
+                                        </tr>
+                                        <tr ng-repeat="list in addProductCtrl.elist">
+                                            <td>{{list.peak_power_watts_pmax}}</td>
+                                            <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                            <td>{{list.maximum_power_current_impp}}</td>
+                                            <td>{{list.peak_power_watts_pmax}}</td>
+                                            <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                            <td>{{list.maximum_power_current_impp}}</td>
+                                            <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                            <td>{{list.maximum_power_current_impp}}</td>
+                                            <td>{{list.peak_power_watts_pmax}}</td>
+                                            <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                            <td>{{list.maximum_power_current_impp}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Special Features<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="spl_feature" placeholder="Special Features"
+                                            ng-model="addProductCtrl.spl_feature.feature_name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul ng-repeat="spl in addProductCtrl.slist">
+                                    <li>{{spl.feature_name}}</li>
+                                </ul> 
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
 

@@ -17,6 +17,7 @@ import {ProductMechanicalData} from '../../sqldb';
 import {ProductSplFeature} from '../../sqldb';
 import {ProductBrochure} from '../../sqldb';
 import {HSN} from '../../sqldb';
+var base64 = require('file-base64');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -116,7 +117,7 @@ export function getProductsubCategory(req, res) {
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
   var brochure = req.body.brochurefiles;
-
+console.log(brochure)
   if(req.body.category_id == 2) {
     return ProductDetail.create(req.body).then(function(prod) {
       if(prod) {
@@ -136,18 +137,15 @@ export function create(req, res) {
           mRes = ProductMechanicalData.create(req.body.m_data);
   
           if(eRes && sRes && mRes) {
-            var base64 = require('file-base64');
- 
             var base64String = brochure.base64;
-            var filepath = './assets/brochure/'+brochure.filename;
-            base64.decode(base64String, './client/assets/brochure/'+brochure.filename, function(err, output) {
-              if(output) {
-                ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
-                  return res.status(200).json({message: "product added"})
-                })
-              }
+            var filepath = './assets/brochure/'+prod._id+brochure.filename;
+            var path = './client/assets/brochure/'+prod._id+brochure.filename;
+            base64.decode(base64String, path, function(err, output) {
+              ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
+                return res.status(200).json({message: "Product sucessfully added"})
+              })
+              .catch(handleError(res));
             });
-            
           }
         }
       }

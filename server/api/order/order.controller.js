@@ -131,7 +131,7 @@ export function create(req, res) {
 
   var d = new Date();
   var ampm = d.getHours() >= 12 ? 'pm' : 'am';
-  var today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear() + '  '+ d.getHours() +':'+ d.getMinutes()+ ' ' +ampm;
+  var today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear() + '  '+ d.getHours() +':'+ d.getMinutes()+ ':' +d.getSeconds();
 
   var orderObj = {
     order_name: ordername,
@@ -183,7 +183,7 @@ export function create(req, res) {
 }
 
 function createInvoice(customer, invoice, admin, total, temp, extra, date) {
-  var html = '<div style="width: 100%;padding: 10px;font-family: Palatino Linotype, Book Antiqua, Palatino, serif; letter-spacing:1px;">\
+  var html = '<div style="width: 95%;padding: 10px; margin:auto; font-family: Palatino Linotype, Book Antiqua, Palatino, serif; letter-spacing:1px;">\
   <div style="text-align: center; color: #263238;">\
       <h1>Enfros Solution</h1>\
       <h4>ADDRESS</h4>\
@@ -192,16 +192,10 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
   </div>\
   <div style="width: 100%; font-size: 16px;">\
     <div style="width: 50%; float: left;">\
-        <p><strong style"font-weight: bold">Reverse Charges: </strong>'+ extra. reversecharge+'</p>\
         <p><strong style"font-weight: bold">Invoice No: </strong>'+ invoice+'</p>\
-        <p><strong style"font-weight: bold">Invoice Date: </strong>'+ date +'</p>\
-        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName+'</p>\
     </div>\
     <div style="width: 50%; float: right" >\
-        <p><strong style"font-weight: bold">Transportation Mode: </strong>'+ extra. transportationmode+'</p>\
-        <p><strong style"font-weight: bold">Vehicle Number: </strong>'+ extra. vechiclenumber+'</p>\
-        <p><strong style"font-weight: bold">Date of Supply: </strong>'+ extra. dateofsupply+'</p>\
-        <p><strong style"font-weight: bold">Place of Supply: </strong>'+ extra. placeofsupply+'</p>\
+        <p><strong style"font-weight: bold">Invoice Date: </strong>'+ date +'</p>\
     </div>\
   </div><hr>\
   <div style="font-size: 16px; width: 100%; padding: 5px">\
@@ -239,7 +233,7 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
       <tbody>\
       <tr>'+temp+'\
       <tr>\
-          <td colspan="8" style="text-align: right; font-weight: bold;">Total Price: ₹'+total+'</td>\
+          <td colspan="8" style="text-align: right; font-weight: bold;"><span style="padding-right:10px;">Total Price: ₹'+total+'</span></td>\
       </tr>\
     </tbody>\
   </table>\
@@ -310,7 +304,7 @@ function sendEmailNotification(email, name, file, ex) {
                       <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
                               font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                               font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;">\
-                              Thank you for placing your order with Enfros Solution.<br> Your order number is' + file + '</p>\
+                              Thank you for placing your order with Enfros Solution.<br> Your order number is ' + file + '</p>\
                       <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
                               font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                               font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;"> \
@@ -402,7 +396,6 @@ export function updatestatus(req, res) {
   if(req.body.status == 4) {
     dObj['delivery_date'] = new Date()
   }
-  console.log(dObj)
   return Order.update(dObj, {
     where: {
       _id: req.body.id
@@ -411,3 +404,20 @@ export function updatestatus(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
+
+
+
+{/* <div style="width: 100%; font-size: 16px;">\
+    <div style="width: 50%; float: left;">\
+        <p><strong style"font-weight: bold">Reverse Charges: </strong>'+ extra. reversecharge+'</p>\
+        <p><strong style"font-weight: bold">Invoice No: </strong>'+ invoice+'</p>\
+        <p><strong style"font-weight: bold">Invoice Date: </strong>'+ date +'</p>\
+        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName+'</p>\
+    </div>\
+    <div style="width: 50%; float: right" >\
+        <p><strong style"font-weight: bold">Transportation Mode: </strong>'+ extra. transportationmode+'</p>\
+        <p><strong style"font-weight: bold">Vehicle Number: </strong>'+ extra. vechiclenumber+'</p>\
+        <p><strong style"font-weight: bold">Date of Supply: </strong>'+ extra. dateofsupply+'</p>\
+        <p><strong style"font-weight: bold">Place of Supply: </strong>'+ extra. placeofsupply+'</p>\
+    </div>\
+  </div><hr>\ */}
