@@ -14,6 +14,9 @@ var db = {
 };
 
 // Insert models below
+db.ProductCableData = db.sequelize.import('../api/ProductCableData/ProductCableData.model');
+db.ProductBatteryData = db.sequelize.import('../api/ProductBatteryData/ProductBatteryData.model');
+db.ProductKitsData = db.sequelize.import('../api/ProductKitsData/ProductKitsData.model');
 db.OrderDetail = db.sequelize.import('../api/orderDetail/orderDetail.model');
 db.Order = db.sequelize.import('../api/order/order.model');
 db.Status = db.sequelize.import('../api/Status/Status.model');
