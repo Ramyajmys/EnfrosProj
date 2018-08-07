@@ -15,6 +15,8 @@ import {OrderDetail} from '../../sqldb';
 import config from '../../config/environment';
 var nodemailer = require('nodemailer');
 
+var twilio = require('twilio');
+
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -236,7 +238,28 @@ export function sendEmail(req, res) {
 }
 
 export function sendSMS(req, res) {
-  
+  var mobilenumber = req.body.mobilenumber;
+  var name = req.body.name;
+  var textmsg = req.body.text;
+
+  var accountSid = config.sms_accountSid
+  var authToken = config.sms_authToken
+
+  var client = new twilio(accountSid, authToken);
+
+  client.messages.create({
+      body: textmsg,
+      to: '+91'+mobilenumber,  // Text this number
+      from: config.sms_senderNumber
+  })
+  .then(function(message) {
+    if(message) {
+      console.log(message.sid)
+      return res.status(200).json({message: 'SMS Sent'})
+    } else {
+      return res.status(400).json({message: 'SMS Error'})
+    }
+  });
 }
 
 

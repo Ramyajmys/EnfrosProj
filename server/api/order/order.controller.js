@@ -158,7 +158,7 @@ export function create(req, res) {
         od.order_name = order.order_name;
         od.unitprice = prod.unitprice;
         od.product_name = prod.product_name;
-        od.quantity = prod.quantity;
+        od.quantity = prod.product_quantity;
         od.product_total = prod.product_total;
         od.product_discount = prod.product_discount;
         od.cgst = prod.cgst,
@@ -167,7 +167,7 @@ export function create(req, res) {
         test.push(od);
         oRes = OrderDetail.create(od);
 
-        temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">'+ cart[i].product_name +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].unitprice +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].product_discount +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].cgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].sgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].igst +'</td><td width="10%" style="border: 1px solid #eee;">'+ cart[i].quantity +'</td><td width="10%" style="border: 1px solid #eee;">₹'+cart[i].product_total+'</td></tr>';
+        temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">'+ cart[i].product_name +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].unitprice +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].product_discount +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].cgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].sgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].igst +'</td><td width="10%" style="border: 1px solid #eee;">'+ cart[i].product_quantity +'</td><td width="10%" style="border: 1px solid #eee;">₹'+cart[i].product_total+'</td></tr>';
 
         if(test.length == cart.length) {
           User.findOne({where: {_id: 1}, include: [{model: UserProfile}]}).then(function(admin) {
@@ -391,18 +391,33 @@ export function updatestatus(req, res) {
     status_id: req.body.status
   }
   if(req.body.status == 3) {
-    dObj['ship_date'] = new Date()
+    dObj['ship_date'] = new Date();
+    return Order.update(dObj, {
+      where: {
+        _id: req.body.id
+      }
+    })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
   if(req.body.status == 4) {
-    dObj['delivery_date'] = new Date()
+    dObj['delivery_date'] = new Date();
+    return Order.update(dObj, {
+      where: {
+        _id: req.body.id
+      }
+    })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  return Order.update(dObj, {
-    where: {
-      _id: req.body.id
-    }
-  })
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+
+  if(req.body.status == 5) { 
+    return Order.update(dObj, {where: { _id: req.body.id}
+    })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
+  
 }
 
 

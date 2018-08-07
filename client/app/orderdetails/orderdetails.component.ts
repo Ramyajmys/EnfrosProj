@@ -257,8 +257,26 @@ export class OrderdetailsComponent {
   }
 
   sendSMS(text, mobilenumber, name) {
-    console.log(text)
-    console.log(mobilenumber)
+    this.$http.post('/api/orderDetails/sendSMS', {name: name, mobilenumber: mobilenumber, text: text}).then(response => {
+      if(response.status == 200) {
+        swal({
+          title: response.data.message,
+          icon: "success",
+          timer: 1500
+        });
+        //this.$state.go('orderdetails');
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
   }
  
 }

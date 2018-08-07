@@ -7,7 +7,7 @@
   </div>
 </nav>
 
-<div class="container-fluid padding-top-40 padding-bottom-80">
+<div class="container-fluid padding-top-40 padding-bottom-80 bgWhite">
   <!-- <div class="row" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">
     <div class="col-md-12" style="padding-bottom: 30px; width: 100%;">
         <div class="col-sm-3">
@@ -97,13 +97,15 @@
           <div class="form-group">
             <select class="form-control" ng-model="productlistCtrl.customer" name="customer" ng-change="productlistCtrl.onCustomerChange(productlistCtrl.customer)" required>
                 <option value="">Select Customer</option>
-                <option ng-repeat="customer in productlistCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
+                <option ng-if="!productlistCtrl.rFlag" ng-repeat="customer in productlistCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
+                <option ng-if="productlistCtrl.rFlag" ng-repeat="customer in productlistCtrl.customerList" ng-value="{{customer._id}}">{{customer.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <select class="form-control" ng-model="productlistCtrl.distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(productlistCtrl.distributor)" required>
                 <option value="">Select Distributor</option>
-                <option ng-repeat="distributor in productlistCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
+                <option ng-if="!productlistCtrl.rFlag" ng-repeat="distributor in productlistCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
+                <option ng-if="productlistCtrl.rFlag" ng-repeat="distributor in productlistCtrl.distributorList" ng-value="{{distributor._id}}">{{distributor.name}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -124,8 +126,9 @@
             <h4 class="title">{{prod.product_name}}</h4>
             <div class="author"><span>Rs. </span>{{prod.unitprice}}</div>
             <p class="desc">{{prod.product_description}}</p>
-            <div class="latest-link" ng-if="!prod.active"><a href="#" ng-click="productlistCtrl.addToCart(prod)" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">ADD TO QUOTE</a></div>
-            <div class="latest-link" ng-if="prod.active"><button class="btn btn-warn" disabled>Quote Added</button></div>
+            <div class="latest-link" ng-if="!prod.qadded && prod.quantity > 0" style="padding: 17px 0px;"><a href="#" ng-click="productlistCtrl.addToCart(prod)" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">ADD TO QUOTE</a></div>
+            <div class="latest-link" ng-if="prod.qadded"><button class="btn btn-warn" disabled>Quote Added</button></div>
+            <div class="latest-link" ng-if="prod.quantity < 1"><button class="btn btn-warn" disabled>Out of Stock</button></div>
             <div class="latest-link"><a href="#" ng-click="productlistCtrl.viewproduct(prod)">View Details</a></div>
           </div>
         </div>

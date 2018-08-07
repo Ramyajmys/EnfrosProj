@@ -43,6 +43,8 @@ export class ProductlistComponent {
   customer;
   distributor;
 
+  rFlag = false;
+
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
     this.$mdDialog = $mdDialog;
@@ -58,8 +60,25 @@ export class ProductlistComponent {
     this.getDistributorList();
   }
 
-  $onInit() {
-
+  check() {
+    this.cartArr =  this.myService.getCartInfo();
+    this.custInfo = this.myService.getCustomerInfo();
+    this.distInfo = this.myService.getDistributorInfo();
+    
+    if(this.cartArr.length != 0) {
+      this.customer = this.custInfo._id;
+      this.distributor = this.distInfo._id;
+      this.rFlag = true;
+      
+      var vm = this;
+      for(var i=0; i<this.cartArr.length; i++) {
+        this.productList.find(function (obj) { 
+          if(obj._id == vm.cartArr[i]._id) {
+            obj['qadded'] = true;
+          }
+        })
+      }
+    }
   }
 
   get() {
@@ -70,6 +89,7 @@ export class ProductlistComponent {
           this.noData = true;
         } else {
           this.noData = false;
+          this.check();
         }
       }
     }, err => {
@@ -139,19 +159,30 @@ export class ProductlistComponent {
   }
 
   onCustomerChange(id) {
-    this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
-      this.custInfo = response.data;
-      this.myService.saveCustomerInfo(this.custInfo);
-      this.checkGST(this.custInfo.gst_number);
-    }, err => {
-      if(err.status === 500) {
-        this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
-        this.errMsg = 'Not Found';
-      } else {
-        this.errMsg = err;
-      }
-    });
+    if(this.rFlag) {
+      this.$state.reload();
+      this.cartArr = []
+      this.rFlag = false;
+      this.myService.saveCartInfo(this.cartArr);
+      this.myService.getCustomerInfo(undefined);
+      this.myService.getDistributorInfo(undefined);
+      this.myService.getGstatus(undefined);
+    } else {
+      this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
+        this.custInfo = response.data;
+        this.myService.saveCustomerInfo(this.custInfo);
+        this.checkGST(this.custInfo.gst_number);
+      }, err => {
+        if(err.status === 500) {
+          this.errMsg = 'Internal Server Error';
+        } else if(err.status === 404) {
+          this.errMsg = 'Not Found';
+        } else {
+          this.errMsg = err;
+        }
+      });
+    }
+    
   }
 
   checkGST(gst) {
@@ -194,7 +225,8 @@ export class ProductlistComponent {
     product['tax'] = tax;
     product['product_total'] = price;
     product['product_discount'] = discount;
-    product['quantity'] = 1;
+    product['product_quantity'] = 1;
+    product['qadded'] = true;
     product['active'] = true;
 
     this.showCartBtn = false;

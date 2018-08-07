@@ -149,11 +149,13 @@ export default function seedDatabaseIfNeeded() {
         .catch(err => console.log('error populating hsn', err)))
 
     Category.destroy({where: {} })
-      .then(() => Category.bulkCreate([{
-        _id: 1,
-        category_name: 'EPC',
-        category_description: 'EPC'
-      }, {
+      .then(() => Category.bulkCreate([
+      //   {
+      //   _id: 1,
+      //   category_name: 'EPC',
+      //   category_description: 'EPC'
+      // }, 
+      {
         _id: 2,
         category_name: 'SOLAR PANELS',
         category_description: 'Solar panels'

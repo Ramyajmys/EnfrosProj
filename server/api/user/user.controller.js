@@ -269,22 +269,18 @@ export function changePassword(req, res) {
 }
 
 function sendSMS(mobilenumber) {
-  // console.log("------------------------------")
-  // console.log(mobilenumber)
 
-var accountSid = 'AC2cc3d2acf5b98721cef6c2274231bc17'; // Your Account SID from www.twilio.com/console
-var authToken = '6bc173cb73158a5d9bc0c402b47ecf12';   // Your Auth Token from www.twilio.com/console
+  var accountSid = config.sms_accountSid
+  var authToken = config.sms_authToken
 
-var client = new twilio(accountSid, authToken);
+  var client = new twilio(accountSid, authToken);
 
-// console.log(client)
-
-client.messages.create({
-    body: 'Your password successfully changed.',
-    to: '+91'+mobilenumber,  // Text this number
-    from: '+12345678901' // From a valid Twilio number
-})
-.then((message) => console.log(message.sid));
+  client.messages.create({
+      body: 'Your password successfully changed.',
+      to: '+91'+mobilenumber,  // Text this number
+      from: config.sms_senderNumber
+  })
+  .then((message) => console.log(message.sid));
 }
 
 /**

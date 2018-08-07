@@ -46,21 +46,26 @@ export class CartDetailsComponent {
   }
 
   calculate() {
+    
     var obj = {}, final = 0;
     for(let i = 0; i < this.cart.length; i++) {
       obj = this.cart[i];
-      final = final + obj['product_total'];
-
-      obj['product_discount'] = obj['product_discount'].toFixed(2);
-      obj['product_total'] = obj['product_total'].toFixed(2);
-      if(this.gstatus) {
-        obj['cgst'] = (obj['tax']/2).toFixed(2);
-        obj['sgst'] = (obj['tax']/2).toFixed(2);
-        obj['igst'] = 0;
+      var typ = typeof(obj['product_discount']);
+      if(typ == 'number') {
+        final = final + obj['product_total'];
+        obj['product_discount'] = obj['product_discount'].toFixed(2);
+        obj['product_total'] = obj['product_total'].toFixed(2);
+        if(this.gstatus) {
+          obj['cgst'] = (obj['tax']/2).toFixed(2);
+          obj['sgst'] = (obj['tax']/2).toFixed(2);
+          obj['igst'] = 0;
+        } else {
+          obj['cgst'] = (obj['tax']/2).toFixed(2);
+          obj['sgst'] = 0;
+          obj['igst'] = (obj['tax']/2).toFixed(2);
+        }
       } else {
-        obj['cgst'] = (obj['tax']/2).toFixed(2);
-        obj['sgst'] = 0;
-        obj['igst'] = (obj['tax']/2).toFixed(2);
+        final = final + parseFloat(obj['product_total']);
       }
     }
     this.finaltotal = final;
@@ -83,7 +88,7 @@ export class CartDetailsComponent {
         obj.tax = tax;
         obj.product_total = price.toFixed(2);
         obj.product_discount = discount.toFixed(2);
-        obj.quantity = q;
+        obj.product_quantity = q;
         this.finaltotal = this.finaltotal - old_price + price;
 
         if(this.gstatus) {
@@ -120,6 +125,7 @@ export class CartDetailsComponent {
     this.finaltotal = this.finaltotal - p.product_total;
     if(this.cInfo.length == 0) {
       this.$state.go('productlist');
+      this.myService.saveCartInfo(this.cInfo);
     }
   }
 
@@ -149,6 +155,11 @@ export class CartDetailsComponent {
           title: "Order sucessfully placed",
           icon: "success",
         });
+
+        this.myService.saveCartInfo(undefined);
+        this.myService.getCustomerInfo(undefined);
+        this.myService.getDistributorInfo(undefined);
+        this.myService.getGstatus(undefined);
       }
     }, err => {
       if(err.data.message) {
@@ -161,6 +172,10 @@ export class CartDetailsComponent {
         this.errMsg = err;
       }
     });
+  }
+
+  addProduct() {
+    this.$state.go('productlist');
   }
 }
 
