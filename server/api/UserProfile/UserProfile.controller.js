@@ -141,7 +141,7 @@ export function destroy(req, res) {
 
 // Get User Gst
 export function getUserInfo(req, res) {
-    return UserProfile.find({ where: {_id: req.body.id }, include: [{model: User}, {model: Country}, {model: State}, {model: City}]})
+    return UserProfile.find({ where: {user_id: req.body.id }, include: [{model: User}, {model: Country}, {model: State}, {model: City}]})
       .then(handleEntityNotFound(res))
       .then(respondWithResult(res))
       .catch(handleError(res));

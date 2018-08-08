@@ -28,62 +28,6 @@ export default function seedDatabaseIfNeeded() {
         email: 'admin@example.com',
         mobilenumber: '9998886660',
         password: 'admin'
-      }, {
-        _id: 2,
-        provider: 'local',
-        role: 'Customer',
-        name: 'Bhaskar',
-        email: 'bhaskar@enfros.com',
-        mobilenumber: '9998886661',
-        password: 'User@1234'
-      }, {
-        _id: 3,
-        provider: 'local',
-        role: 'Customer',
-        name: 'Kumari',
-        email: 'kumari@enfros.com',
-        mobilenumber: '9998886662',
-        password: 'User@1234'
-      }, {
-        _id: 4,
-        provider: 'local',
-        role: 'Customer',
-        name: 'Shiva',
-        email: 'shiva@enfros.com',
-        mobilenumber: '9998886663',
-        password: 'User@1234'
-      }, {
-        _id: 5,
-        provider: 'local',
-        role: 'Customer',
-        name: 'Geetha',
-        email: 'geetha@enfros.com',
-        mobilenumber: '9998886664',
-        password: 'User@1234'
-      }, {
-        _id: 6,
-        provider: 'local',
-        role: 'Distributor',
-        name: 'Ramya',
-        email: 'ramya@enfros.com',
-        mobilenumber: '9998886665',
-        password: 'User@1234'
-      }, {
-        _id: 7,
-        provider: 'local',
-        role: 'Distributor',
-        name: 'Sandeep',
-        email: 'sandeep@enfros.com',
-        mobilenumber: '9998886666',
-        password: 'User@1234'
-      }, {
-        _id: 8,
-        provider: 'local',
-        role: 'Distributor',
-        name: 'Ranga',
-        email: 'ranga@enfros.com',
-        mobilenumber: '9998886667',
-        password: 'User@1234'
       }])
         .then(() => console.log('finished populating users'))
         .catch(err => console.log('error populating users', err)));
@@ -97,28 +41,8 @@ export default function seedDatabaseIfNeeded() {
       .then(() => UserProfile.bulkCreate([{
         gst_number: '123456',
         user_id: 1
-      }, {
-        gst_number: '232344',
-        user_id: 2
-      }, {
-        gst_number: '124645',
-        user_id: 3
-      }, {
-        gst_number: '767677',
-        user_id: 4
-      }, {
-        gst_number: '128756',
-        user_id: 5
-      }, {
-        gst_number: '456566',
-        user_id: 6
-      }, {
-        gst_number: '765576',
-        user_id: 7
-      }, {
-        gst_number: '878787',
-        user_id: 8
-      }])
+      }
+      ])
         .then(() => console.log('finished userprofile'))
         .catch(err => console.log('error userprofile', err)));  
     }
