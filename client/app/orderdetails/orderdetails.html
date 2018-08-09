@@ -17,6 +17,11 @@
                 <div>
                     <button class="icon-btn" ng-click="orderdetailsCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New Order</button>
                 </div>
+                <div>
+                    <select class="form-control" ng-model="orderdetailsCtrl.statusid" name="statusname" ng-change="orderdetailsCtrl.getOrdersByStatus(orderdetailsCtrl.statusid)" required>                  
+                        <option ng-repeat="status in orderdetailsCtrl.statusList" ng-value="{{status._id}}">{{status.status_name}}</option>
+                    </select>
+                </div>
                 <div class="search-box">
                     <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
                     <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>

@@ -41,12 +41,17 @@ export class OrderdetailsComponent {
 
   emailText;
   smsText;
+  statusList;
+  statusid;
+  rolename;
+  userid;
 
   /*@ngInject*/
   constructor($http, $state, Auth) {
     this.$http = $http;
     this.$state = $state;
     this.Auth = Auth;
+    this.getstatusList();
   }
 
   $onInit() {
@@ -60,19 +65,44 @@ export class OrderdetailsComponent {
     this.getCurrentUser = this.Auth.getCurrentUser;
     this.getCurrentUser(function(data){
       vm.currentUser = data;
+      vm.rolename = vm.currentUser.role;
+      vm.userid = vm.currentUser._id;
       if(vm.currentUser.role == 'admin' || vm.currentUser.role == 'Distributor') {
         vm.readonlyslider = false;
       } else {
         vm.readonlyslider = true;
       }
-      vm.getorders(vm.currentUser.role, vm.currentUser._id);
+      vm.getorders(vm.rolename, vm.userid, vm.statusid);
     });
   }
 
-  getorders(role, id) {
-    this.$http.post('/api/orders/getordersbyrole', {role: role, id: id}).then(response => {
+  getorders(role, id, sid) {
+    this.$http.post('/api/orders/getordersbyrole', {role: role, id: id, sid: sid}).then(response => {
       if(response.status === 200) {
         this.orderList = response.data;
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
+  }
+
+  getOrdersByStatus(sid) {
+    this.getorders(this.rolename, this.userid, sid);
+  }
+
+  getstatusList() {
+    this.$http.get('/api/Status/').then(response => {
+      if(response.status === 200) {
+        this.statusList = response.data;      
+        this.statusid = 2;
       }
     }, err => {
       if(err.data.message) {

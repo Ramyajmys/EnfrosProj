@@ -41,8 +41,7 @@ export default function seedDatabaseIfNeeded() {
       .then(() => UserProfile.bulkCreate([{
         gst_number: '123456',
         user_id: 1
-      }
-      ])
+      }])
         .then(() => console.log('finished userprofile'))
         .catch(err => console.log('error userprofile', err)));  
     }

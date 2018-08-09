@@ -86,17 +86,17 @@ function handleError(res, statusCode) {
 // Gets a list of Orders
 export function getordersbyrole(req, res) {
   if(req.body.role == 'admin') {
-    return Order.findAll({include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    return Order.findAll({where: {status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
   }
   if(req.body.role == 'Distributor') {
-    return Order.findAll({where:{distributor_id: req.body.id}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    return Order.findAll({where:{distributor_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
   }
   if(req.body.role == 'Customer') {
-    return Order.findAll({where:{customer_id: req.body.id}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    return Order.findAll({where:{customer_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
   }

@@ -16,6 +16,9 @@ import {ProductElectricalData} from '../../sqldb';
 import {ProductMechanicalData} from '../../sqldb';
 import {ProductSplFeature} from '../../sqldb';
 import {ProductBrochure} from '../../sqldb';
+import {ProductInputDcData} from '../../sqldb';
+import {ProductOutputAcData} from '../../sqldb';
+import {ProductKitsData} from '../../sqldb';
 import {HSN} from '../../sqldb';
 var base64 = require('file-base64');
 
@@ -117,7 +120,7 @@ export function getProductsubCategory(req, res) {
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
   var brochure = req.body.brochurefiles;
-console.log(brochure)
+
   if(req.body.category_id == 2) {
     return ProductDetail.create(req.body).then(function(prod) {
       if(prod) {
@@ -153,6 +156,77 @@ console.log(brochure)
     .catch(handleError(res));
   }
 
+  if(req.body.category_id == 3) {
+    return ProductDetail.create(req.body).then(function(prod) {
+      if(prod) {
+        if(req.body.i_data.length != 0) {
+          var iObj, iRes, sObj, sRes, oObj, oRes;
+          for(var i=0; i<req.body.i_data.length; i++) {
+            iObj = req.body.i_data[i];
+            iObj['product_detail_id'] = prod._id;
+            iRes = ProductInputDcData.create(iObj);
+          }
+          for(var i=0; i<req.body.o_data.length; i++) {
+            oObj = req.body.o_data[i];
+            oObj['product_detail_id'] = prod._id;
+            oRes = ProductOutputAcData.create(oObj);
+          }
+          for(var i=0; i<req.body.features.length; i++) {
+            sObj = req.body.features[i];
+            sObj['product_detail_id'] = prod._id;
+            sRes = ProductSplFeature.create(sObj);
+          }
+  
+          if(iRes && sRes && oRes) {
+            var base64String = brochure.base64;
+            var filepath = './assets/brochure/'+prod._id+brochure.filename;
+            var path = './client/assets/brochure/'+prod._id+brochure.filename;
+            base64.decode(base64String, path, function(err, output) {
+              ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
+                return res.status(200).json({message: "Product sucessfully added"})
+              })
+              .catch(handleError(res));
+            });
+          }
+        }
+      }
+    })
+    .catch(handleError(res));
+  }
+
+  if(req.body.category_id == 4) {
+    return ProductDetail.create(req.body).then(function(prod) {
+      if(prod) {
+        if(req.body.k_data.length != 0) {
+          var kObj, kRes, sObj, sRes;
+          for(var i=0; i<req.body.k_data.length; i++) {
+            kObj = req.body.k_data[i];
+            kObj['product_detail_id'] = prod._id;
+            kRes = ProductKitsData.create(kObj);
+          }
+          for(var i=0; i<req.body.features.length; i++) {
+            sObj = req.body.features[i];
+            sObj['product_detail_id'] = prod._id;
+            sRes = ProductSplFeature.create(sObj);
+          }
+  
+          if(kRes && sRes) {
+            var base64String = brochure.base64;
+            var filepath = './assets/brochure/'+prod._id+brochure.filename;
+            var path = './client/assets/brochure/'+prod._id+brochure.filename;
+            base64.decode(base64String, path, function(err, output) {
+              ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
+                return res.status(200).json({message: "Product sucessfully added"})
+              })
+              .catch(handleError(res));
+            });
+          }
+        }
+      }
+    })
+    .catch(handleError(res));
+  }
+
 }
 
 export function getproductdetails(req, res) {
@@ -166,6 +240,29 @@ export function getproductdetails(req, res) {
           return res.status(200).json({elist: elist, mlist: mlist, flist: flist});
         })
         .catch(handleError(res));
+      })
+      .catch(handleError(res));
+    })
+    .catch(handleError(res));
+  }
+
+  if(category_id == 3) {
+    return ProductInputDcData.findAll({where: {product_detail_id: product_detail_id}}).then(function(ilist) {
+      return ProductOutputAcData.findAll({where: {product_detail_id: product_detail_id}}).then(function(olist) {
+        return ProductSplFeature.findAll({where: {product_detail_id: product_detail_id}}).then(function(flist) {
+          return res.status(200).json({ilist: ilist, olist: olist, flist: flist});
+        })
+        .catch(handleError(res));
+      })
+      .catch(handleError(res));
+    })
+    .catch(handleError(res));
+  }
+
+  if(category_id == 4) {
+    return ProductKitsData.findAll({where: {product_detail_id: product_detail_id}}).then(function(klist) {
+      return ProductSplFeature.findAll({where: {product_detail_id: product_detail_id}}).then(function(flist) {
+        return res.status(200).json({klist: klist, flist: flist});
       })
       .catch(handleError(res));
     })

@@ -31,6 +31,12 @@ export class AddProductComponent {
   productObj = {};
   brochurefiles;
   brochure;
+  input_dc = {};
+  ilist = [];
+  output_ac = {};
+  olist = [];
+  solarkits = {};
+  klist = [];
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, $scope) {
@@ -115,6 +121,21 @@ export class AddProductComponent {
     this.spl_feature = {};
   }
 
+  addInputDC() {
+    this.ilist.push(this.input_dc);
+    this.input_dc = {};
+  }
+
+  addOutputAC() {
+    this.olist.push(this.output_ac);
+    this.output_ac = {};
+  }
+
+  addKits() {
+    this.klist.push(this.solarkits);
+    this.solarkits = {};
+  }
+
   picChange(pic) {
     if(pic) {
       this.def = 'data:'+pic.filetype+';base64,'+pic.base64;
@@ -123,19 +144,27 @@ export class AddProductComponent {
   }
 
   save() {
-    this.productObj['e_data'] = this.elist;
-    this.productObj['m_data'] = this.mech_data;
-    this.productObj['features'] = this.slist;
+    if(this.productObj['category_id'] == 2) {
+      this.productObj['e_data'] = this.elist;
+      this.productObj['m_data'] = this.mech_data;
+      this.productObj['features'] = this.slist;
+    }
+
+    if(this.productObj['category_id'] == 3) {
+      this.productObj['i_data'] = this.ilist;
+      this.productObj['o_data'] = this.olist;
+      this.productObj['features'] = this.slist;
+    }
+
+    if(this.productObj['category_id'] == 4) {
+      this.productObj['k_data'] = this.klist;
+      this.productObj['features'] = this.slist;
+    }
+    
     this.productObj['brochurefiles'] = this.brochurefiles;
 
     this.$http.post('/api/ProductDetails/', this.productObj).then(response => {
       if(response.status === 200) {
-        // this.$mdToast.show(
-        //   this.$mdToast.simple()
-        //   .textContent(response.data.message)
-        //   .position('bottom right')
-        //   .hideDelay(3000)
-        // );
         swal({
           title: response.data.message,
           icon: "success",

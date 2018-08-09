@@ -8,12 +8,16 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    peak_power_kilowats: DataTypes.BIGINT,
-    panel_cell: DataTypes.STRING,
-    ac_wire: DataTypes.STRING,
-    dc_wire: DataTypes.STRING,
-    cable: DataTypes.STRING,
+    peak_power_kilowats: DataTypes.STRING,
+    solar_panel: DataTypes.STRING,
     inverter_phase: DataTypes.STRING,
+    inverter_efficiency: DataTypes.STRING,
+    dc_wire: DataTypes.STRING,
+    ac_wire: DataTypes.STRING,
+    cable: DataTypes.STRING,
+    ajb: DataTypes.BOOLEAN,
+    flat: DataTypes.BOOLEAN,
+    monitoring: DataTypes.BOOLEAN,
     active: DataTypes.BOOLEAN
   });
 }

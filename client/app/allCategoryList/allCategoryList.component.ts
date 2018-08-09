@@ -4,6 +4,7 @@ const angular = require('angular');
 const uiRouter = require('angular-ui-router');
 
 import routes from './allCategoryList.routes';
+const swal = require('sweetalert');
 
 export class AllCategoryListComponent {
   $mdDialog: any;
@@ -84,12 +85,17 @@ export class AllCategoryListComponent {
     if(!this.flag) {
       this.$http.post('/api/ProductCategorys', this.categoryObj).then(response => {
         if(response.status === 200 || response.status === 201) {
-          this.$mdToast.show(
-            this.$mdToast.simple()
-            .textContent('Successfully Added')
-            .position('bottom right')
-            .hideDelay(3000)
-          );
+          // this.$mdToast.show(
+          //   this.$mdToast.simple()
+          //   .textContent('Successfully Added')
+          //   .position('bottom right')
+          //   .hideDelay(3000)
+          // );
+          swal({
+            title: 'Successfully Added',
+            icon: "success",
+            timer: 1500
+          });
           //this.closeDialog();
           this.btnClicked = false;
           this.$state.go('allCategoryList');
@@ -108,12 +114,17 @@ export class AllCategoryListComponent {
     } else {
       this.$http.post('/api/ProductCategorys/update', this.categoryObj).then(response => {
         if(response.status === 200 || response.status === 201) {
-          this.$mdToast.show(
-            this.$mdToast.simple()
-            .textContent('Successfully Updated')
-            .position('bottom right')
-            .hideDelay(3000)
-          );
+          // this.$mdToast.show(
+          //   this.$mdToast.simple()
+          //   .textContent('Successfully Updated')
+          //   .position('bottom right')
+          //   .hideDelay(3000)
+          // );
+          swal({
+            title: 'Successfully Updated',
+            icon: "success",
+            timer: 1500
+          });
           //this.closeDialog();
           this.btnClicked = false;
 

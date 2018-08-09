@@ -21,6 +21,9 @@ export class ProductPageComponent {
   elist;
   mlist;
   flist;
+  ilist;
+  olist;
+  klist;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
@@ -44,9 +47,20 @@ export class ProductPageComponent {
   getproductdetails(cid, pid) {
     this.$http.post('/api/ProductDetails/getproductdetails', {cid: cid, pid: pid}).then(response => {
       if(response.status === 200) {
-        this.elist = response.data.elist;
-        this.mlist = response.data.mlist;
-        this.flist = response.data.flist;
+        if(cid == 2) {
+          this.elist = response.data.elist;
+          this.mlist = response.data.mlist;
+          this.flist = response.data.flist;
+        }
+        if(cid == 3) {
+          this.ilist = response.data.ilist;
+          this.olist = response.data.olist;
+          this.flist = response.data.flist;
+        }
+        if(cid == 4) {
+          this.klist = response.data.klist;
+          this.flist = response.data.flist;
+        }
       }
     }, err => {
       if(err.data.message) {

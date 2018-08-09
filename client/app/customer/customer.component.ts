@@ -4,6 +4,7 @@ const angular = require('angular');
 const uiRouter = require('angular-ui-router');
 
 import routes from './customer.routes';
+const swal = require('sweetalert');
 
 export class CustomerComponent {
   $mdDialog: any;
@@ -130,12 +131,17 @@ export class CustomerComponent {
     if(!this.isEdit) {
       this.$http.post('/api/users/', this.user).then(response => {
         if(response.status === 200) {
-          this.$mdToast.show(
-            this.$mdToast.simple()
-            .textContent(response.data.message)
-            .position('bottom right')
-            .hideDelay(3000)
-          );
+          // this.$mdToast.show(
+          //   this.$mdToast.simple()
+          //   .textContent(response.data.message)
+          //   .position('bottom right')
+          //   .hideDelay(3000)
+          // );
+          swal({
+            title: response.data.message,
+            icon: "success",
+            timer: 1500
+          });
           this.cancel();
           this.get();
         }
@@ -153,12 +159,17 @@ export class CustomerComponent {
     } else {
       this.$http.post('/api/users/updateUser', this.user).then(response => {
         if(response.status === 200) {
-          this.$mdToast.show(
-            this.$mdToast.simple()
-            .textContent(response.data.message)
-            .position('bottom right')
-            .hideDelay(3000)
-          );
+          // this.$mdToast.show(
+          //   this.$mdToast.simple()
+          //   .textContent(response.data.message)
+          //   .position('bottom right')
+          //   .hideDelay(3000)
+          // );
+          swal({
+            title: response.data.message,
+            icon: "success",
+            timer: 1500
+          });
           this.cancel();
           this.get();
         }

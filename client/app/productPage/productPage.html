@@ -19,7 +19,7 @@
     </div>
 </nav> -->
 
-<div class="container btmSpace">
+<div class="container-fluid btmSpace bgWhite">
     <div class="row">
         <div class="col-md-12" style="padding-top: 40px;">
             <div class="col-md-4">
@@ -46,6 +46,18 @@
                                 <td>{{list.maximum_power_voltage_vmpp}}</td>
                                 <td>{{list.maximum_power_current_impp}}</td>
                             </tr>
+                            <!-- <tr>
+                                <th>Peak Power Watts-PMAX (Wp)</th>
+                                <td ng-repeat="list in productPageCtrl.elist">{{list.peak_power_watts_pmax}}</td>
+                            </tr>
+                            <tr>
+                                <th>Maximum Power Voltage-VMPP (V)</th>
+                                <td ng-repeat="list in productPageCtrl.elist">{{list.maximum_power_voltage_vmpp}}</td>
+                            </tr>
+                            <tr>
+                                <th>Maximum Power Current-IMPP (A)</th>
+                                <td ng-repeat="list in productPageCtrl.elist">{{list.maximum_power_current_impp}}</td>
+                            </tr> -->
                         </table>
                     </div>
 
@@ -76,6 +88,132 @@
                                     <td>{{productPageCtrl.mlist.glass}}</td>
                                 </tr>
                             </tbody>
+                        </table>
+                    </div>
+
+                    <div style="padding-top: 10px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="1" style="text-align: center; font-weight: bold;">Special features</td>
+                            </tr>
+                            <tr ng-repeat="list in productPageCtrl.flist">
+                                <td>{{list.feature_name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div ng-if="productPageCtrl.product.category_id == 3">
+                    <div style="padding-top: 20px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="{{productPageCtrl.ilist.length + 1}}" style="text-align: center; font-weight: bold;">Input DC</td>
+                            </tr>
+                            <tr>
+                                <th>Model</th>
+                                <td ng-repeat="list in productPageCtrl.ilist">{{list.model}}</td>
+                            </tr>
+                            <tr>
+                                <th>Max DC Power</th>
+                                <td ng-repeat="list in productPageCtrl.ilist">{{list.max_power}}</td>
+                            </tr>
+                            <tr>
+                                <th>Operating Voltage Range</th>
+                                <td ng-repeat="list in productPageCtrl.ilist">{{list.voltage}}</td>
+                            </tr>
+                            <tr>
+                                <th>MPP Voltage Range</th>
+                                <td ng-repeat="list in productPageCtrl.ilist">{{list.mpp_voltage}}</td>
+                            </tr>
+                            <tr>
+                                <th>Startup Voltage</th>
+                                <td ng-repeat="list in productPageCtrl.ilist">{{list.startup_voltage}}</td>
+                            </tr>
+                            <tr>
+                                <th>Max Input Current</th>
+                                <td ng-repeat="list in productPageCtrl.ilist">{{list.input_current}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="padding-top: 10px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="{{productPageCtrl.olist.length + 1}}" style="text-align: center; font-weight: bold;">Output AC</td>
+                            </tr>
+                            <tr>
+                                <th>Model</th>
+                                <td ng-repeat="list in productPageCtrl.olist">{{list.model}}</td>
+                            </tr>
+                            <tr>
+                                <th>Output Power</th>
+                                <td ng-repeat="list in productPageCtrl.olist">{{list.output_power}}</td>
+                            </tr>
+                            <tr>
+                                <th>Frequency Range</th>
+                                <td ng-repeat="list in productPageCtrl.olist">{{list.frequency}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="padding-top: 10px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="1" style="text-align: center; font-weight: bold;">Special features</td>
+                            </tr>
+                            <tr ng-repeat="list in productPageCtrl.flist">
+                                <td>{{list.feature_name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div ng-if="productPageCtrl.product.category_id == 4">
+                    <div style="padding-top: 20px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="{{productPageCtrl.klist.length + 1}}" style="text-align: center; font-weight: bold;">Solar Kits</td>
+                            </tr>
+                            <tr>
+                                <th>Peak Power</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.peak_power_kilowats}}</td>
+                            </tr>
+                            <tr>
+                                <th>Solar Panel</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.solar_panel}}</td>
+                            </tr>
+                            <tr>
+                                <th>Inverter Phase</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.inverter_phase}}</td>
+                            </tr>
+                            <tr>
+                                <th>Inverter Efficiency</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.inverter_efficiency}}</td>
+                            </tr>
+                            <tr>
+                                <th>DC Wiring</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.dc_wire}}</td>
+                            </tr>
+                            <tr>
+                                <th>AC Wiring</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.ac_wire}}</td>
+                            </tr>
+                            <tr>
+                                <th>Grounding Cable</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.cable}}</td>
+                            </tr>
+                            <tr>
+                                <th>AJB/ACDB</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.ajb}}</td>
+                            </tr>
+                            <tr>
+                                <th>Structure (FLAT/ TILE / STEEL ROOF)</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.flat}}</td>
+                            </tr>
+                            <tr>
+                                <th>Monitoring (APP & WEB)</th>
+                                <td ng-repeat="list in productPageCtrl.klist">{{list.monitoring}}</td>
+                            </tr>
                         </table>
                     </div>
 

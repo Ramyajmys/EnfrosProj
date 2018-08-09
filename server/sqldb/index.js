@@ -218,6 +218,42 @@ db.ProductDetail.hasMany(db.ProductKeyNote, {
   }
 });
 
+// product inputdc data association
+db.ProductInputDcData.belongsTo(db.ProductDetail, {
+  foreignKey: {
+    name: 'product_detail_id'
+  }
+});
+db.ProductDetail.hasMany(db.ProductInputDcData, {
+  foreignKey: {
+    name: 'product_detail_id'
+  }
+});
+
+// product output dc data association
+db.ProductOutputAcData.belongsTo(db.ProductDetail, {
+  foreignKey: {
+    name: 'product_detail_id'
+  }
+});
+db.ProductDetail.hasMany(db.ProductOutputAcData, {
+  foreignKey: {
+    name: 'product_detail_id'
+  }
+});
+
+// product solar kit data association
+db.ProductKitsData.belongsTo(db.ProductDetail, {
+  foreignKey: {
+    name: 'product_detail_id'
+  }
+});
+db.ProductDetail.hasMany(db.ProductKitsData, {
+  foreignKey: {
+    name: 'product_detail_id'
+  }
+});
+
 
 // Order details association
 //db.ProductDetails.belongsTo(db.OrderDetail, {

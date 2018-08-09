@@ -4,6 +4,7 @@ const angular = require('angular');
 const uiRouter = require('angular-ui-router');
 
 import routes from './addProductSubCategory.routes';
+const swal = require('sweetalert');
 
 export class AddProductSubCategoryComponent {
   $mdDialog: any;
@@ -100,12 +101,17 @@ export class AddProductSubCategoryComponent {
     if(!this.flag) {
       this.$http.post('/api/ProductSubCategorys', this.subCategoryObj).then(response => {
         if(response.status === 200 || response.status === 201) {
-          this.$mdToast.show(
-            this.$mdToast.simple()
-            .textContent('Successfully Added')
-            .position('bottom right')
-            .hideDelay(3000)
-          );
+          // this.$mdToast.show(
+          //   this.$mdToast.simple()
+          //   .textContent('Successfully Added')
+          //   .position('bottom right')
+          //   .hideDelay(3000)
+          // );
+          swal({
+            title: 'Successfully Added',
+            icon: "success",
+            timer: 1500
+          });
           //this.closeDialog();
           this.btnClicked = false;
           this.$state.go('addProductSubCategory');
@@ -124,12 +130,17 @@ export class AddProductSubCategoryComponent {
     } else {
       this.$http.post('/api/ProductSubCategorys/update', this.subCategoryObj).then(response => {
         if(response.status === 200 || response.status === 201) {
-          this.$mdToast.show(
-            this.$mdToast.simple()
-            .textContent('Successfully Updated')
-            .position('bottom right')
-            .hideDelay(3000)
-          );
+          // this.$mdToast.show(
+          //   this.$mdToast.simple()
+          //   .textContent('Successfully Updated')
+          //   .position('bottom right')
+          //   .hideDelay(3000)
+          // );
+          swal({
+            title: 'Successfully Updated',
+            icon: "success",
+            timer: 1500
+          });
           //this.closeDialog();
           this.btnClicked = false;
           this.$state.go('addProductSubCategory');
