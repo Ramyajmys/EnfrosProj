@@ -244,7 +244,15 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
     right: "10px",
     bottom: "20px"
   } };
-  var path = './client/assets/invoice/'+invoice+'.pdf';
+
+  var mode = process.env.NODE_ENV;
+  var path;
+  if(mode == 'development') {
+    path = './client/assets/invoice/'+invoice+'.pdf';
+  } else if(mode == 'production') {
+    var path = './dist/client/assets/invoice/'+invoice+'.pdf';
+  }
+  //var path = './client/assets/invoice/'+invoice+'.pdf';
 
   pdf.create(html, options).toFile(path, function(err, res) {
     if (err) return console.log(err);
