@@ -15,7 +15,7 @@ module.exports = {
     || 80,
 
   sequelize: {
-    uri: 'postgres://postgres:test1234@localhost:5432/enp',
+    uri: 'postgres://postgres:test1234@localhost:5432/sample',
     options: {
       logging: false,
       //storage: 'dev.sqlite',

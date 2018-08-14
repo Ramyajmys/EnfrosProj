@@ -145,8 +145,16 @@ export function create(req, res) {
   
           if(eRes && sRes && mRes) {
             var base64String = brochure.base64;
-            var filepath = './assets/brochure/'+prod._id+brochure.filename;
-            var path = './client/assets/brochure/'+prod._id+brochure.filename;
+            var mode = process.env.NODE_ENV;
+            var filepath, path;
+            if(mode == 'development') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './client/assets/brochure/'+prod._id+brochure.filename;
+            } else if(mode == 'production') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './dist/client/assets/brochure/'+prod._id+brochure.filename;
+            }
+            
             base64.decode(base64String, path, function(err, output) {
               ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
                 return res.status(200).json({message: "Product sucessfully added"})
@@ -183,8 +191,15 @@ export function create(req, res) {
   
           if(iRes && sRes && oRes) {
             var base64String = brochure.base64;
-            var filepath = './assets/brochure/'+prod._id+brochure.filename;
-            var path = './client/assets/brochure/'+prod._id+brochure.filename;
+            var mode = process.env.NODE_ENV;
+            var filepath, path;
+            if(mode == 'development') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './client/assets/brochure/'+prod._id+brochure.filename;
+            } else if(mode == 'production') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './dist/client/assets/brochure/'+prod._id+brochure.filename;
+            }
             base64.decode(base64String, path, function(err, output) {
               ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
                 return res.status(200).json({message: "Product sucessfully added"})
@@ -216,8 +231,15 @@ export function create(req, res) {
   
           if(kRes && sRes) {
             var base64String = brochure.base64;
-            var filepath = './assets/brochure/'+prod._id+brochure.filename;
-            var path = './client/assets/brochure/'+prod._id+brochure.filename;
+            var mode = process.env.NODE_ENV;
+            var filepath, path;
+            if(mode == 'development') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './client/assets/brochure/'+prod._id+brochure.filename;
+            } else if(mode == 'production') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './dist/client/assets/brochure/'+prod._id+brochure.filename;
+            }
             base64.decode(base64String, path, function(err, output) {
               ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
                 return res.status(200).json({message: "Product sucessfully added"})
