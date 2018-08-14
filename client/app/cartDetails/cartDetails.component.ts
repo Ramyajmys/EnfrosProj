@@ -156,7 +156,7 @@ export class CartDetailsComponent {
           icon: "success",
         });
 
-        this.myService.saveCartInfo(undefined);
+        this.myService.saveCartInfo([]);
         this.myService.getCustomerInfo(undefined);
         this.myService.getDistributorInfo(undefined);
         this.myService.getGstatus(undefined);

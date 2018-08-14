@@ -86,7 +86,6 @@ export function show(req, res) {
 
 // Creates a new ProductCategory in the DB
 export function create(req, res) {
-  console.log(req.body)
   return ProductCategory.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));

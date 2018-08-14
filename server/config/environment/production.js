@@ -12,17 +12,27 @@ module.exports = {
   // Server port
   port: process.env.OPENSHIFT_NODEJS_PORT
     || process.env.PORT
-    || 8080,
+    || 80,
 
   sequelize: {
-    uri: process.env.SEQUELIZE_URI
-      || 'sqlite://',
+    uri: 'postgres://postgres:test1234@localhost:5432/enp',
     options: {
       logging: false,
-      storage: 'dist.sqlite',
+      //storage: 'dev.sqlite',
       define: {
         timestamps: false
       }
     }
-  }
+  },
+  // sequelize: {
+  //   uri: process.env.SEQUELIZE_URI
+  //     || 'sqlite://',
+  //   options: {
+  //     logging: false,
+  //     storage: 'dist.sqlite',
+  //     define: {
+  //       timestamps: false
+  //     }
+  //   }
+  // }
 };

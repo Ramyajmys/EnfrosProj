@@ -20,7 +20,11 @@ import {ProductInputDcData} from '../../sqldb';
 import {ProductOutputAcData} from '../../sqldb';
 import {ProductKitsData} from '../../sqldb';
 import {HSN} from '../../sqldb';
+import {ProductCategory} from '../../sqldb';
+import {ProductSubCategory} from '../../sqldb';
+
 var base64 = require('file-base64');
+var fs = require('fs');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -75,7 +79,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of ProductDetails
 export function index(req, res) {
-  return ProductDetail.findAll({include: [{model: HSN}]})
+  return ProductDetail.findAll({include: [{model: HSN}, {model: ProductCategory}, {model: ProductSubCategory}], order:[['_id', 'DESC']]})
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -272,17 +276,34 @@ export function getproductdetails(req, res) {
 
 // Upserts the given ProductDetail in the DB at the specified ID
 export function upsert(req, res) {
-  if(req.body._id) {
-    Reflect.deleteProperty(req.body, '_id');
-  }
+  var brochure = req.body.brochurefiles;
+  var prod = req.body;
 
-  return ProductDetail.upsert(req.body, {
-    where: {
-      _id: req.params.id
-    }
-  })
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if(brochure == undefined) {
+    return ProductDetail.update(req.body, {
+      where: {
+        _id: req.body._id
+      }
+    })
+      .then(function() {
+        return res.status(200).json({message: 'Successfully Updated'})
+      })
+      .catch(handleError(res));
+  } else {
+    var fPath = 'client/';
+    fPath = fPath + req.body.brochure;
+    fs.unlinkSync(fPath);
+    var base64String = brochure.base64;
+    var filepath = './assets/brochure/'+prod._id+brochure.filename;
+    var path = './client/assets/brochure/'+prod._id+brochure.filename;
+    base64.decode(base64String, path, function(err, output) {
+      prod.brochure = filepath;
+      ProductDetail.update(prod, {where: {_id: prod._id}}).then(function() {
+        return res.status(200).json({message: "Product sucessfully Updated"})
+      })
+      .catch(handleError(res));
+    });
+  }
 }
 
 // Updates an existing ProductDetail in the DB

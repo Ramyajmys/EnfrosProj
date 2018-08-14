@@ -1,0 +1,488 @@
+<div class="container-fluid btmSpace" style="background: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Edit Product</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Edit Product</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12"><hr class="hr-width"></div>
+        </div>
+
+        <div class="col-md-12 padding-top-40">
+            <form name="uForm" ng-submit="editProductCtrl.save()">
+                <div>
+                    <div class="product-img-cover"><img class="form-group product-img-style" ng-src="{{editProductCtrl.def}}"></div>
+                    <div layout="row" layout-align="center center" class="md-padding">
+                        <input type='file'  maxsize="3072" ng-model='editProductCtrl.product_def_pic' accept="image/*" ng-change="editProductCtrl.picChange(editProductCtrl.product_def_pic)" ng-required="editProductCtrl.def == null" base-sixty-four-input>
+                    </div>
+                    <div class="has-error" layout="row" layout-align="center center">
+                        <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 3 Mb</p>
+                    </div>
+                </div>
+
+                <div class="topSpace">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="editProductCtrl.productObj.category_id" name="category_id" disabled ng-change="editProductCtrl.onCategoryChange(editProductCtrl.productObj.category_id)" required>
+                                <option value="">Select Category</option>
+                                <option ng-repeat="category in editProductCtrl.categoryList" ng-value="{{category._id}}">{{category.category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="editProductCtrl.productObj.sub_category_id" name="sub_category_id" required>
+                                <option value="">Select Sub-category</option>
+                                <option ng-repeat="sub in editProductCtrl.subCategoryList" ng-value="{{sub._id}}">{{sub.sub_category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="editProductCtrl.productObj.product_name" placeholder="Enter Product name" name="productname" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="editProductCtrl.productObj.unitprice" placeholder="Enter Unit price" name="unitprice" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <textarea type="text" rows="2" class="form-control" ng-model="editProductCtrl.productObj.product_description" placeholder="Enter Description" name="productdesc" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="editProductCtrl.productObj.quantity" placeholder="Enter Quantity" name="quantity" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="editProductCtrl.productObj.hsn_id" name="hsn_id" required>
+                                <option value="">Select HSN code</option>
+                                <option ng-repeat="hsn in editProductCtrl.hsnList" ng-value="{{hsn._id}}">{{hsn.hsn_code}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="editProductCtrl.productObj.discount" placeholder="Enter Discount" name="productdiscount" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-offset-4">
+                        <label class="control-label col-sm-2">Brochure: </label>
+                        <div class="form-group">
+                            <div><p>{{editProductCtrl.productObj.brochure}}</p></div>
+                            <input type='file' ng-model="editProductCtrl.brochure" ng-change="editProductCtrl.brochureChange(editProductCtrl.brochure)" ng-required="editProductCtrl.productObj.brochure == null" base-sixty-four-input>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="topSpace">
+
+                    <div class="col-md-12 padding-left-right-0" ng-if="editProductCtrl.productObj.category_id == 2">
+                        
+                        <div class="col-md-12 padding-left-right-0">
+                            <div class="col-md-12"><h1 class="head-line">Electrical Data<hr></h1></div>
+
+                            <div class="col-md-6 col-md-offset-3 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="peak" placeholder="Peak Power Watts-PMAX (Wp)"
+                                            ng-model="editProductCtrl.edata.peak_power_watts_pmax"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="vmpp" placeholder="Maximum Power Voltage-VMPP (V)"
+                                            ng-model="editProductCtrl.edata.maximum_power_voltage_vmpp"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="impp" placeholder="Maximum Power Current-IMPP (A)"
+                                            ng-model="editProductCtrl.edata.maximum_power_current_impp"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.saveEdata()">Save</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12 padding-top-40">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Peak Power Watts-PMAX (Wp)</th>
+                                        <th>Maximum Power Voltage-VMPP (V)</th>
+                                        <th>Maximum Power Current-IMPP (A)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr ng-repeat="list in editProductCtrl.elist">
+                                        <td>{{list.peak_power_watts_pmax}}</td>
+                                        <td>{{list.maximum_power_voltage_vmpp}}</td>
+                                        <td>{{list.maximum_power_current_impp}}</td>
+                                        <td md-cell>
+                                            <button type="button" class="btn btn-info green-btn"  ng-click="editProductCtrl.addEdata()"><i class="fa fa-plus" id="icon-right-5"></i>Add</button>
+                                            <button type="button" class="btn btn-info new-btn"  ng-click="editProductCtrl.editEdata(list)"><i class="fa fa-edit" id="icon-right-5"></i>Edit</button>
+                                            <button type="button" class="btn btn-danger cancel-btn"  ng-click="editProductCtrl.confirmDelete(list, 'edata', $event)"><i class="fa fa-trash" id="icon-right-5"></i>Delete</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Mechanical Data<hr></h1></div>
+
+                            <div class="col-md-12 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.mlist.solar_cell" placeholder="Soloar Cell" name="solarcell" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.mlist.cell_orientation" placeholder="Cell Orientation" name="orientation" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.mlist.module_dimensions" placeholder="Module Dimensions" name="module_dimensions" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.mlist.weight" placeholder="Weight" name="weight" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.mlist.glass" placeholder="Glass" name="glass" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Special Features<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="spl_feature" placeholder="Special Features"
+                                            ng-model="editProductCtrl.spl_feature.feature_name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr ng-repeat="list in editProductCtrl.flist">
+                                        <td>{{list.feature_name}}</td>
+                                        <td md-cell>
+                                            <button type="button" class="btn btn-info green-btn"  ng-click="editProductCtrl.editfeature(list)"><i class="fa fa-plus" id="icon-right-5"></i>Add</button>
+                                            <button type="button" class="btn btn-info new-btn"  ng-click="editProductCtrl.editfeature(list)"><i class="fa fa-edit" id="icon-right-5"></i>Edit</button>
+                                            <button type="button" class="btn btn-danger cancel-btn"  ng-click="editProductCtrl.confirmDelete(prod, $event)"><i class="fa fa-trash" id="icon-right-5"></i>Delete</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 padding-left-right-0" ng-if="editProductCtrl.productObj.category_id == 3">
+                        <div class="col-md-12 padding-left-right-0">
+                            <div class="col-md-12"><h1 class="head-line">Input DC<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="model" placeholder="Model"
+                                            ng-model="editProductCtrl.input_dc.model" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="maxdcpower" placeholder="Max DC Power"
+                                            ng-model="editProductCtrl.input_dc.max_power" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="opv_range" placeholder="Operating Voltage Range"
+                                            ng-model="editProductCtrl.input_dc.voltage"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="mppv_range" placeholder="MPP Voltage range"
+                                            ng-model="editProductCtrl.input_dc.mpp_voltage" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="startup_voltage" placeholder="Startup Voltage"
+                                            ng-model="editProductCtrl.input_dc.startup_voltage" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="max_input_current" placeholder="Max input Current"
+                                            ng-model="editProductCtrl.input_dc.input_current"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addInputDC()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Max DC Power</th>
+                                        <th>Operating Voltage Range</th>
+                                        <th>MPP Voltage Range</th>
+                                        <th>Startup Voltage</th>
+                                        <th>Max input Current</th>
+                                    </tr>
+                                    <tr ng-repeat="list in editProductCtrl.ilist">
+                                        <td>{{list.model}}</td>
+                                        <td>{{list.max_power}}</td>
+                                        <td>{{list.voltage}}</td>
+                                        <td>{{list.mpp_voltage}}</td>
+                                        <td>{{list.startup_voltage}}</td>
+                                        <td>{{list.input_current}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Output AC<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="opmodel" placeholder="Model"
+                                            ng-model="editProductCtrl.output_ac.model" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="output_power" placeholder="Output Power"
+                                            ng-model="editProductCtrl.output_ac.output_power" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="fq_range" placeholder="Frequency Range"
+                                            ng-model="editProductCtrl.output_ac.frequency"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addOutputAC()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Output Power</th>
+                                        <th>Frequency Range</th>
+                                    </tr>
+                                    <tr ng-repeat="list in editProductCtrl.olist">
+                                        <td>{{list.model}}</td>
+                                        <td>{{list.output_power}}</td>
+                                        <td>{{list.frequency}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Special Features<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="spl_feature" placeholder="Special Features"
+                                            ng-model="editProductCtrl.spl_feature.feature_name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul ng-repeat="spl in editProductCtrl.slist">
+                                    <li>{{spl.feature_name}}</li>
+                                </ul> 
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 padding-left-right-0" ng-if="editProductCtrl.productObj.category_id == 4">
+                        <div class="col-md-12 padding-left-right-0">
+                            <div class="col-md-12"><h1 class="head-line">Solar Kits<hr></h1></div>
+    
+                            <div class="col-md-12 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.solarkits.peak_power_kilowats" placeholder="Peak Power" name="peakpower">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.solarkits.solar_panel" placeholder="Solar Panel" name="solarpanel">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.solarkits.inverter_phase" placeholder="Inverter - Single Phase/Three Phase" name="inverter">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.solarkits.inverter_efficiency" placeholder="Inverter Max Efficiency" name="inverter_max_efficiency">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.solarkits.dc_wire" placeholder="DC Wiring" name="dc_wiring">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.solarkits.ac_wire" placeholder="AC Wiring" name="ac_wiring">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="editProductCtrl.solarkits.cable" placeholder="Grounding Cable" name="grounding_cable">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="editProductCtrl.solarkits.ajb" name="ajb_acdb" ng-change="editProductCtrl.ajbChange(editProductCtrl.solarkits.ajb)">
+                                            <option value="">AJB/ACDB</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="editProductCtrl.solarkits.flat" name="flat" ng-change="editProductCtrl.flatChange(editProductCtrl.solarkits.flat)">
+                                            <option value="">STRUCTURE (FLAT/ TILE / STEEL ROOF)</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="editProductCtrl.solarkits.monitoring" name="monitoring" ng-change="editProductCtrl.monitorChange(editProductCtrl.solarkits.monitoring)">
+                                            <option value="">MONITORING</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-md-4 col-md-offset-4">	
+                                        <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addKits()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 padding-top-40">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Peak Power</th>
+                                            <th>Solar Panel</th>
+                                            <th>Inverter phase</th>
+                                            <th>Inverter Max Efficiency</th>
+                                            <th>DC Wiring</th>
+                                            <th>AC Wiring</th>
+                                            <th>Grounding Cable</th>
+                                            <th>AJB/ACDB</th>
+                                            <th>Structure</th>
+                                            <th>Monitoring</th>
+                                        </tr>
+                                        <tr ng-repeat="list in editProductCtrl.klist">
+                                            <td>{{list.peak_power_kilowats}}</td>
+                                            <td>{{list.solar_panel}}</td>
+                                            <td>{{list.inverter_phase}}</td>
+                                            <td>{{list.inverter_efficiency}}</td>
+                                            <td>{{list.dc_wire}}</td>
+                                            <td>{{list.ac_wire}}</td>
+                                            <td>{{list.cable}}</td>
+                                            <td>{{list.ajb == 'true'? 'Yes' : 'No'}}</td>
+                                            <td>{{list.flat == 'true'? 'Yes' : 'No'}}</td>
+                                            <td>{{list.monitoring == 'true'? 'Yes' : 'No'}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Special Features<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="spl_feature" placeholder="Special Features"
+                                            ng-model="editProductCtrl.spl_feature.feature_name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul ng-repeat="spl in editProductCtrl.slist">
+                                    <li>{{spl.feature_name}}</li>
+                                </ul> 
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div> -->
+
+                <!-- Save and Cancel Btn -->
+                <div class="topSpace">
+                    <div class="col-md-12 padding-left-right-0 padding-top-40" layout="row" layout-align="center center">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="editProductCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="editProductCtrl.cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Msg -->
+                <div class="col-md-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="editProductCtrl.errMsg">
+                    <p class="tooltips">{{editProductCtrl.errMsg}}</p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

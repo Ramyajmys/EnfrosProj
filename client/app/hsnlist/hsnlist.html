@@ -1,0 +1,67 @@
+<div class="container-fluid btmSpace">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>HSN List</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">HSN List</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12"><hr class="hr-width"></div>
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <button class="icon-btn" ng-click="hsnlistCtrl.New()"><i class="fa fa-plus" id="icon-right-5"></i>New HSN</button>
+                </div>
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
+                    <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="col-md-12 padding-top-40 table-data">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head md-order="hsnlistCtrl.query.order">
+                            <tr md-row>
+                                <th md-column>HSN Code</th> 
+                                <th md-column>Percentage</th>
+                                <th md-column>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>   
+                            <tr md-row md-auto-select ng-repeat="hsn in hsnlistCtrl.hsnList
+                                                                | filter: filter.search 
+                                                                | filter: searchBylocation
+                                                                | filter: search 
+                                                                | orderBy: hsnlistCtrl.query.order 
+                                                                | limitTo: hsnlistCtrl.query.limit : (hsnlistCtrl.query.page -1) * hsnlistCtrl.query.limit">
+                                <td md-cell>{{hsn.hsn_code}}</td>
+                                <td md-cell>{{hsn.hsn_percentage}}</td> 
+                                <td md-cell>
+                                    <button type="button" class="btn btn-info new-btn"  ng-click="hsnlistCtrl.edit(hsn)"><i class="fa fa-edit" id="icon-right-5"></i>Edit</button>
+                                    <button type="button" class="btn btn-danger cancel-btn"  ng-click="hsnlistCtrl.confirmDelete(hsn, $event)"><i class="fa fa-trash" id="icon-right-5"></i>Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            
+                <md-table-pagination md-limit="hsnlistCtrl.query.limit" md-limit-options="hsnlistCtrl.limitOptions" 
+                    md-page="hsnlistCtrl.query.page" md-total="{{hsnlistCtrl.hsnList.length}}" 
+                    md-page-select="hsnlistCtrl.options.pageSelect" md-boundary-links="hsnlistCtrl.options.boundaryLinks" 
+                    md-on-paginate="logPagination">
+                </md-table-pagination>
+                            
+                <div layout="row" layout-align="center center"> 
+                    <div class="alert alert-danger" ng-if="hsnlistCtrl.errMsg">
+                        {{hsnlistCtrl.errMsg}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

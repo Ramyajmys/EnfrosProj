@@ -92,13 +92,10 @@ export function create(req, res) {
 
 // Upserts the given HSN in the DB at the specified ID
 export function upsert(req, res) {
-  if(req.body._id) {
-    Reflect.deleteProperty(req.body, '_id');
-  }
 
-  return HSN.upsert(req.body, {
+  return HSN.update(req.body, {
     where: {
-      _id: req.params.id
+      _id: req.body._id
     }
   })
     .then(respondWithResult(res))

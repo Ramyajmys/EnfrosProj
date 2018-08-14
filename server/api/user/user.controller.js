@@ -183,7 +183,6 @@ export function create(req, res) {
  * Update a new user
  */
 export function updateUser(req, res) {
-console.log(req.body)
   var id = req.body._id;
   var userObj = {
     name: req.body.name,

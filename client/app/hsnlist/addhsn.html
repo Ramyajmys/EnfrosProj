@@ -1,0 +1,53 @@
+<div class="container-fluid btmSpace">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div ng-if="!hsnlistCtrl.flag" class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add HSN</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Add HSN</li>
+                    </ol>
+                </div>
+            </div>
+            <div ng-if="hsnlistCtrl.flag" class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-edit" aria-hidden="true" id="icon-right-5"></i>Edit HSN</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Edit HSN</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12"><hr class="hr-width"></div>
+
+            <div class="col-md-12 padding-top-40">
+                <form name="form" ng-submit="hsnlistCtrl.save()" validate>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="hsn_code" placeholder="Enter HSN Code" ng-model="hsnlistCtrl.hsnObj.hsn_code" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <input type="number" class="form-control" name="hsn_percentage" placeholder="Enter Percentage" ng-model="hsnlistCtrl.hsnObj.hsn_percentage">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 padding-left-right-0" layout="row" layout-align="center center">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="hsnlistCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="hsnlistCtrl.cancel()">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="hsnlistCtrl.errMsg">
+                        <p class="tooltips">{{hsnlistCtrl.errMsg}}</p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>            

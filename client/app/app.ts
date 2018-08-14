@@ -42,6 +42,8 @@ import OrderdetailsComponent from './orderdetails/orderdetails.component';
 import AddProductComponent from './addProduct/addProduct.component';
 import CartDetailsComponent from './cartDetails/cartDetails.component';
 import ProductlistComponent from './productlist/productlist.component';
+import HsnlistComponent from './hsnlist/hsnlist.component';
+import EditProductComponent from './editProduct/editProduct.component';
 
 import 'angular-print';
 import 'angular-material-icons';
@@ -89,7 +91,9 @@ angular.module('testprojApp', [
   OrderdetailsComponent,
   AddProductComponent,
   CartDetailsComponent,
-  ProductlistComponent
+  ProductlistComponent,
+  HsnlistComponent,
+  EditProductComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

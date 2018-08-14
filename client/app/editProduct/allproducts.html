@@ -1,0 +1,77 @@
+<div class="container-fluid btmSpace bgWhite">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Product List</h1></div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Product List</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12"><hr class="hr-width"></div>
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <button class="icon-btn" ng-click="editProductCtrl.New()"><i class="fa fa-plus" id="icon-right-5"></i>New Product</button>
+                </div>
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
+                    <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="col-md-12 padding-top-40 table-data">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head md-order="editProductCtrl.query.order">
+                            <tr md-row>
+                                <th md-column>Product Name</th> 
+                                <th md-column>Quantity</th>
+                                <th md-column>Unitprice</th>
+                                <th md-column>Discount</th>
+                                <th md-column>HSN</th> 
+                                <th md-column>Category</th>
+                                <th md-column>Sub-category</th>
+                                <th md-column>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>   
+                            <tr md-row md-auto-select ng-repeat="prod in editProductCtrl.productList
+                                                                | filter: filter.search 
+                                                                | filter: searchBylocation
+                                                                | filter: search 
+                                                                | orderBy: editProductCtrl.query.order 
+                                                                | limitTo: editProductCtrl.query.limit : (editProductCtrl.query.page -1) * editProductCtrl.query.limit">
+                                <td md-cell>{{prod.product_name}}</td>
+                                <td md-cell>{{prod.quantity}}</td> 
+                                <td md-cell>{{prod.unitprice}}</td>
+                                <td md-cell>{{prod.discount}}</td>
+                                <td md-cell>{{prod.HSN.hsn_percentage}}</td>
+                                <td md-cell>{{prod.ProductCategory.category_name}}</td>
+                                <td md-cell>{{prod.ProductSubCategory.sub_category_name}}</td>
+                                <td md-cell>
+                                    <button type="button" class="btn btn-info new-btn"  ng-click="editProductCtrl.edit(prod)"><i class="fa fa-edit" id="icon-right-5"></i>Edit</button>
+                                    <!-- <button type="button" class="btn btn-danger cancel-btn"  ng-click="editProductCtrl.confirmDelete(prod, $event)"><i class="fa fa-trash" id="icon-right-5"></i>Delete</button> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            
+                <md-table-pagination md-limit="editProductCtrl.query.limit" md-limit-options="editProductCtrl.limitOptions" 
+                    md-page="editProductCtrl.query.page" md-total="{{editProductCtrl.productList.length}}" 
+                    md-page-select="editProductCtrl.options.pageSelect" md-boundary-links="editProductCtrl.options.boundaryLinks" 
+                    md-on-paginate="logPagination">
+                </md-table-pagination>
+                            
+                <div layout="row" layout-align="center center"> 
+                    <div class="alert alert-danger" ng-if="editProductCtrl.errMsg">
+                        {{editProductCtrl.errMsg}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

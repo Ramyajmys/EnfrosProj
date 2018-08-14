@@ -69,8 +69,10 @@ export class OrderdetailsComponent {
       vm.userid = vm.currentUser._id;
       if(vm.currentUser.role == 'admin' || vm.currentUser.role == 'Distributor') {
         vm.readonlyslider = false;
+        vm.getOrdersByStatus(2);
       } else {
         vm.readonlyslider = true;
+        vm.getOrdersByStatus(2);
       }
       vm.getorders(vm.rolename, vm.userid, vm.statusid);
     });

@@ -65,20 +65,23 @@ export class ProductlistComponent {
     this.custInfo = this.myService.getCustomerInfo();
     this.distInfo = this.myService.getDistributorInfo();
     
-    if(this.cartArr.length != 0) {
-      this.customer = this.custInfo._id;
-      this.distributor = this.distInfo._id;
-      this.rFlag = true;
-      
-      var vm = this;
-      for(var i=0; i<this.cartArr.length; i++) {
-        this.productList.find(function (obj) { 
-          if(obj._id == vm.cartArr[i]._id) {
-            obj['qadded'] = true;
-          }
-        })
-      }
+    // if(this.cartArr != undefined) {
+      if(this.cartArr.length != 0) {
+        this.customer = this.custInfo._id;
+        this.distributor = this.distInfo._id;
+        this.rFlag = true;
+        
+        var vm = this;
+        for(var i=0; i<this.cartArr.length; i++) {
+          this.productList.find(function (obj) { 
+            if(obj._id == vm.cartArr[i]._id) {
+              obj['qadded'] = true;
+            }
+          })
+        }
+     // }
     }
+    
   }
 
   get() {
@@ -233,6 +236,7 @@ export class ProductlistComponent {
 
     if(tax && price && discount) {
       this.cartArr.push(product);
+      this.myService.saveCartInfo(this.cartArr);
     }
     this.cartTotal = parseInt(product.unitprice)  + this.cartTotal;
     
