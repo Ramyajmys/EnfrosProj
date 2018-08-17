@@ -312,7 +312,13 @@ export function upsert(req, res) {
       })
       .catch(handleError(res));
   } else {
-    var fPath = 'client/';
+    var mode = process.env.NODE_ENV;
+    var fPath;
+    if(mode == 'development') {
+      fPath = 'client/';
+    } else if(mode == 'production') {
+      fPath = 'dist/client/';
+    }  
     fPath = fPath + req.body.brochure;
     fs.unlinkSync(fPath);
     var base64String = brochure.base64;
@@ -346,12 +352,57 @@ export function patch(req, res) {
 
 // Deletes a ProductDetail from the DB
 export function destroy(req, res) {
-  return ProductDetail.find({
-    where: {
-      _id: req.params.id
+  // return ProductDetail.find({
+  //   where: {
+  //     _id: req.params.id
+  //   }
+  // })
+  //   .then(handleEntityNotFound(res))
+  //   .then(removeEntity(res))
+  //   .catch(handleError(res));
+  var id = req.params.id;
+  return ProductDetail.find({where: {_id: id}}).then(function(product) {
+    if(product.brochure != null) {
+      var mode = process.env.NODE_ENV;
+      var fPath;
+      if(mode == 'development') {
+        fPath = 'client/';
+      } else if(mode == 'production') {
+        fPath = 'dist/client/';
+      }  
+      fPath = fPath + product.brochure;
+      fs.unlinkSync(fPath);
+    }  
+    if(product.category_id == 2) {
+      var eres = ProductElectricalData.destroy({where: {product_detail_id: id}});
+      var mres = ProductMechanicalData.destroy({where: {product_detail_id: id}});
+      var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+      if(eres && mres && fres) {
+        return ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+          return res.status(204).json({message: 'Successfully Deleted'})
+        })
+      }
+    }
+    if(product.category_id == 3) {
+      var eres = ProductInputDcData.destroy({where: {product_detail_id: id}});
+      var mres = ProductOutputAcData.destroy({where: {product_detail_id: id}});
+      var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+      if(eres && mres && fres) {
+        return ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+          return res.status(204).json({message: 'Successfully Deleted'})
+        })
+      }
+    }
+    if(product.category_id == 4) {
+      var eres = ProductKitsData.destroy({where: {product_detail_id: id}});
+      var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+      if(eres && fres) {
+        return ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+          return res.status(204).json({message: 'Successfully Deleted'})
+        })
+      }
     }
   })
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
+  .then(handleEntityNotFound(res))
+  .catch(handleError(res));
 }

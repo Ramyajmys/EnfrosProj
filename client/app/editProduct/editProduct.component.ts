@@ -207,6 +207,54 @@ export class EditProductComponent {
     });
   }
 
+  delete(dObj) {
+    this.$http.delete('/api/ProductDetails/'+dObj._id).then(response => {
+      if(response.status === 204) {
+        swal({
+          title: 'Successfully Deleted',
+          icon: "success",
+          timer: 1500
+        });
+        // this.$mdToast.show(
+        //   this.$mdToast.simple()
+        //   .textContent('Successfully Deleted')
+        //   .position('bottom right')
+        //   .hideDelay(3000)
+        // );
+        this.get();
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
+  }
+
+  confirmDelete(dObj, ev) {
+    var confirm = this.$mdDialog.confirm()
+    .title('Are you sure?')
+    .textContent('You want to delete this item? This action cannot be undone.')
+    .targetEvent(ev)
+    .ok('Yes')
+    .cancel('No');
+    var vm = this;
+    this.$mdDialog.show(confirm).then(function(success) {
+      vm.delete(dObj);
+    }, err => {
+      this.closeDialog();
+    });
+  }
+  
+  closeDialog() {
+    this.$mdDialog.cancel();
+  };
+
   addEdata() {
     this.eflag = true;
     this.isEdit = false;
