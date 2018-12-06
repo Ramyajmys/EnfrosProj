@@ -10,3 +10,7 @@ table.md-table td.md-cell, table.md-table th.md-column {
     width: 60px;
     max-width: 60px;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+}

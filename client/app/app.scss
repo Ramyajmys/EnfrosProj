@@ -11,6 +11,7 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
 @import url('https://fonts.googleapis.com/css?family=Lato');
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import '/assets/bower_components/ng-ckeditor/ng-ckeditor.css';
 
 // $navbar-bg-color: #122f3b;
 // $navbar-title-text-color: #ffffff;
@@ -83,6 +84,7 @@ body {
 @import 'printinvoice/printinvoice';
 @import 'productlist/productlist';
 @import 'productPage/productPage';
+@import 'quotation/quotation';
 @import 'setpassword/setpassword';
 @import '../components/footer/footer';
 @import '../components/modal/modal';

@@ -22,9 +22,13 @@
                         <option ng-repeat="status in orderdetailsCtrl.statusList" ng-value="{{status._id}}">{{status.status_name}}</option>
                     </select>
                 </div>
-                <div class="search-box">
+                <!-- <div class="search-box">
                     <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
                     <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
+                </div> -->
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='keyword' placeholder="Search by order name" ng-change="orderdetailsCtrl.search(keyword)">
+                    <button class="search-btn-icon" ng-click="orderdetailsCtrl.search(keyword)"><i class="zmdi zmdi-search"></i></button>
                 </div>
             </div>
                    
@@ -51,14 +55,18 @@
                                     </tr>
                                 </thead>
                                 <tbody md-body>   
-                                    <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
+                                    <!-- <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
                                                                         | orderBy: 'time':true
                                                                         | filter: filter.search 
                                                                         | filter: searchBylocation
                                                                         | filter: search 
                                                                         | orderBy: orderdetailsCtrl.query.order 
-                                                                        | limitTo: orderdetailsCtrl.query.limit : (orderdetailsCtrl.query.page -1) * orderdetailsCtrl.query.limit">
-                                        
+                                                                        | limitTo: orderdetailsCtrl.query.limit : (orderdetailsCtrl.query.page -1) * orderdetailsCtrl.query.limit"> -->
+                                                                        <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
+                                                                        | orderBy: 'time':true
+                                                                        | filter: filter.search 
+                                                                        | filter: searchBylocation
+                                                                        | filter: search">
                                         <td md-cell>{{order.order_name}}</td>
                                         <td md-cell>{{order.order_date | date}}</td>
                                         <td md-cell>{{order.total}}</td>
@@ -76,13 +84,15 @@
                                 </tbody>
                             </table>
                         </md-table-container>
+
+                        <ul uib-pagination total-items="orderdetailsCtrl.bigTotalItems" ng-model="orderdetailsCtrl.bigCurrentPage" max-size="orderdetailsCtrl.maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-click="orderdetailsCtrl.pagination()"></ul>
         
-                        <md-table-pagination md-limit="orderdetailsCtrl.query.limit" md-limit-options="orderdetailsCtrl.limitOptions" 
+                        <!-- <md-table-pagination md-limit="orderdetailsCtrl.query.limit" md-limit-options="orderdetailsCtrl.limitOptions" 
                             md-page="orderdetailsCtrl.query.page" md-total="{{orderdetailsCtrl.orderList.length}}" 
                             md-page-select="orderdetailsCtrl.options.pageSelect" md-boundary-links="orderdetailsCtrl.options.boundaryLinks" 
                             md-on-paginate="logPagination">
                         </md-table-pagination>
-        
+         -->
                     <div layout="row" layout-align="center center"> 
                         <div class="alert alert-danger" ng-if="orderdetailsCtrl.errMsg">
                              {{orderdetailsCtrl.errMsg}}

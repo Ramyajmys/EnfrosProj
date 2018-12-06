@@ -1,0 +1,47 @@
+<div class="container-fluid padding-top-40 padding-bottom-80 bgWhite">
+    <div class="row">
+        <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+            <div>
+                <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Create Quotation</h1>
+            </div>
+            <div>
+                <ol class="breadcrumb al-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" ng-click="quotationCtrl.cancel()">Back to List</a></li>
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item active">Create Quotation</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <hr class="hr-width">
+        </div>
+        <div class="col-md-12">
+            <form>
+                <div class="col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <select class="form-control" ng-model="quotationCtrl.formData.customer" name="customer"
+                            required>
+                            <option value="">Select Customer</option>
+                            <option ng-repeat="customer in quotationCtrl.customerList" value="{{customer}}">{{customer.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" ng-model="quotationCtrl.formData.distributor" name="distributor" 
+                            required>
+                            <option value="">Select Distributor</option>
+                            <option ng-repeat="distributor in quotationCtrl.distributorList" value="{{distributor}}">{{distributor.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc">Description:</label>
+                        <textarea ckeditor="editorOptions" ng-model="quotationCtrl.template"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-info btn-block new-btn" ng-click="quotationCtrl.create()" ng-disabled="quotationCtrl.formData.customer == undefined || quotationCtrl.formData.distributor == undefined || quotationCtrl.template == ''">Generate
+                            Quotation</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

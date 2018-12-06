@@ -144,6 +144,7 @@ export class AddProductComponent {
   }
 
   save() {
+    this.btnClicked = true;
     if(this.productObj['category_id'] == 2) {
       this.productObj['e_data'] = this.elist;
       this.productObj['m_data'] = this.mech_data;
@@ -160,11 +161,16 @@ export class AddProductComponent {
       this.productObj['k_data'] = this.klist;
       this.productObj['features'] = this.slist;
     }
+
+    if(this.productObj['category_id'] == 5) {
+      this.productObj['features'] = this.slist;
+    }
     
     this.productObj['brochurefiles'] = this.brochurefiles;
 
     this.$http.post('/api/ProductDetails/', this.productObj).then(response => {
       if(response.status === 200) {
+        this.btnClicked = false;
         swal({
           title: response.data.message,
           icon: "success",

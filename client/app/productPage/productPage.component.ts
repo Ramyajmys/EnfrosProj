@@ -61,6 +61,9 @@ export class ProductPageComponent {
           this.klist = response.data.klist;
           this.flist = response.data.flist;
         }
+        if(cid == 5) {
+          this.flist = response.data.flist;
+        }
       }
     }, err => {
       if(err.data.message) {

@@ -13,13 +13,13 @@
                 <button id="b9" class="tablinks" ng-click="admin.openCity('b9', 'Editprofile')"><i class="fa fa-edit sidetab-icon" aria-hidden="true"></i>Edit Profile</button>
             </div>
         </div>
-        
+
         <div class="tab-content">
             <div id="Dashboard" class="tabcontent">
                 <div>Dashboard view</div>
             </div>
             <div id="Quote" class="tabcontent">
-               
+
             </div>
             <div id="Category" class="tabcontent">
                 <all-category-list></all-category-list>
@@ -43,34 +43,60 @@
                 <div><editprofile></editprofile></div>
             </div>
         </div>
-        
+
     </div>
 </div> -->
 
 <div class="container">
-    <div layout="row" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 40px;" layout-align="space-between start" ng-cloak>
+    <div layout="row" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 40px;"
+        layout-align="space-between start" ng-cloak>
         <div layout="column" flex="100">
-            <div layout="row" layout-align="center center">
+            <!-- <div layout="row" layout-align="center center">
                 <a ng-href="/productlist" class="label-links">
-                    <div class="bgAqua" md-whiteframe="1" flex="100" layout layout-align="center center" >
-                        <div layout="column"  layout-align="center center" class="padding-10">
+                    <div class="bgAqua" md-whiteframe="1" flex="100" layout layout-align="center center">
+                        <div layout="column" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="note_add" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
-                        <div layout="column"  layout-align="center center">
+
+                        <div layout="column" layout-align="center center">
                             <h3 class="rmvSpace">New Quotation</h3>
+                        </div>
+                    </div>
+                </a>
+            </div> -->
+            <div layout="row" layout-align="space-between center">
+                <a ng-href="/quotation" class="label-links">
+                    <div class="bgAqua" md-whiteframe="1" layout layout-align="center center">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="insert_comment" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+
+                        <div layout="column" flex="70" layout-align="center center">
+                            <h3 class="rmvSpace">Quotation</h3>
+                        </div>
+                    </div>
+                </a>
+
+                <a ng-href="/addProduct" class="label-links">
+                    <div class="bgBrick" md-whiteframe="1" layout layout-align="center center">
+                        <div layout="column" flex="30" layout-align="center center" class="padding-10">
+                            <ng-md-icon icon="local_grocery_store" class="my-icon" size="50px"></ng-md-icon>
+                        </div>
+
+                        <div layout="column" flex="70" layout-align="end center">
+                            <h3 class="rmvSpace">Create Invoice</h3>
                         </div>
                     </div>
                 </a>
             </div>
 
-            <div layout="row" layout-align="space-between center" >
+            <div layout="row" layout-align="space-between center">
                 <a ng-href="/orderdetails" class="label-links">
                     <div class="bgRed" md-whiteframe="1" layout layout-align="center center">
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="view_list" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="center center">
                             <h3 class="rmvSpace">Order Details</h3>
                         </div>
@@ -78,13 +104,13 @@
                 </a>
 
                 <a ng-href="/addProduct" class="label-links">
-                    <div class="bgCyan" md-whiteframe="1"  layout layout-align="center center">
+                    <div class="bgCyan" md-whiteframe="1" layout layout-align="center center">
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="add_box" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="end center">
-                            <h3 class="rmvSpace">Products</h3>
+                            <h3 class="rmvSpace">Add Products</h3>
                         </div>
                     </div>
                 </a>
@@ -96,7 +122,7 @@
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="format_list_bulleted" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="center center">
                             <h3 class="rmvSpace">Category</h3>
                         </div>
@@ -107,37 +133,37 @@
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="format_list_numbered" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="end center">
                             <h3 class="rmvSpace">Sub-category</h3>
                         </div>
                     </div>
-                </a>    
+                </a>
             </div>
-            
+
             <div layout="row" layout-align="space-between center">
                 <a ng-href="/customer" class="label-links">
                     <div class="bgPurple" md-whiteframe="1" layout layout-align="center center">
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="account_box" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="center center">
                             <h3 class="rmvSpace">Customer</h3>
                         </div>
                     </div>
                 </a>
-                <a ng-href="/distributor" class="label-links">   
+                <a ng-href="/distributor" class="label-links">
                     <div class="bgPink" md-whiteframe="1" layout layout-align="center center">
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="supervisor_account" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="end center">
                             <h3 class="rmvSpace">Distributor</h3>
                         </div>
                     </div>
-                </a>     
+                </a>
             </div>
 
             <div layout="row" layout-align="space-between center">
@@ -146,26 +172,26 @@
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="filter_list" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="center center">
                             <h3 class="rmvSpace">HSN</h3>
                         </div>
                     </div>
                 </a>
-                <a ng-href="/allproducts" class="label-links">   
+                <a ng-href="/allproducts" class="label-links">
                     <div class="bgGrey" md-whiteframe="1" layout layout-align="center center">
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="sort" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="end center">
                             <h3 class="rmvSpace">Product List</h3>
                         </div>
                     </div>
-                </a>     
+                </a>
             </div>
         </div>
-        
+
         <!-- <div layout="column" flex="60">
             <div layout="row" layout-align="center center">
                 <a ng-href="/productlist" class="label-links">
@@ -173,7 +199,7 @@
                         <div layout="column"  layout-align="center center" class="padding-10">
                             <ng-md-icon icon="note_add" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column"  layout-align="center center">
                             <h3 class="rmvSpace">New Quotation</h3>
                         </div>
@@ -187,7 +213,7 @@
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="view_list" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="center center">
                             <h3 class="rmvSpace">Order Details</h3>
                         </div>
@@ -199,7 +225,7 @@
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="add_box" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="end center">
                             <h3 class="rmvSpace">Products</h3>
                         </div>
@@ -213,7 +239,7 @@
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="format_list_bulleted" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="center center">
                             <h3 class="rmvSpace">Category</h3>
                         </div>
@@ -224,37 +250,37 @@
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="format_list_numbered" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="end center">
                             <h3 class="rmvSpace">Sub-category</h3>
                         </div>
                     </div>
-                </a>    
+                </a>
             </div>
-            
+
             <div layout="row" layout-align="space-between center">
                 <a ng-href="/customer" class="label-links">
                     <div class="bgPurple" md-whiteframe="1" layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="account_box" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="center center">
                             <h3 class="rmvSpace">Customer</h3>
                         </div>
                     </div>
                 </a>
-                <a ng-href="/distributor" class="label-links">   
+                <a ng-href="/distributor" class="label-links">
                     <div class="bgPink" md-whiteframe="1" layout layout-align="center center" ng-click="dashboardCtrl.goLedger()">
                         <div layout="column" flex="30" layout-align="center center" class="padding-10">
                             <ng-md-icon icon="supervisor_account" class="my-icon" size="50px"></ng-md-icon>
                         </div>
-            
+
                         <div layout="column" flex="70" layout-align="end center">
                             <h3 class="rmvSpace">Distributor</h3>
                         </div>
                     </div>
-                </a>     
+                </a>
             </div>
         </div>
         <div layout="column" flex="30">
@@ -291,6 +317,6 @@
                 </div>
             </div>
         </div> -->
-        
+
     </div>
 </div>

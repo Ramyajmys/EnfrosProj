@@ -14,6 +14,15 @@ import jsonpatch from 'fast-json-patch';
 import {ProductCategory} from '../../sqldb';
 import {ProductSubCategory} from '../../sqldb';
 
+import {ProductDetail} from '../../sqldb';
+import {ProductElectricalData} from '../../sqldb';
+import {ProductMechanicalData} from '../../sqldb';
+import {ProductSplFeature} from '../../sqldb';
+import {ProductInputDcData} from '../../sqldb';
+import {ProductOutputAcData} from '../../sqldb';
+import {ProductKitsData} from '../../sqldb';
+var fs = require('fs');
+
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -141,4 +150,78 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+
+    // var sub_id = req.params.id;
+
+    // return ProductDetail.find({where: {sub_category_id: sub_id}}).then(function(product) {
+    //   var id = product._id;
+    //   if(product.brochure != null) {
+    //     var mode = process.env.NODE_ENV;
+    //     var fPath;
+    //     if(mode == 'development') {
+    //       fPath = 'client/';
+    //     } else if(mode == 'production') {
+    //       fPath = 'dist/client/';
+    //     }  
+    //     fPath = fPath + product.brochure;
+    //     if (fs.existsSync(fPath)) {
+    //       fs.unlinkSync(fPath);
+    //     } 
+    //   } 
+    //   if(product.category_id == 2) {
+    //     var eres = ProductElectricalData.destroy({where: {product_detail_id: id}});
+    //     var mres = ProductMechanicalData.destroy({where: {product_detail_id: id}});
+    //     var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+    //     if(eres && mres && fres) {
+    //       ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+    //         if(deleted) {
+    //           ProductSubCategory.destroy({where: {_id: id}}).then(function() {
+    //             return res.status(204).json({message: 'Successfully Deleted'})
+    //           })
+    //         }
+    //       })
+    //     }
+    //   }
+    //   if(product.category_id == 3) {
+    //     var eres = ProductInputDcData.destroy({where: {product_detail_id: id}});
+    //     var mres = ProductOutputAcData.destroy({where: {product_detail_id: id}});
+    //     var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+    //     if(eres && mres && fres) {
+    //       ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+    //         if(deleted) {
+    //           ProductSubCategory.destroy({where: {_id: id}}).then(function() {
+    //             return res.status(204).json({message: 'Successfully Deleted'})
+    //           })
+    //         }
+    //       })
+    //     }
+    //   }
+    //   if(product.category_id == 4) {
+    //     var eres = ProductKitsData.destroy({where: {product_detail_id: id}});
+    //     var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+    //     if(eres && fres) {
+    //       ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+    //         if(deleted) {
+    //           ProductSubCategory.destroy({where: {_id: id}}).then(function() {
+    //             return res.status(204).json({message: 'Successfully Deleted'})
+    //           })
+    //         }
+    //       })
+    //     }
+    //   }
+    //   if(product.category_id == 5) {
+    //     var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+    //     if(fres) {
+    //       ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+    //         if(deleted) {
+    //           ProductSubCategory.destroy({where: {_id: sub_id}}).then(function() {
+    //             return res.status(204).json({message: 'Successfully Deleted'})
+    //           })
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
+    // .then(handleEntityNotFound(res))
+    // .catch(handleError(res));
 }

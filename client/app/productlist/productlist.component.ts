@@ -220,7 +220,6 @@ export class ProductlistComponent {
   }
 
   addToCart(product) {
-
     var tax =  parseInt(product.unitprice)  * (product.HSN.hsn_percentage/100);
     var discount = parseInt(product.unitprice) * (product.discount /100);
     var price = parseInt(product.unitprice) + tax - discount;
@@ -233,8 +232,7 @@ export class ProductlistComponent {
     product['active'] = true;
 
     this.showCartBtn = false;
-
-    if(tax && price && discount) {
+    if(tax && price || discount) {
       this.cartArr.push(product);
       this.myService.saveCartInfo(this.cartArr);
     }

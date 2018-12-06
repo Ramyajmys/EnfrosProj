@@ -1,0 +1,74 @@
+<div class="container-fluid btmSpace">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Quotation
+                        Details</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Quotation Details</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <button class="icon-btn" ng-click="quotationCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New
+                        Quotation</button>
+                </div>
+
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='keyword' placeholder="Search by customer name"
+                        ng-change="quotationCtrl.search(keyword)">
+                    <button class="search-btn-icon" ng-click="quotationCtrl.search(keyword)"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="col-md-12 padding-top-40 table-data">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column>Customer</th>
+                                <th md-column>Distributor</th>
+                                <th md-column>Date and Time</th>
+                                <th md-column>Attchment</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                            <tr md-row md-auto-select ng-repeat="q in quotationCtrl.qList
+                                                                        | filter: filter.search
+                                                                        | filter: searchBylocation
+                                                                        | filter: search">
+                                <td md-cell>{{q.customer.name}}</td>
+                                <td md-cell>{{q.distributor.name}}</td>
+                                <td md-cell>{{q.date | date:'medium'}}</td>
+                                <td md-cell>
+                                    <a target="_target" href="{{q.path}}">view</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <ul uib-pagination total-items="quotationCtrl.bigTotalItems" ng-model="quotationCtrl.bigCurrentPage"
+                    max-size="quotationCtrl.maxSize" class="pagination-sm" boundary-links="true" rotate="false"
+                    ng-click="quotationCtrl.pagination()"></ul>
+
+                <div layout="row" layout-align="center center">
+                    <div class="alert alert-danger" ng-if="quotationCtrl.errMsg">
+                        {{quotationCtrl.errMsg}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

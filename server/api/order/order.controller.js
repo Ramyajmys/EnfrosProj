@@ -86,21 +86,65 @@ function handleError(res, statusCode) {
 // Gets a list of Orders
 export function getordersbyrole(req, res) {
   if(req.body.role == 'admin') {
-    return Order.findAll({where: {status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    return Order.count({where: {status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
   }
   if(req.body.role == 'Distributor') {
-    return Order.findAll({where:{distributor_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    return Order.count({where:{distributor_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
   }
   if(req.body.role == 'Customer') {
-    return Order.findAll({where:{customer_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    return Order.count({where:{customer_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
     .then(respondWithResult(res))
     .catch(handleError(res));
   }
   
+}
+
+export function getorders(req, res) {
+  var limit = 10;
+  var offset = (req.body.offset - 1) * limit;
+
+  if(req.body.role == 'admin') {
+    return Order.findAll({where: {status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
+  if(req.body.role == 'Distributor') {
+    return Order.findAll({where:{distributor_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
+  if(req.body.role == 'Customer') {
+    return Order.findAll({where:{customer_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
+  
+}
+
+export function search(req, res) {
+  var limit = 10;
+  var offset = (req.body.offset - 1) * limit;
+  var keyword = req.body.keyword;
+
+  if(req.body.role == 'admin') {
+    return Order.findAll({where: {order_name: { $like: '%' + keyword + '%' }, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
+  if(req.body.role == 'Distributor') {
+    return Order.findAll({where:{order_name: { $like: '%' + keyword + '%' }, distributor_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
+  if(req.body.role == 'Customer') {
+    return Order.findAll({where:{order_name: { $like: '%' + keyword + '%' }, customer_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  }
 }
 
 // Gets a single Order from the DB
@@ -428,6 +472,34 @@ export function updatestatus(req, res) {
   
 }
 
+
+export function createQuotation(req, res) {
+  var temp = req.body.template;
+  var img = config.domain+'assets/images/logo.png';
+
+  var html = '<div style="width: 95%;padding: 10px; margin:auto; text-align: center; letter-spacing:1px; font-size: 20px;">\
+  <div style="width: 95%; text-align: right; ">\
+      <img src='+img+' style="width:190px; height:80px"/><br>\
+  </div>'+temp+'</div>';
+
+  var options = { format: "A4", orientation: "landscape", border: {
+    right: "10px",
+    bottom: "20px"
+  } };
+
+  var mode = process.env.NODE_ENV;
+  var path;
+  if(mode == 'development') {
+    path = './client/assets/invoice/test.pdf';
+  } else if(mode == 'production') {
+    var path = './dist/client/assets/invoice/test.pdf';
+  }
+  //var path = './client/assets/invoice/'+invoice+'.pdf';
+
+  pdf.create(html, options).toFile(path, function(err, res) {
+    if (err) return console.log(err);
+  });
+}
 
 
 {/* <div style="width: 100%; font-size: 16px;">\

@@ -94,11 +94,13 @@ export default function seedDatabaseIfNeeded() {
         _id: 5,
         category_name: 'BOS',
         category_description: 'battery specifications'
-      }, {
-        _id: 6,
-        category_name: 'KNOWLEDGE',
-        category_description: 'Knowledge'
-      }])
+      }, 
+      // {
+      //   _id: 6,
+      //   category_name: 'KNOWLEDGE',
+      //   category_description: 'Knowledge'
+      // }
+    ])
     )
  
     Status.destroy({ where: {} })

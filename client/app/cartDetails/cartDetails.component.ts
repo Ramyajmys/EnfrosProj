@@ -25,7 +25,9 @@ export class CartDetailsComponent {
   vechiclenumber;
   dateofsupply;
   placeofsupply;
-  emailtext;
+  emailtext = '';
+
+  isLoading: boolean = false;
 
   /*@ngInject*/
   constructor($http, $state, myService, $mdDialog) {
@@ -131,6 +133,7 @@ export class CartDetailsComponent {
 
   confirmOrder() {
     this.btnClicked = true;
+    this.isLoading = true;
     var ex = {
       reversecharge: this.reversecharge,
       transportationmode: this.transportationmode,
@@ -151,6 +154,7 @@ export class CartDetailsComponent {
       if(response.status === 200) {
         this.$state.go('admin');
         this.btnClicked = false;
+        this.isLoading = false;
         swal({
           title: "Order sucessfully placed",
           icon: "success",

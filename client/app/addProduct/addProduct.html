@@ -1,4 +1,4 @@
-<div class="container-fluid btmSpace" style="background: white;">
+<div class="container-fluid btmSpace" ng-hide="addProductCtrl.btnClicked" style="background: white;">
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
@@ -42,7 +42,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <div class="form-group">
                             <input type="text" class="form-control" ng-model="addProductCtrl.productObj.product_name" placeholder="Enter Product name" name="productname" required>
                         </div>
@@ -51,15 +51,25 @@
                         <div class="form-group">
                             <input type="text" class="form-control" ng-model="addProductCtrl.productObj.unitprice" placeholder="Enter Unit price" name="unitprice" required>
                         </div>
+                    </div> -->
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.product_name" placeholder="Enter Product name" name="productname" required>
+                        </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
                             <textarea type="text" rows="2" class="form-control" ng-model="addProductCtrl.productObj.product_description" placeholder="Enter Description" name="productdesc" required></textarea>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <input type="text" class="form-control" ng-model="addProductCtrl.productObj.quantity" placeholder="Enter Quantity" name="quantity" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.capacity" placeholder="Enter Capacity" name="capacity" required>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -70,11 +80,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-12">
+                    <!-- <div class="col-sm-6">
                         <div class="form-group">
-                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.discount" placeholder="Enter Discount" name="productdiscount" required/>
+                            <select class="form-control" ng-model="addProductCtrl.productObj.hsn_id" name="hsn_id" required>
+                                <option value="">Select HSN code</option>
+                                <option ng-repeat="hsn in addProductCtrl.hsnList" value="{{hsn._id}}">{{hsn.hsn_code}}</option>
+                            </select>
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="addProductCtrl.productObj.discount" placeholder="Enter Discount (If there is no discount enter 0)" name="productdiscount" required/>
+                        </div>
+                    </div> -->
                     <div class="col-md-6 col-md-offset-4">
                         <label class="control-label col-sm-2">Brochure: </label>
                         <div class="form-group">
@@ -425,6 +443,34 @@
                                 </div>
                                 
                             </div>
+                        </div>
+
+                        <div class="col-md-12 padding-left-right-0 padding-top-40">
+                            <div class="col-md-12"><h1 class="head-line">Special Features<hr></h1></div>
+
+                            <div class="col-md-6 padding-left-right-0">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="spl_feature" placeholder="Special Features"
+                                            ng-model="addProductCtrl.spl_feature.feature_name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">	
+                                    <button type="button" class="btn btn-primary btn-block new-btn" ng-click="addProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul ng-repeat="spl in addProductCtrl.slist">
+                                    <li>{{spl.feature_name}}</li>
+                                </ul> 
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-md-12 padding-left-right-0" ng-if="addProductCtrl.productObj.category_id == 5">
+                        <div class="col-md-12 padding-left-right-0">
+                            <div class="col-md-12"><h1 class="head-line">Battery Specification<hr></h1></div>
                         </div>
 
                         <div class="col-md-12 padding-left-right-0 padding-top-40">
@@ -847,3 +893,9 @@
         </form> -->
     </div>
 </div>
+
+<div class="container" ng-show="addProductCtrl.btnClicked" style="padding-top: 200px;"> 
+    <div layout="column" layout-align="center center" > 
+       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+   </div>
+ </div> 

@@ -13,5 +13,8 @@ router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 router.post('/updatestatus', controller.updatestatus);
 router.post('/getordersbyrole', controller.getordersbyrole);
+router.post('/getorders', controller.getorders);
+router.post('/search', controller.search);
 
+router.post('/createQuotation', controller.createQuotation);
 module.exports = router;

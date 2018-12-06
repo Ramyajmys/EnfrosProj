@@ -253,6 +253,42 @@ export function create(req, res) {
     .catch(handleError(res));
   }
 
+  if(req.body.category_id == 5) {
+    return ProductDetail.create(req.body).then(function(prod) {
+      if(prod) {
+        if(req.body.features.length != 0) {
+          var sObj, sRes;
+         
+          for(var i=0; i<req.body.features.length; i++) {
+            sObj = req.body.features[i];
+            sObj['product_detail_id'] = prod._id;
+            sRes = ProductSplFeature.create(sObj);
+          }
+  
+          if(sRes) {
+            var base64String = brochure.base64;
+            var mode = process.env.NODE_ENV;
+            var filepath, path;
+            if(mode == 'development') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './client/assets/brochure/'+prod._id+brochure.filename;
+            } else if(mode == 'production') {
+              filepath = './assets/brochure/'+prod._id+brochure.filename;
+              path = './dist/client/assets/brochure/'+prod._id+brochure.filename;
+            }
+            base64.decode(base64String, path, function(err, output) {
+              ProductDetail.update({brochure: filepath}, {where: {_id: prod._id}}).then(function() {
+                return res.status(200).json({message: "Product sucessfully added"})
+              })
+              .catch(handleError(res));
+            });
+          }
+        }
+      }
+    })
+    .catch(handleError(res));
+  }
+
 }
 
 export function getproductdetails(req, res) {
@@ -293,6 +329,13 @@ export function getproductdetails(req, res) {
       .catch(handleError(res));
     })
     .catch(handleError(res));
+  }
+
+  if(category_id == 5) {
+      return ProductSplFeature.findAll({where: {product_detail_id: product_detail_id}}).then(function(flist) {
+        return res.status(200).json({flist: flist});
+      })
+      .catch(handleError(res));
   }
 }
 
@@ -371,7 +414,9 @@ export function destroy(req, res) {
         fPath = 'dist/client/';
       }  
       fPath = fPath + product.brochure;
-      fs.unlinkSync(fPath);
+      if (fs.existsSync(fPath)) {
+        fs.unlinkSync(fPath);
+      } 
     }  
     if(product.category_id == 2) {
       var eres = ProductElectricalData.destroy({where: {product_detail_id: id}});
@@ -397,6 +442,14 @@ export function destroy(req, res) {
       var eres = ProductKitsData.destroy({where: {product_detail_id: id}});
       var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
       if(eres && fres) {
+        return ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
+          return res.status(204).json({message: 'Successfully Deleted'})
+        })
+      }
+    }
+    if(product.category_id == 5) {
+      var fres = ProductSplFeature.destroy({where: {product_detail_id: id}});
+      if(fres) {
         return ProductDetail.destroy({where: {_id: id}}).then(function(deleted) {
           return res.status(204).json({message: 'Successfully Deleted'})
         })

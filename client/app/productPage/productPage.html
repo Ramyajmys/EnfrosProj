@@ -229,6 +229,20 @@
                     </div>
                 </div>
 
+                <div ng-if="productPageCtrl.product.category_id == 5">
+
+                    <div style="padding-top: 20px;">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="1" style="text-align: center; font-weight: bold;">Special features</td>
+                            </tr>
+                            <tr ng-repeat="list in productPageCtrl.flist">
+                                <td>{{list.feature_name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
                 <div style="padding-top: 10px;">
                     <a class="btn btn-info btn-block" target="_self" href="{{productPageCtrl.product.brochure}}" download>Download Brochure</a>
                 </div>

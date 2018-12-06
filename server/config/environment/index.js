@@ -46,7 +46,7 @@ var all = {
   password: 'abcd12345',
 
   default_password: 'User@1234',
-  domain: 'http://localhost:3000/',
+  domain: 'http://localhost:5000/',
 
   sms_accountSid: 'AC2cc3d2acf5b98721cef6c2274231bc17',
   sms_authToken: '6bc173cb73158a5d9bc0c402b47ecf12',

@@ -46,6 +46,12 @@ export class OrderdetailsComponent {
   rolename;
   userid;
 
+  maxSize = 5;
+  bigTotalItems;
+  bigCurrentPage = 1;
+  offset = 1;
+  keyword;
+
   /*@ngInject*/
   constructor($http, $state, Auth) {
     this.$http = $http;
@@ -68,6 +74,7 @@ export class OrderdetailsComponent {
       vm.rolename = vm.currentUser.role;
       vm.userid = vm.currentUser._id;
       if(vm.currentUser.role == 'admin' || vm.currentUser.role == 'Distributor') {
+        vm.statusid = 2;
         vm.readonlyslider = false;
         vm.getOrdersByStatus(2);
       } else {
@@ -75,13 +82,43 @@ export class OrderdetailsComponent {
         vm.getOrdersByStatus(2);
       }
       vm.getorders(vm.rolename, vm.userid, vm.statusid);
+      vm.paginationList(vm.rolename, vm.userid, vm.statusid);
     });
+  }
+
+  clickNew() {
+    this.$state.go('productlist');
   }
 
   getorders(role, id, sid) {
     this.$http.post('/api/orders/getordersbyrole', {role: role, id: id, sid: sid}).then(response => {
       if(response.status === 200) {
+        this.bigTotalItems = response.data;
+        // this.orderList = response.data;
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
+  }
+
+  pagination() {
+    this.offset = this.bigCurrentPage;
+    this.paginationList(this.rolename, this.userid, this.statusid);
+  }
+
+  paginationList(role, id, sid) {
+    this.$http.post('/api/orders/getorders', {role: role, id: id, sid: sid, offset: this.offset}).then(response => {
+      if(response.status === 200) {
         this.orderList = response.data;
+        //console.log(response.data)
       }
     }, err => {
       if(err.data.message) {
@@ -97,7 +134,9 @@ export class OrderdetailsComponent {
   }
 
   getOrdersByStatus(sid) {
+    this.offset = 1;
     this.getorders(this.rolename, this.userid, sid);
+    this.paginationList(this.rolename, this.userid, sid);
   }
 
   getstatusList() {
@@ -297,6 +336,25 @@ export class OrderdetailsComponent {
           timer: 1500
         });
         //this.$state.go('orderdetails');
+      }
+    }, err => {
+      if(err.data.message) {
+        this.errMsg = err.data.message;
+      } else if(err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if(err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
+  }
+
+  search(keyword) {
+    this.$http.post('/api/orders/search', {role: this.rolename, id: this.userid, sid: this.statusid, offset: this.offset, keyword: keyword}).then(response => {
+      //console.log(response)
+      if(response.status == 200) {
+        this.orderList = response.data;
       }
     }, err => {
       if(err.data.message) {

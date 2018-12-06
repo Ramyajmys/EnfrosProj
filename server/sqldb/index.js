@@ -14,6 +14,7 @@ var db = {
 };
 
 // Insert models below
+db.Quotation = db.sequelize.import('../api/quotation/quotation.model');
 db.ProductOutputAcData = db.sequelize.import('../api/ProductOutputAcData/ProductOutputAcData.model');
 db.ProductInputDcData = db.sequelize.import('../api/ProductInputDcData/ProductInputDcData.model');
 db.ProductCableData = db.sequelize.import('../api/ProductCableData/ProductCableData.model');
@@ -305,6 +306,26 @@ db.Order.hasMany(db.OrderDetail, {
 db.OrderDetail.belongsTo(db.Order, {
   foreignKey: {
     name: 'order_id'
+  }
+});
+
+/* Quotation */
+db.Quotation.belongsTo(db.User, {
+  foreignKey: 'customer_id',
+  as: 'customer'
+});
+db.User.hasMany(db.Quotation, {
+  foreignKey: {
+    name: 'customer_id'
+  }
+});
+db.Quotation.belongsTo(db.User, {
+  foreignKey: 'distributor_id',
+  as: 'distributor'
+});
+db.User.hasMany(db.Quotation, {
+  foreignKey: {
+    name: 'distributor_id'
   }
 });
 
