@@ -107,7 +107,7 @@ export function create(req, res) {
       createQ(temp, filename, customer);
       var mode = process.env.NODE_ENV;
       var path;
-      path = './assets/brochure/'+ filename + '.pdf';
+      path = './assets/quotation/'+ filename + '.pdf';
       Quotation.update({ path: path }, { where: { _id: quot._id } }).then(function () {
         return res.status(200).json({ msg: 'Succcessfully Created' });
       })

@@ -78,7 +78,7 @@
           <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
         </div>
 
-        <!-- <div class="side-list padding-top-40" ng-if="productlistCtrl.subList.length > 0 || productlistCtrl.catList.length > 0">
+        <div class="side-list padding-top-40" ng-if="productlistCtrl.subList.length > 0 || productlistCtrl.catList.length > 0">
           <h4 class="left-heading-h4">Categories</h4>
 
           <ul ng-if="productlistCtrl.selectedIndex != 0">
@@ -92,9 +92,9 @@
               <a href="#">{{cat.category_name}}</a>
             </li>
           </ul>
-        </div> -->
+        </div>
 
-        <div ng-if="productlistCtrl.getCurrentUser().role == 'admin'" class="padding-top-20">
+        <!-- <div ng-if="productlistCtrl.getCurrentUser().role == 'admin'" class="padding-top-20">
           <div class="form-group">
             <select class="form-control" ng-model="productlistCtrl.customer" name="customer" ng-change="productlistCtrl.onCustomerChange(productlistCtrl.customer)"
               required>
@@ -115,7 +115,7 @@
             <button class="btn btn-info btn-block new-btn" ng-click="productlistCtrl.viewcart()" ng-disabled="productlistCtrl.customer == undefined || productlistCtrl.distributor == undefined || productlistCtrl.cartArr.length == 0">Generate
               Invoice</button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
