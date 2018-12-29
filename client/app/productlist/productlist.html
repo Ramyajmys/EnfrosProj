@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <ul class="nav navbar-nav product-nav-links">
       <!-- <li class="active" ng-click="productlistCtrl.showhide($index)" ng-class="{active: $index===0}"><a href="#">All</a></li> -->
-      <li ng-repeat="cat in productlistCtrl.catList" ng-click="productlistCtrl.getcat($index, cat)" ng-class="{active: $index===productlistCtrl.selectedIndex}"><a href="#">{{cat.category_name}}</a></li>
+      <li ng-repeat="cat in productlistCtrl.catList" ng-click="productlistCtrl.getcat($index, cat)" ng-class="{active: $index===productlistCtrl.selectedIndex}"><a
+          href="#">{{cat.category_name}}</a></li>
     </ul>
   </div>
 </nav>
@@ -25,7 +26,7 @@
         <div class="col-sm-3">
             <button class="btn btn-info btn-block" ng-click="productlistCtrl.viewcart()" ng-disabled="customer == undefined || distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
         </div>
-        
+
         <input type='text' ng-model='productlistCtrl.searchText' placeholder="Search" />
     </div>
   </div>
@@ -64,7 +65,7 @@
         <div class="col-sm-3">
             <button class="btn btn-info btn-block" ng-click="productlistCtrl.viewcart()" ng-disabled="customer == undefined || distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
         </div>
-        
+
         <input type='text' ng-model='productlistCtrl.searchText' placeholder="Search" />
     </div>
   </div> -->
@@ -95,22 +96,25 @@
 
         <div ng-if="productlistCtrl.getCurrentUser().role == 'admin'" class="padding-top-20">
           <div class="form-group">
-            <select class="form-control" ng-model="productlistCtrl.customer" name="customer" ng-change="productlistCtrl.onCustomerChange(productlistCtrl.customer)" required>
-                <option value="">Select Customer</option>
-                <option ng-if="!productlistCtrl.rFlag" ng-repeat="customer in productlistCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
-                <option ng-if="productlistCtrl.rFlag" ng-repeat="customer in productlistCtrl.customerList" ng-value="{{customer._id}}">{{customer.name}}</option>
+            <select class="form-control" ng-model="productlistCtrl.customer" name="customer" ng-change="productlistCtrl.onCustomerChange(productlistCtrl.customer)"
+              required>
+              <option value="">Select Customer</option>
+              <option ng-if="!productlistCtrl.rFlag" ng-repeat="customer in productlistCtrl.customerList" value="{{customer._id}}">{{customer.name}}</option>
+              <option ng-if="productlistCtrl.rFlag" ng-repeat="customer in productlistCtrl.customerList" ng-value="{{customer._id}}">{{customer.name}}</option>
             </select>
-        </div>
-        <div class="form-group">
-            <select class="form-control" ng-model="productlistCtrl.distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(productlistCtrl.distributor)" required>
-                <option value="">Select Distributor</option>
-                <option ng-if="!productlistCtrl.rFlag" ng-repeat="distributor in productlistCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
-                <option ng-if="productlistCtrl.rFlag" ng-repeat="distributor in productlistCtrl.distributorList" ng-value="{{distributor._id}}">{{distributor.name}}</option>
+          </div>
+          <div class="form-group">
+            <select class="form-control" ng-model="productlistCtrl.distributor" name="distributor" ng-change="productlistCtrl.onDistributorChange(productlistCtrl.distributor)"
+              required>
+              <option value="">Select Distributor</option>
+              <option ng-if="!productlistCtrl.rFlag" ng-repeat="distributor in productlistCtrl.distributorList" value="{{distributor._id}}">{{distributor.name}}</option>
+              <option ng-if="productlistCtrl.rFlag" ng-repeat="distributor in productlistCtrl.distributorList" ng-value="{{distributor._id}}">{{distributor.name}}</option>
             </select>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-info btn-block new-btn" ng-click="productlistCtrl.viewcart()" ng-disabled="productlistCtrl.customer == undefined || productlistCtrl.distributor == undefined || productlistCtrl.cartArr.length == 0">Generate Invoice</button>
-        </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-info btn-block new-btn" ng-click="productlistCtrl.viewcart()" ng-disabled="productlistCtrl.customer == undefined || productlistCtrl.distributor == undefined || productlistCtrl.cartArr.length == 0">Generate
+              Invoice</button>
+          </div>
         </div>
       </div>
     </div>
@@ -119,14 +123,16 @@
       <div ng-if="!productlistCtrl.noData" class="col-sm-6 col-md-4 col-lg-4" ng-repeat="prod in productlistCtrl.productList | filter:{ 'product_name': productlistCtrl.searchText}">
         <div class="latest-news">
           <div class="latest-date-img">
-            <img src="{{prod.product_photo}}" alt="img" class="latest-img"/>
+            <img src="{{prod.product_photo}}" alt="img" class="latest-img" />
             <div class="overlay-4"></div>
           </div>
           <div class="latest-desc">
             <h4 class="title">{{prod.product_name}}</h4>
-            <div class="author"><span>Rs. </span>{{prod.unitprice}}</div>
-            <p class="desc">{{prod.product_description}}</p>
-            <div class="latest-link" ng-if="!prod.qadded && prod.quantity > 0" style="padding: 17px 0px;"><a href="#" ng-click="productlistCtrl.addToCart(prod)" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">ADD TO CART</a></div>
+            <!-- <div class="author"><span>Rs. </span>{{prod.unitprice}}</div>
+            <p class="desc">{{prod.product_description}}</p> -->
+            <div class="latest-link" ng-if="!prod.qadded && prod.quantity > 0" style="padding: 17px 0px;"><a href="#"
+                ng-click="productlistCtrl.addToCart(prod)" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">ADD
+                TO CART</a></div>
             <div class="latest-link" ng-if="prod.qadded"><button class="btn btn-warn" disabled>Cart Added</button></div>
             <div class="latest-link" ng-if="prod.quantity < 1"><button class="btn btn-warn" disabled>Out of Stock</button></div>
             <div class="latest-link"><a href="#" ng-click="productlistCtrl.viewproduct(prod)">View Details</a></div>
@@ -134,14 +140,14 @@
         </div>
       </div>
 
-      <div ng-if="productlistCtrl.noData" >
+      <div ng-if="productlistCtrl.noData">
         <div style="margin: auto; padding-top: 40px; text-align: center;">
-            <i class="fa fa-search fa-4x" aria-hidden="true"></i>
-            <h1>No Products Found</h1>
+          <i class="fa fa-search fa-4x" aria-hidden="true"></i>
+          <h1>No Products Found</h1>
         </div>
-        
+
       </div>
     </div>
-    
+
   </div>
 </div>

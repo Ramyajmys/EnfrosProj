@@ -11,19 +11,19 @@ import signup from './signup';
 
 export default angular.module('testprojApp.account', [
 
-    uiRouter,
-    login,
-    settings,
-    signup
+  uiRouter,
+  login,
+  settings,
+  signup
 ])
-    .config(routing)
+  .config(routing)
 
-    .run(function($rootScope) {
-      'ngInject';
-      $rootScope.$on('$stateChangeStart', function(event, next, nextParams, current) {
-        if (next.name === 'logout' && current && current.name && !current.authenticate) {
-          next.referrer = current.name;
-        }
-      });
-    })
-    .name;
+  .run(function ($rootScope) {
+    'ngInject';
+    $rootScope.$on('$stateChangeStart', function (event, next, nextParams, current) {
+      if (next.name === 'logout' && current && current.name && !current.authenticate) {
+        next.referrer = current.name;
+      }
+    });
+  })
+  .name;

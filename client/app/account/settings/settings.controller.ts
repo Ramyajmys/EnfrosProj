@@ -14,7 +14,7 @@ export default class SettingsController {
     newPassword: '',
     confirmPassword: ''
   };
-  errors = {other: undefined};
+  errors = { other: undefined };
   errMsg;
   message = '';
   submitted = false;
@@ -40,14 +40,14 @@ export default class SettingsController {
   $onInit() {
     var vm = this;
     vm.getCurrentUser = vm.Auth.getCurrentUser;
-    vm.getCurrentUser(function(data){
+    vm.getCurrentUser(function (data) {
       vm.currentUser = data;
       vm.userinfo = vm.currentUser;
       vm.getCountry();
-      if(vm.userinfo.UserProfile.country_id != null) {
+      if (vm.userinfo.UserProfile.country_id != null) {
         vm.getStates(vm.userinfo.UserProfile.country_id)
       }
-      if(vm.userinfo.UserProfile.state_id != null) {
+      if (vm.userinfo.UserProfile.state_id != null) {
         vm.getCities(vm.userinfo.UserProfile.state_id)
       }
       vm.userinfo['_id'] = vm.currentUser._id;
@@ -56,20 +56,20 @@ export default class SettingsController {
       vm.userinfo['mobilenumber'] = vm.currentUser.mobilenumber;
       vm.userinfo['address'] = vm.currentUser.UserProfile.address;
       vm.userinfo['gst_number'] = vm.currentUser.UserProfile.gst_number;
-      if(vm.currentUser.UserProfile.profilepic != null) {
+      if (vm.currentUser.UserProfile.profilepic != null) {
         vm.userinfo['profilepic'] = vm.currentUser.UserProfile.profilepic;
       } else {
         vm.userinfo['profilepic'] = null;
       }
-      if(vm.currentUser.UserProfile.country_id != null) {
+      if (vm.currentUser.UserProfile.country_id != null) {
         vm.userinfo['country_id'] = vm.currentUser.UserProfile.country_id;
         vm.getStates(vm.currentUser.UserProfile.country_id);
       }
-      if(vm.currentUser.UserProfile.state_id != null) {
+      if (vm.currentUser.UserProfile.state_id != null) {
         vm.userinfo['state_id'] = vm.currentUser.UserProfile.state_id;
         vm.getCities(vm.currentUser.UserProfile.state_id);
       }
-    
+
       vm.userinfo['city_id'] = vm.currentUser.UserProfile.city_id;
       vm.userinfo['zip'] = vm.currentUser.UserProfile.zip;
     });
@@ -78,14 +78,14 @@ export default class SettingsController {
   changePassword(form) {
     this.submitted = true;
     form.password.$setValidity('mongoose', true);
-    if(form.$valid) {
+    if (form.$valid) {
       this.Auth.changePassword(this.user.oldPassword, this.user.newPassword)
         .then(() => {
           this.$mdToast.show(
             this.$mdToast.simple()
-            .textContent('Password successfully changed.')
-            .position('bottom right')
-            .hideDelay(3000)
+              .textContent('Password successfully changed.')
+              .position('bottom right')
+              .hideDelay(3000)
           );
           this.$state.go('settings');
         })
@@ -95,9 +95,9 @@ export default class SettingsController {
           this.message = '';
           this.$mdToast.show(
             this.$mdToast.simple()
-            .textContent('Incorrect password')
-            .position('bottom right')
-            .hideDelay(3000)
+              .textContent('Incorrect password')
+              .position('bottom right')
+              .hideDelay(3000)
           );
           this.$state.reload('settings');
         });
@@ -109,7 +109,7 @@ export default class SettingsController {
       this.country = response.data;
     });
   }
-  
+
   getStates(countryid) {
     this.$http.get('/api/States/' + countryid).then(response => {
       this.states = response.data;
@@ -123,26 +123,26 @@ export default class SettingsController {
   }
 
   editPic(pic) {
-    this.userinfo['profilepic'] = 'data:'+pic.filetype+';base64,'+pic.base64;
+    this.userinfo['profilepic'] = 'data:' + pic.filetype + ';base64,' + pic.base64;
   }
 
   userInfoUpdate() {
     this.$http.post('/api/users/updateUser', this.userinfo).then(response => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         this.$mdToast.show(
           this.$mdToast.simple()
-          .textContent(response.data.message)
-          .position('bottom right')
-          .hideDelay(3000)
+            .textContent(response.data.message)
+            .position('bottom right')
+            .hideDelay(3000)
         );
         this.cancel();
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;

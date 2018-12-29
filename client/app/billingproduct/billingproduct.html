@@ -1,0 +1,72 @@
+<div class="container-fluid btmSpace bgWhite">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Billing
+                        Products</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Billing Products</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <button class="icon-btn" ng-click="billingproductCtrl.New()"><i class="fa fa-plus" id="icon-right-5"></i>New
+                        Product</button>
+                </div>
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
+                    <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="col-md-12 padding-top-40 table-data">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column>Product Name</th>
+                                <th md-column>Quantity</th>
+                                <th md-column>Price</th>
+                                <th md-column>Payment Status</th>
+                                <th md-column>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                            <tr md-row md-auto-select ng-repeat="q in billingproductCtrl.productList
+                                                                            | filter: filter.search
+                                                                            | filter: searchBylocation
+                                                                            | filter: search">
+                                <td md-cell>{{q.product_name}}</td>
+                                <td md-cell>{{q.PurchaseEntry.quantity}}</td>
+                                <td md-cell>{{q.PurchaseEntry.purchase_price}}</td>
+                                <td md-cell>{{q.PurchaseEntry.payment_status}}</td>
+                                <td md-cell>
+                                    <a target="_target" href="{{q.PurchaseEntry.attachment}}">view</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <ul uib-pagination total-items="billingproductCtrl.bigTotalItems" ng-model="billingproductCtrl.bigCurrentPage"
+                    max-size="billingproductCtrl.maxSize" class="pagination-sm" boundary-links="true" rotate="false"
+                    ng-click="billingproductCtrl.pagination()"></ul>
+
+                <div layout="row" layout-align="center center">
+                    <div class="alert alert-danger" ng-if="billingproductCtrl.errMsg">
+                        {{billingproductCtrl.errMsg}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

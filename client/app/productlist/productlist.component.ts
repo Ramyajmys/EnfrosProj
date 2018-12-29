@@ -28,9 +28,9 @@ export class ProductlistComponent {
 
   myService;
 
-  mainGST; 
-  custGST; 
-  custInfo; 
+  mainGST;
+  custGST;
+  custInfo;
   distInfo;
   gStatus: boolean;
 
@@ -61,34 +61,34 @@ export class ProductlistComponent {
   }
 
   check() {
-    this.cartArr =  this.myService.getCartInfo();
+    this.cartArr = this.myService.getCartInfo();
     this.custInfo = this.myService.getCustomerInfo();
     this.distInfo = this.myService.getDistributorInfo();
-    
+
     // if(this.cartArr != undefined) {
-      if(this.cartArr.length != 0) {
-        this.customer = this.custInfo._id;
-        this.distributor = this.distInfo._id;
-        this.rFlag = true;
-        
-        var vm = this;
-        for(var i=0; i<this.cartArr.length; i++) {
-          this.productList.find(function (obj) { 
-            if(obj._id == vm.cartArr[i]._id) {
-              obj['qadded'] = true;
-            }
-          })
-        }
-     // }
+    if (this.cartArr.length != 0) {
+      this.customer = this.custInfo._id;
+      this.distributor = this.distInfo._id;
+      this.rFlag = true;
+
+      var vm = this;
+      for (var i = 0; i < this.cartArr.length; i++) {
+        this.productList.find(function (obj) {
+          if (obj._id == vm.cartArr[i]._id) {
+            obj['qadded'] = true;
+          }
+        })
+      }
+      // }
     }
-    
+
   }
 
   get() {
     this.$http.get('/api/ProductDetails/').then(response => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         this.productList = response.data;
-        if(this.productList.length == 0) {
+        if (this.productList.length == 0) {
           this.noData = true;
         } else {
           this.noData = false;
@@ -96,11 +96,11 @@ export class ProductlistComponent {
         }
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -112,12 +112,12 @@ export class ProductlistComponent {
     this.$http.get('/api/ProductCategorys').then(response => {
       this.categoryList = response.data;
       this.catList = this.categoryList;
-      this.catList.unshift({category_name: 'All', _id: 0})
+      this.catList.unshift({ category_name: 'All', _id: 0 })
       this.myService.saveCategories(this.categoryList);
     }, err => {
-      if(err.status === 500) {
+      if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -126,16 +126,16 @@ export class ProductlistComponent {
   }
 
   getCustomerList() {
-    this.$http.post('/api/users/get', {role: 'Customer'}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/users/get', { role: 'Customer' }).then(response => {
+      if (response.status === 200) {
         this.customerList = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -144,16 +144,16 @@ export class ProductlistComponent {
   }
 
   getDistributorList() {
-    this.$http.post('/api/users/get', {role: 'Distributor'}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/users/get', { role: 'Distributor' }).then(response => {
+      if (response.status === 200) {
         this.distributorList = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -162,7 +162,7 @@ export class ProductlistComponent {
   }
 
   onCustomerChange(id) {
-    if(this.rFlag) {
+    if (this.rFlag) {
       this.$state.reload();
       this.cartArr = []
       this.rFlag = false;
@@ -171,31 +171,31 @@ export class ProductlistComponent {
       this.myService.getDistributorInfo(undefined);
       this.myService.getGstatus(undefined);
     } else {
-      this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
+      this.$http.post('/api/UserProfiles/getUserInfo', { id: id }).then(response => {
         this.custInfo = response.data;
         this.myService.saveCustomerInfo(this.custInfo);
         this.checkGST(this.custInfo.gst_number);
       }, err => {
-        if(err.status === 500) {
+        if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
-        } else if(err.status === 404) {
+        } else if (err.status === 404) {
           this.errMsg = 'Not Found';
         } else {
           this.errMsg = err;
         }
       });
     }
-    
+
   }
 
   checkGST(gst) {
-    this.$http.post('/api/UserProfiles/checkGst', {gst: gst}).then(response => {
+    this.$http.post('/api/UserProfiles/checkGst', { gst: gst }).then(response => {
       this.gStatus = response.data.gstatus;
       this.myService.saveGstatus(this.gStatus);
     }, err => {
-      if(err.status === 500) {
+      if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -205,13 +205,13 @@ export class ProductlistComponent {
   }
 
   onDistributorChange(id) {
-    this.$http.post('/api/UserProfiles/getUserInfo', {id: id}).then(response => {
+    this.$http.post('/api/UserProfiles/getUserInfo', { id: id }).then(response => {
       this.distInfo = response.data;
       this.myService.saveDistributorInfo(this.distInfo);
     }, err => {
-      if(err.status === 500) {
+      if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -220,27 +220,42 @@ export class ProductlistComponent {
   }
 
   addToCart(product) {
-    var tax =  parseInt(product.unitprice)  * (product.HSN.hsn_percentage/100);
-    var discount = parseInt(product.unitprice) * (product.discount /100);
-    var price = parseInt(product.unitprice) + tax - discount;
-    
-    product['tax'] = tax;
-    product['product_total'] = price;
-    product['product_discount'] = discount;
+    // var tax = parseInt(product.unitprice) * (product.HSN.hsn_percentage / 100);
+    // var discount = parseInt(product.unitprice) * (product.discount / 100);
+    // var price = parseInt(product.unitprice) + tax - discount;
+
+    // product['tax'] = tax;
+    // product['product_total'] = price;
+    // product['product_discount'] = discount;
+    // product['product_quantity'] = 1;
+    // product['qadded'] = true;
+    // product['active'] = true;
+
+    // this.showCartBtn = false;
+    // if (tax && price || discount) {
+    //   this.cartArr.push(product);
+    //   this.myService.saveCartInfo(this.cartArr);
+    // }
+    // this.cartTotal = parseInt(product.unitprice) + this.cartTotal;
+
+
+
+    product['tax'] = 0;
+    product['unitprice'] = 0;
+    product['product_total'] = 0;
+    product['product_discount'] = 0;
     product['product_quantity'] = 1;
     product['qadded'] = true;
     product['active'] = true;
-
+    product['cgst'] = 0;
+    product['sgst'] = 0;
+    product['igst'] = 0;
+    this.cartTotal = 0;
     this.showCartBtn = false;
-    if(tax && price || discount) {
-      this.cartArr.push(product);
-      this.myService.saveCartInfo(this.cartArr);
-    }
-    this.cartTotal = parseInt(product.unitprice)  + this.cartTotal;
-    
+    this.cartArr.push(product);
     swal({
       title: "Successfully Added",
-      text: product.product_name + " is added to quote!",
+      text: product.product_name + " is added to cart!",
       icon: "success",
     });
   }
@@ -251,12 +266,12 @@ export class ProductlistComponent {
   }
 
   viewproduct(p) {
-    this.$state.go('productPage', {product: p});
+    this.$state.go('productPage', { product: p });
   }
 
   getcat(i, cat) {
-    this.selectedIndex=i;
-    if(cat._id != 0) {
+    this.selectedIndex = i;
+    if (cat._id != 0) {
       this.subList = cat.ProductSubCategories;
       this.getproductsBycategory(cat);
     } else {
@@ -269,21 +284,21 @@ export class ProductlistComponent {
   }
 
   getproductsBycategory(cat) {
-    this.$http.post('/api/ProductDetails/getproductPagecategory', {id: cat._id}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/ProductDetails/getproductPagecategory', { id: cat._id }).then(response => {
+      if (response.status === 200) {
         this.productList = response.data;
-        if(this.productList.length == 0) {
+        if (this.productList.length == 0) {
           this.noData = true;
         } else {
           this.noData = false;
         }
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -292,21 +307,21 @@ export class ProductlistComponent {
   }
 
   getproductsBysubcategory(sub) {
-    this.$http.post('/api/ProductDetails/getProductsubCategory', {sid: sub._id, cid: sub.category_id}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/ProductDetails/getProductsubCategory', { sid: sub._id, cid: sub.category_id }).then(response => {
+      if (response.status === 200) {
         this.productList = response.data;
-        if(this.productList.length == 0) {
+        if (this.productList.length == 0) {
           this.noData = true;
         } else {
           this.noData = false;
         }
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;

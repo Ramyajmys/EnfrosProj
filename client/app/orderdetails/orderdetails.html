@@ -1,9 +1,11 @@
 <div class="container-fluid btmSpace">
     <div class="row">
         <div class="col-md-12">
-                
+
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
-                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Order Details</h1></div>
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Order Details</h1>
+                </div>
                 <div>
                     <ol class="breadcrumb al-breadcrumb">
                         <li class="breadcrumb-item"><a href="/admin">Home</a></li>
@@ -11,14 +13,18 @@
                     </ol>
                 </div>
             </div>
-            <div class="col-md-12"><hr class="hr-width"></div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
 
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
                 <div>
-                    <button class="icon-btn" ng-click="orderdetailsCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New Order</button>
+                    <button class="icon-btn" ng-click="orderdetailsCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New
+                        Order</button>
                 </div>
                 <div>
-                    <select class="form-control" ng-model="orderdetailsCtrl.statusid" name="statusname" ng-change="orderdetailsCtrl.getOrdersByStatus(orderdetailsCtrl.statusid)" required>                  
+                    <select class="form-control" ng-model="orderdetailsCtrl.statusid" name="statusname" ng-change="orderdetailsCtrl.getOrdersByStatus(orderdetailsCtrl.statusid)"
+                        required>
                         <option ng-repeat="status in orderdetailsCtrl.statusList" ng-value="{{status._id}}">{{status.status_name}}</option>
                     </select>
                 </div>
@@ -27,12 +33,13 @@
                     <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
                 </div> -->
                 <div class="search-box">
-                    <input class="search-inp" type='text' ng-model='keyword' placeholder="Search by order name" ng-change="orderdetailsCtrl.search(keyword)">
+                    <input class="search-inp" type='text' ng-model='keyword' placeholder="Search by order name"
+                        ng-change="orderdetailsCtrl.search(keyword)">
                     <button class="search-btn-icon" ng-click="orderdetailsCtrl.search(keyword)"><i class="zmdi zmdi-search"></i></button>
                 </div>
             </div>
-                   
-                <!-- <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="space-between center" layout-align-sm="center center">
+
+            <!-- <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="space-between center" layout-align-sm="center center">
                     <h3>Order List</h3>
                     <md-input-container>
                         <label>Search order</label>
@@ -40,66 +47,69 @@
                     </md-input-container>
                 </div> -->
             <div class="col-md-12 padding-top-40 table-data">
-                    <md-table-container>
-                            <table md-table>
-                                <thead md-head>
-                                    <tr md-row>
-                                        <th md-column>Order Name</th> 
-                                        <th md-column>Date</th>
-                                        <th md-column>Total</th>
-                                        <th md-column>Paid</th>
-                                        <th md-column>Status</th>
-                                        <th md-column ng-show="orderdetailsCtrl.currentUser.role != 'Customer'">Customer</th>
-                                        <th md-column ng-show="orderdetailsCtrl.currentUser.role == 'admin'">Distributor</th>
-                                        <th md-column>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody md-body>   
-                                    <!-- <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column>Order Name</th>
+                                <th md-column>Date</th>
+                                <th md-column>Total</th>
+                                <th md-column>Paid</th>
+                                <th md-column>Status</th>
+                                <th md-column ng-show="orderdetailsCtrl.currentUser.role != 'Customer'">Customer</th>
+                                <th md-column ng-show="orderdetailsCtrl.currentUser.role == 'admin'">Distributor</th>
+                                <th md-column>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                            <!-- <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
                                                                         | orderBy: 'time':true
                                                                         | filter: filter.search 
                                                                         | filter: searchBylocation
                                                                         | filter: search 
                                                                         | orderBy: orderdetailsCtrl.query.order 
                                                                         | limitTo: orderdetailsCtrl.query.limit : (orderdetailsCtrl.query.page -1) * orderdetailsCtrl.query.limit"> -->
-                                                                        <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
+                            <tr md-row md-auto-select ng-repeat="order in orderdetailsCtrl.orderList
                                                                         | orderBy: 'time':true
                                                                         | filter: filter.search 
                                                                         | filter: searchBylocation
                                                                         | filter: search">
-                                        <td md-cell>{{order.order_name}}</td>
-                                        <td md-cell>{{order.order_date | date}}</td>
-                                        <td md-cell>{{order.total}}</td>
-                                        <td md-cell>{{order.paid_flag}}</td>
-                                        <td md-cell ng-if="order.status_id == 1 || order.status_id == 2" style="background: #00BCD4; color: white">{{order.Status.status_name}}</td>
-                                        <td md-cell ng-if="order.status_id == 3" style="background: #FFDe03; color: black">{{order.Status.status_name}}</td>
-                                        <td md-cell ng-if="order.status_id >= 4" style="background: #61d800; color: white">{{order.Status.status_name}}</td>
-                                        <td md-cell ng-show="orderdetailsCtrl.currentUser.role != 'Customer'">{{order.customer.name}}</td>
-                                        <td md-cell ng-show="orderdetailsCtrl.currentUser.role == 'admin'">{{order.distributor.name}}</td>
-        
-                                        <td md-cell>
-                                            <button type="button" class="btn btn-info new-btn"  ng-click="orderdetailsCtrl.view(order)"><i class="fa fa-eye" id="icon-right-5"></i>View</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </md-table-container>
+                                <td md-cell>{{order.order_name}}</td>
+                                <td md-cell>{{order.order_date | date}}</td>
+                                <td md-cell>{{order.total}}</td>
+                                <td md-cell>{{order.paid_flag}}</td>
+                                <td md-cell ng-if="order.status_id == 1 || order.status_id == 2" style="background: #00BCD4; color: white">{{order.Status.status_name}}</td>
+                                <td md-cell ng-if="order.status_id == 3" style="background: #FFDe03; color: black">{{order.Status.status_name}}</td>
+                                <td md-cell ng-if="order.status_id >= 4" style="background: #61d800; color: white">{{order.Status.status_name}}</td>
+                                <td md-cell ng-show="orderdetailsCtrl.currentUser.role != 'Customer'">{{order.customer.name}}</td>
+                                <td md-cell ng-show="orderdetailsCtrl.currentUser.role == 'admin'">{{order.distributor.name}}</td>
 
-                        <ul uib-pagination total-items="orderdetailsCtrl.bigTotalItems" ng-model="orderdetailsCtrl.bigCurrentPage" max-size="orderdetailsCtrl.maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-click="orderdetailsCtrl.pagination()"></ul>
-        
-                        <!-- <md-table-pagination md-limit="orderdetailsCtrl.query.limit" md-limit-options="orderdetailsCtrl.limitOptions" 
+                                <td md-cell>
+                                    <button type="button" class="btn btn-info new-btn" ng-click="orderdetailsCtrl.view(order)"><i
+                                            class="fa fa-eye" id="icon-right-5"></i>View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <ul uib-pagination total-items="orderdetailsCtrl.bigTotalItems" ng-model="orderdetailsCtrl.bigCurrentPage"
+                    max-size="orderdetailsCtrl.maxSize" class="pagination-sm" boundary-links="true" rotate="false"
+                    ng-click="orderdetailsCtrl.pagination()"></ul>
+
+                <!-- <md-table-pagination md-limit="orderdetailsCtrl.query.limit" md-limit-options="orderdetailsCtrl.limitOptions" 
                             md-page="orderdetailsCtrl.query.page" md-total="{{orderdetailsCtrl.orderList.length}}" 
                             md-page-select="orderdetailsCtrl.options.pageSelect" md-boundary-links="orderdetailsCtrl.options.boundaryLinks" 
                             md-on-paginate="logPagination">
                         </md-table-pagination>
          -->
-                    <div layout="row" layout-align="center center"> 
-                        <div class="alert alert-danger" ng-if="orderdetailsCtrl.errMsg">
-                             {{orderdetailsCtrl.errMsg}}
-                        </div>
-                    </div>  
+                <div layout="row" layout-align="center center">
+                    <div class="alert alert-danger" ng-if="orderdetailsCtrl.errMsg">
+                        {{orderdetailsCtrl.errMsg}}
+                    </div>
+                </div>
             </div>
-  
+
         </div>
     </div>
 </div>

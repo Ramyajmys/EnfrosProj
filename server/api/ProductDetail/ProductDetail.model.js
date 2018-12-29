@@ -12,7 +12,7 @@ export default function(sequelize, DataTypes) {
     product_description: DataTypes.STRING,
     product_photo: DataTypes.TEXT,
     quantity: DataTypes.BIGINT,
-    capacity: DataTypes.TEXT,
+    capacity: DataTypes.STRING,
     // unitprice: DataTypes.BIGINT,
     // discount: DataTypes.INTEGER,
     brochure: DataTypes.STRING,

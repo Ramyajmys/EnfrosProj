@@ -54,7 +54,7 @@ export class AddProductComponent {
   $onInit() {
     var vm = this;
     vm.getCurrentUser = vm.Auth.getCurrentUser;
-    vm.getCurrentUser(function(data){
+    vm.getCurrentUser(function (data) {
       vm.currentUser = data;
     });
   }
@@ -63,9 +63,9 @@ export class AddProductComponent {
     this.$http.get('/api/ProductCategorys').then(response => {
       this.categoryList = response.data;
     }, err => {
-      if(err.status === 500) {
+      if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -77,9 +77,9 @@ export class AddProductComponent {
     this.$http.get('/api/HSNs').then(response => {
       this.hsnList = response.data;
     }, err => {
-      if(err.status === 500) {
+      if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -88,13 +88,13 @@ export class AddProductComponent {
   }
 
   onCategoryChange(id) {
-    if(id) {
-      this.$http.post('/api/ProductSubCategorys/getsubcategory', {id: id}).then(response => {
+    if (id) {
+      this.$http.post('/api/ProductSubCategorys/getsubcategory', { id: id }).then(response => {
         this.subCategoryList = response.data;
       }, err => {
-        if(err.status === 500) {
+        if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
-        } else if(err.status === 404) {
+        } else if (err.status === 404) {
           this.errMsg = 'Not Found';
         } else {
           this.errMsg = err;
@@ -137,39 +137,39 @@ export class AddProductComponent {
   }
 
   picChange(pic) {
-    if(pic) {
-      this.def = 'data:'+pic.filetype+';base64,'+pic.base64;
+    if (pic) {
+      this.def = 'data:' + pic.filetype + ';base64,' + pic.base64;
       this.productObj['product_photo'] = this.def;
     }
   }
 
   save() {
     this.btnClicked = true;
-    if(this.productObj['category_id'] == 2) {
+    if (this.productObj['category_id'] == 2) {
       this.productObj['e_data'] = this.elist;
       this.productObj['m_data'] = this.mech_data;
       this.productObj['features'] = this.slist;
     }
 
-    if(this.productObj['category_id'] == 3) {
+    if (this.productObj['category_id'] == 3) {
       this.productObj['i_data'] = this.ilist;
       this.productObj['o_data'] = this.olist;
       this.productObj['features'] = this.slist;
     }
 
-    if(this.productObj['category_id'] == 4) {
+    if (this.productObj['category_id'] == 4) {
       this.productObj['k_data'] = this.klist;
       this.productObj['features'] = this.slist;
     }
 
-    if(this.productObj['category_id'] == 5) {
+    if (this.productObj['category_id'] == 5) {
       this.productObj['features'] = this.slist;
     }
-    
+
     this.productObj['brochurefiles'] = this.brochurefiles;
 
     this.$http.post('/api/ProductDetails/', this.productObj).then(response => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         this.btnClicked = false;
         swal({
           title: response.data.message,
@@ -179,11 +179,11 @@ export class AddProductComponent {
         this.cancel();
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -197,7 +197,7 @@ export class AddProductComponent {
     this.slist = [];
     this.mech_data = {};
     this.electrical_data = {};
-    this.spl_feature = {}; 
+    this.spl_feature = {};
     this.def = './assets/images/solar.jpg';
     this.product_def_pic = undefined;
     this.brochure = undefined;

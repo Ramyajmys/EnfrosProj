@@ -9,6 +9,8 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/billingProducts', require('./api/billingProduct'));
+  app.use('/api/PurchaseEntriess', require('./api/PurchaseEntries'));
   app.use('/api/quotations', require('./api/quotation'));
   app.use('/api/ProductOutputAcDatas', require('./api/ProductOutputAcData'));
   app.use('/api/ProductInputDcDatas', require('./api/ProductInputDcData'));

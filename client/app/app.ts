@@ -45,9 +45,11 @@ import ProductlistComponent from './productlist/productlist.component';
 import HsnlistComponent from './hsnlist/hsnlist.component';
 import EditProductComponent from './editProduct/editProduct.component';
 import QuotationComponent from './quotation/quotation.component';
+import BillingproductComponent from './billingproduct/billingproduct.component';
 
 import 'angular-print';
 import 'angular-material-icons';
+import 'angularjs-dropdown-multiselect';
 // import * as rzModule from 'angularjs-slider';
 const rzModule = require('angularjs-slider');
 
@@ -95,7 +97,8 @@ angular.module('testprojApp', [
   ProductlistComponent,
   HsnlistComponent,
   EditProductComponent,
-  QuotationComponent
+  QuotationComponent,
+  BillingproductComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

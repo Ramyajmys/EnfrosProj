@@ -61,7 +61,7 @@ export class OrderdetailsComponent {
   }
 
   $onInit() {
-    if(this.$state.params.order) {
+    if (this.$state.params.order) {
       this.orderObj = this.$state.params.order;
       this.getstatus();
       this.getUsers(this.orderObj.customer._id, this.orderObj.distributor._id);
@@ -69,11 +69,11 @@ export class OrderdetailsComponent {
     }
     var vm = this;
     this.getCurrentUser = this.Auth.getCurrentUser;
-    this.getCurrentUser(function(data){
+    this.getCurrentUser(function (data) {
       vm.currentUser = data;
       vm.rolename = vm.currentUser.role;
       vm.userid = vm.currentUser._id;
-      if(vm.currentUser.role == 'admin' || vm.currentUser.role == 'Distributor') {
+      if (vm.currentUser.role == 'admin' || vm.currentUser.role == 'Distributor') {
         vm.statusid = 2;
         vm.readonlyslider = false;
         vm.getOrdersByStatus(2);
@@ -87,21 +87,21 @@ export class OrderdetailsComponent {
   }
 
   clickNew() {
-    this.$state.go('productlist');
+    this.$state.go('bill');
   }
 
   getorders(role, id, sid) {
-    this.$http.post('/api/orders/getordersbyrole', {role: role, id: id, sid: sid}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/orders/getordersbyrole', { role: role, id: id, sid: sid }).then(response => {
+      if (response.status === 200) {
         this.bigTotalItems = response.data;
         // this.orderList = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -115,17 +115,17 @@ export class OrderdetailsComponent {
   }
 
   paginationList(role, id, sid) {
-    this.$http.post('/api/orders/getorders', {role: role, id: id, sid: sid, offset: this.offset}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/orders/getorders', { role: role, id: id, sid: sid, offset: this.offset }).then(response => {
+      if (response.status === 200) {
         this.orderList = response.data;
         //console.log(response.data)
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -141,16 +141,16 @@ export class OrderdetailsComponent {
 
   getstatusList() {
     this.$http.get('/api/Status/').then(response => {
-      if(response.status === 200) {
-        this.statusList = response.data;      
+      if (response.status === 200) {
+        this.statusList = response.data;
         this.statusid = 2;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -160,57 +160,57 @@ export class OrderdetailsComponent {
 
   getstatus() {
     this.$http.get('/api/Status/').then(response => {
-      if(response.status === 200) {
-        for(var i=0; i<response.data.length; i++) {
-          if(response.data[i]._id == 1) {
+      if (response.status === 200) {
+        for (var i = 0; i < response.data.length; i++) {
+          if (response.data[i]._id == 1) {
             var d = new Date(this.orderObj.order_date);
             var legen;
-            if(this.orderObj.order_date != null) {
+            if (this.orderObj.order_date != null) {
               legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
             } else {
               legen = response.data[i].status_name;
             }
-            this.statusArray.push({value: response.data[i]._id, legend: legen});
+            this.statusArray.push({ value: response.data[i]._id, legend: legen });
           }
-          if(response.data[i]._id == 2) {
+          if (response.data[i]._id == 2) {
             var d = new Date(this.orderObj.order_date);
             var legen;
-            if(this.orderObj.order_date != null) {
+            if (this.orderObj.order_date != null) {
               legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
             } else {
               legen = response.data[i].status_name;
             }
-            this.statusArray.push({value: response.data[i]._id, legend: legen});
+            this.statusArray.push({ value: response.data[i]._id, legend: legen });
           }
-          if(response.data[i]._id == 3) {
+          if (response.data[i]._id == 3) {
             var d = new Date(this.orderObj.ship_date);
             var legen;
-            if(this.orderObj.ship_date != null) {
+            if (this.orderObj.ship_date != null) {
               legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
             } else {
               legen = response.data[i].status_name;
             }
-            this.statusArray.push({value: response.data[i]._id, legend: legen});
+            this.statusArray.push({ value: response.data[i]._id, legend: legen });
           }
-          if(response.data[i]._id == 4) {
+          if (response.data[i]._id == 4) {
             var d = new Date(this.orderObj.delivery_date);
             var legen;
-            if(this.orderObj.delivery_date != null) {
+            if (this.orderObj.delivery_date != null) {
               legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
             } else {
               legen = response.data[i].status_name;
             }
-            this.statusArray.push({value: response.data[i]._id, legend: legen});
+            this.statusArray.push({ value: response.data[i]._id, legend: legen });
           }
-          if(response.data[i]._id == 5) {
+          if (response.data[i]._id == 5) {
             var d = new Date(this.orderObj.delivery_date);
             var legen;
-            if(this.orderObj.delivery_date != null) {
+            if (this.orderObj.delivery_date != null) {
               legen = response.data[i].status_name + ' ' + d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
             } else {
               legen = response.data[i].status_name;
             }
-            this.statusArray.push({value: response.data[i]._id, legend: legen});
+            this.statusArray.push({ value: response.data[i]._id, legend: legen });
           }
         }
         var vm = this;
@@ -221,18 +221,18 @@ export class OrderdetailsComponent {
             showTicksValues: true,
             stepsArray: vm.statusArray,
             readOnly: vm.readonlyslider,
-            onEnd: function() {
+            onEnd: function () {
               vm.myChangeListener()
-            } 
+            }
           }
         };
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -241,17 +241,17 @@ export class OrderdetailsComponent {
   }
 
   getUsers(cid, did) {
-    this.$http.post('/api/Userprofiles/getusers', {cid: cid, did: did}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/Userprofiles/getusers', { cid: cid, did: did }).then(response => {
+      if (response.status === 200) {
         this.custInfo = response.data.customer;
         this.distInfo = response.data.distributor;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -261,20 +261,20 @@ export class OrderdetailsComponent {
 
   view(order) {
     this.orderObj = order;
-    this.$state.go('vieworder', {order: order});
+    this.$state.go('vieworder', { order: order });
   }
 
   getOrderDetails(oid) {
-    this.$http.post('/api/orderDetails/getdetails', {id: oid}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/orderDetails/getdetails', { id: oid }).then(response => {
+      if (response.status === 200) {
         this.cInfo = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -283,20 +283,20 @@ export class OrderdetailsComponent {
   }
 
   myChangeListener() {
-    this.$http.post('/api/orders/updatestatus', {status: this.slider['value'], id: this.orderObj._id}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/orders/updatestatus', { status: this.slider['value'], id: this.orderObj._id }).then(response => {
+      if (response.status === 200) {
         swal({
           title: "Status Successfully Updated",
           icon: "success",
         });
-        this.$state.go('orderdetails');
+        // this.$state.go('orderdetails');
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -305,8 +305,8 @@ export class OrderdetailsComponent {
   }
 
   sendEmail(text, email, name) {
-    this.$http.post('/api/orderDetails/sendEmail', {name: name, email: email, text: text}).then(response => {
-      if(response.status == 200) {
+    this.$http.post('/api/orderDetails/sendEmail', { name: name, email: email, text: text }).then(response => {
+      if (response.status == 200) {
         swal({
           title: response.data.message,
           icon: "success",
@@ -315,11 +315,11 @@ export class OrderdetailsComponent {
         //this.$state.go('orderdetails');
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -328,8 +328,8 @@ export class OrderdetailsComponent {
   }
 
   sendSMS(text, mobilenumber, name) {
-    this.$http.post('/api/orderDetails/sendSMS', {name: name, mobilenumber: mobilenumber, text: text}).then(response => {
-      if(response.status == 200) {
+    this.$http.post('/api/orderDetails/sendSMS', { name: name, mobilenumber: mobilenumber, text: text }).then(response => {
+      if (response.status == 200) {
         swal({
           title: response.data.message,
           icon: "success",
@@ -338,11 +338,11 @@ export class OrderdetailsComponent {
         //this.$state.go('orderdetails');
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -351,24 +351,24 @@ export class OrderdetailsComponent {
   }
 
   search(keyword) {
-    this.$http.post('/api/orders/search', {role: this.rolename, id: this.userid, sid: this.statusid, offset: this.offset, keyword: keyword}).then(response => {
+    this.$http.post('/api/orders/search', { role: this.rolename, id: this.userid, sid: this.statusid, offset: this.offset, keyword: keyword }).then(response => {
       //console.log(response)
-      if(response.status == 200) {
+      if (response.status == 200) {
         this.orderList = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
       }
     });
   }
- 
+
 }
 
 export default angular.module('enfrosProjApp.orderdetails', [uiRouter])

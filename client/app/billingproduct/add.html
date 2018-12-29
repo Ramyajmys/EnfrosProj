@@ -1,0 +1,121 @@
+<div class="container-fluid btmSpace" ng-hide="billingproductCtrl.btnClicked" style="background: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add Product</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Add Product</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-top-40">
+            <form name="uForm" ng-submit="billingproductCtrl.save()">
+                <div class="topSpace">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="billingproductCtrl.productObj.category_id" name="category_id"
+                                ng-change="billingproductCtrl.onCategoryChange(billingproductCtrl.productObj.category_id)"
+                                required>
+                                <option value="">Select Category</option>
+                                <option ng-repeat="category in billingproductCtrl.categoryList" value="{{category._id}}">{{category.category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="billingproductCtrl.productObj.sub_category_id" name="sub_category_id"
+                                required>
+                                <option value="">Select Sub-category</option>
+                                <option ng-repeat="sub in billingproductCtrl.subCategoryList" value="{{sub._id}}">{{sub.sub_category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="billingproductCtrl.productObj.product_name"
+                                placeholder="Enter Product name" name="productname" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <textarea type="text" rows="2" class="form-control" ng-model="billingproductCtrl.productObj.product_description"
+                                placeholder="Enter Description" name="productdesc" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="number" class="form-control" ng-model="billingproductCtrl.productObj.quantity"
+                                placeholder="Enter Quantity" name="quantity" min="0" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="billingproductCtrl.productObj.capacity"
+                                placeholder="Enter Capacity" name="capacity" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="billingproductCtrl.productObj.hsn_id" name="hsn_id"
+                                required>
+                                <option value="">Select HSN code</option>
+                                <option ng-repeat="hsn in billingproductCtrl.hsnList" value="{{hsn._id}}">{{hsn.hsn_code}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="billingproductCtrl.productObj.supplier_name"
+                                placeholder="Supplier Name" name="supplier_name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="number" class="form-control" ng-model="billingproductCtrl.productObj.purchase_price"
+                                placeholder="Purchase Price" name="price" min="0" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control" ng-model="billingproductCtrl.productObj.payment" name="payment"
+                            required>
+                            <option value="">Payment Status</option>
+                            <option ng-repeat="sub in billingproductCtrl.paymentArr" value="{{sub.value}}">{{sub.value}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-md-offset-4 p-t-20">
+                        <label class="control-label col-sm-3">Attachment: </label>
+                        <div class="form-group">
+                            <input type='file' ng-model="billingproductCtrl.brochure" ng-change="billingproductCtrl.brochureChange(billingproductCtrl.brochure)"
+                                base-sixty-four-input required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topSpace">
+                    <div class="col-md-12 padding-left-right-0 padding-top-40" layout="row" layout-align="center center">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="billingproductCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="billingproductCtrl.cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Msg -->
+                <div class="col-md-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="billingproductCtrl.errMsg">
+                    <p class="tooltips">{{billingproductCtrl.errMsg}}</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

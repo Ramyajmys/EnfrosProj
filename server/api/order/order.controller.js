@@ -11,15 +11,16 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import {Order} from '../../sqldb';
-import {OrderDetail} from '../../sqldb';
+import { Order } from '../../sqldb';
+import { OrderDetail } from '../../sqldb';
 import config from '../../config/environment';
-import {User} from '../../sqldb';
-import {UserProfile} from '../../sqldb';
-import {Status} from '../../sqldb';
-import {Country} from '../../sqldb';
-import {State} from '../../sqldb';
-import {City} from '../../sqldb';
+import { User } from '../../sqldb';
+import { UserProfile } from '../../sqldb';
+import { Status } from '../../sqldb';
+import { Country } from '../../sqldb';
+import { State } from '../../sqldb';
+import { City } from '../../sqldb';
+import {PurchaseEntries} from '../../sqldb';
 
 var fs = require('fs');
 var pdf = require('html-pdf');
@@ -27,8 +28,8 @@ var nodemailer = require('nodemailer');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
-  return function(entity) {
-    if(entity) {
+  return function (entity) {
+    if (entity) {
       return res.status(statusCode).json(entity);
     }
     return null;
@@ -36,11 +37,11 @@ function respondWithResult(res, statusCode) {
 }
 
 function patchUpdates(patches) {
-  return function(entity) {
+  return function (entity) {
     try {
       // eslint-disable-next-line prefer-reflect
       jsonpatch.apply(entity, patches, /*validate*/ true);
-    } catch(err) {
+    } catch (err) {
       return Promise.reject(err);
     }
 
@@ -49,8 +50,8 @@ function patchUpdates(patches) {
 }
 
 function removeEntity(res) {
-  return function(entity) {
-    if(entity) {
+  return function (entity) {
+    if (entity) {
       return entity.destroy()
         .then(() => {
           res.status(204).end();
@@ -60,8 +61,8 @@ function removeEntity(res) {
 }
 
 function handleEntityNotFound(res) {
-  return function(entity) {
-    if(!entity) {
+  return function (entity) {
+    if (!entity) {
       res.status(404).end();
       return null;
     }
@@ -71,7 +72,7 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     res.status(statusCode).send(err);
   };
 }
@@ -85,44 +86,44 @@ function handleError(res, statusCode) {
 
 // Gets a list of Orders
 export function getordersbyrole(req, res) {
-  if(req.body.role == 'admin') {
-    return Order.count({where: {status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'admin') {
+    return Order.count({ where: { status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  if(req.body.role == 'Distributor') {
-    return Order.count({where:{distributor_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'Distributor') {
+    return Order.count({ where: { distributor_id: req.body.id, status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  if(req.body.role == 'Customer') {
-    return Order.count({where:{customer_id: req.body.id, status_id: req.body.sid}, include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'Customer') {
+    return Order.count({ where: { customer_id: req.body.id, status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  
+
 }
 
 export function getorders(req, res) {
   var limit = 10;
   var offset = (req.body.offset - 1) * limit;
 
-  if(req.body.role == 'admin') {
-    return Order.findAll({where: {status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'admin') {
+    return Order.findAll({ where: { status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  if(req.body.role == 'Distributor') {
-    return Order.findAll({where:{distributor_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'Distributor') {
+    return Order.findAll({ where: { distributor_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  if(req.body.role == 'Customer') {
-    return Order.findAll({where:{customer_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'Customer') {
+    return Order.findAll({ where: { customer_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  
+
 }
 
 export function search(req, res) {
@@ -130,20 +131,20 @@ export function search(req, res) {
   var offset = (req.body.offset - 1) * limit;
   var keyword = req.body.keyword;
 
-  if(req.body.role == 'admin') {
-    return Order.findAll({where: {order_name: { $like: '%' + keyword + '%' }, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'admin') {
+    return Order.findAll({ where: { order_name: { $like: '%' + keyword + '%' }, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  if(req.body.role == 'Distributor') {
-    return Order.findAll({where:{order_name: { $like: '%' + keyword + '%' }, distributor_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'Distributor') {
+    return Order.findAll({ where: { order_name: { $like: '%' + keyword + '%' }, distributor_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
-  if(req.body.role == 'Customer') {
-    return Order.findAll({where:{order_name: { $like: '%' + keyword + '%' }, customer_id: req.body.id, status_id: req.body.sid}, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: User, as: 'distributor'}, {model: User, as: 'customer'}, {model: Status}]})
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.body.role == 'Customer') {
+    return Order.findAll({ where: { order_name: { $like: '%' + keyword + '%' }, customer_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
   }
 }
 
@@ -162,9 +163,10 @@ export function show(req, res) {
 // Creates a new Order in the DB
 export function create(req, res) {
 
-  const uniqueRandom = require('unique-random');
-  const rand = uniqueRandom(1, 10000000000);
-  var ordername = rand();
+  // const uniqueRandom = require('unique-random');
+  // const rand = uniqueRandom(1, 10000000000);
+  // var ordername = rand();
+  var ordername = new Date().getTime();
 
   var cart = req.body.cart;
   var customer = req.body.customer;
@@ -175,7 +177,7 @@ export function create(req, res) {
 
   var d = new Date();
   var ampm = d.getHours() >= 12 ? 'pm' : 'am';
-  var today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear() + '  '+ d.getHours() +':'+ d.getMinutes()+ ':' +d.getSeconds();
+  var today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear() + '  ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 
   var orderObj = {
     order_name: ordername,
@@ -190,14 +192,14 @@ export function create(req, res) {
     distributor_id: distributor.User._id
   };
 
-  Order.create(orderObj).then(function(order) {
-    if(order) {
+  Order.create(orderObj).then(function (order) {
+    if (order) {
 
-      var prod = {}, od = {}, temp = '', oRes;
+      var prod = {}, od = {}, temp = '', oRes, remaingQ;
 
-      for(var i = 0; i< cart.length; i++) {
+      for (var i = 0; i < cart.length; i++) {
         prod = cart[i];
-        
+
         od.order_id = order._id;
         od.order_name = order.order_name;
         od.unitprice = prod.unitprice;
@@ -209,21 +211,24 @@ export function create(req, res) {
         od.sgst = prod.sgst;
         od.igst = prod.igst;
         test.push(od);
+
+        remaingQ = prod.PurchaseEntry.quantity - prod.product_quantity
         oRes = OrderDetail.create(od);
+        PurchaseEntries.update({quantity: remaingQ}, {where: {prod_id: prod._id}})
 
-        temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">'+ cart[i].product_name +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].unitprice +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].product_discount +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].cgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].sgst +'</td><td width="10%" style="border: 1px solid #eee;">₹'+ cart[i].igst +'</td><td width="10%" style="border: 1px solid #eee;">'+ cart[i].product_quantity +'</td><td width="10%" style="border: 1px solid #eee;">₹'+cart[i].product_total+'</td></tr>';
+        temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">' + cart[i].product_name + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].unitprice + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].product_discount + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].cgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].sgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].igst + '</td><td width="10%" style="border: 1px solid #eee;">' + cart[i].product_quantity + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].product_total + '</td></tr>';
 
-        if(test.length == cart.length) {
-          User.findOne({where: {_id: 1}, include: [{model: UserProfile}]}).then(function(admin) {
+        if (test.length == cart.length) {
+          User.findOne({ where: { _id: 1 }, include: [{ model: UserProfile }] }).then(function (admin) {
             createInvoice(customer, order.order_name, admin, ftotal, temp, extra, today);
-            return res.status(200).json({msg: 'Success'});
+            return res.status(200).json({ msg: 'Success' });
           })
-          .catch(handleError(res));
+            .catch(handleError(res));
         }
       }
     }
   })
-  .catch(handleError(res));
+    .catch(handleError(res));
 }
 
 function createInvoice(customer, invoice, admin, total, temp, extra, date) {
@@ -232,32 +237,32 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
       <h1>Enfros Solution</h1>\
       <h4>ADDRESS</h4>\
       <h4>Bangalore</h4>\
-      <h3>GSTIN: '+ admin.UserProfile.gst_number +'</h3>\
+      <h3>GSTIN: '+ admin.UserProfile.gst_number + '</h3>\
   </div>\
   <div style="width: 100%; font-size: 16px;">\
     <div style="width: 50%; float: left;">\
-        <p><strong style"font-weight: bold">Invoice No: </strong>'+ invoice+'</p>\
+        <p><strong style"font-weight: bold">Invoice No: </strong>'+ invoice + '</p>\
     </div>\
     <div style="width: 50%; float: right" >\
-        <p><strong style"font-weight: bold">Invoice Date: </strong>'+ date +'</p>\
+        <p><strong style"font-weight: bold">Invoice Date: </strong>'+ date + '</p>\
     </div>\
   </div><hr>\
   <div style="font-size: 16px; width: 100%; padding: 5px">\
     <div style="float: left; width: 50%;">\
         <p style="font-weight: bold; text-align: center;">Billed to</p>\
-        <p><strong style"font-weight: bold">Name: </strong>'+ customer.User.name +'</p>\
-        <p><strong style"font-weight: bold">Address: </strong>'+ customer.address +', '+ customer.City.cityName +', \
-            '+ customer.State.stateName+', '+ customer.Country.countryName+'</p>\
-        <p><strong style"font-weight: bold">GSTIN: </strong>'+ customer.gst_number+'</p>\
-        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName+'</p>\
+        <p><strong style"font-weight: bold">Name: </strong>'+ customer.User.name + '</p>\
+        <p><strong style"font-weight: bold">Address: </strong>'+ customer.address + ', ' + customer.City.cityName + ', \
+            '+ customer.State.stateName + ', ' + customer.Country.countryName + '</p>\
+        <p><strong style"font-weight: bold">GSTIN: </strong>'+ customer.gst_number + '</p>\
+        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName + '</p>\
     </div>\
     <div style="float: right; width: 50%;">\
         <p style="font-weight: bold; text-align: center;">Shipped to</p>\
-        <p><strong style"font-weight: bold">Name: </strong>'+ customer.User.name +'</p>\
-        <p><strong style"font-weight: bold">Address: </strong>'+ customer.address +', '+ customer.City.cityName +', \
-            '+ customer.State.stateName+', '+ customer.Country.countryName+'</p>\
-        <p><strong style"font-weight: bold">GSTIN: </strong>'+ customer.gst_number+'</p>\
-        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName+'</p>\
+        <p><strong style"font-weight: bold">Name: </strong>'+ customer.User.name + '</p>\
+        <p><strong style"font-weight: bold">Address: </strong>'+ customer.address + ', ' + customer.City.cityName + ', \
+            '+ customer.State.stateName + ', ' + customer.Country.countryName + '</p>\
+        <p><strong style"font-weight: bold">GSTIN: </strong>'+ customer.gst_number + '</p>\
+        <p><strong style"font-weight: bold">State: </strong>'+ customer.State.stateName + '</p>\
     </div>\
   </div><hr>\
   <div style="font-size: 16px; width: 100%; padding: 5px">\
@@ -275,30 +280,32 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
           </tr>\
       </thead>\
       <tbody>\
-      <tr>'+temp+'\
+      <tr>'+ temp + '\
       <tr>\
-          <td colspan="8" style="text-align: right; font-weight: bold;"><span style="padding-right:10px;">Total Price: ₹'+total+'</span></td>\
+          <td colspan="8" style="text-align: right; font-weight: bold;"><span style="padding-right:10px;">Total Price: ₹'+ total + '</span></td>\
       </tr>\
     </tbody>\
   </table>\
   </div>\
 </div>'
 
-  var options = { format: "A4", orientation: "landscape", border: {
-    right: "10px",
-    bottom: "20px"
-  } };
+  var options = {
+    format: "A4", orientation: "landscape", border: {
+      right: "10px",
+      bottom: "20px"
+    }
+  };
 
   var mode = process.env.NODE_ENV;
   var path;
-  if(mode == 'development') {
-    path = './client/assets/invoice/'+invoice+'.pdf';
-  } else if(mode == 'production') {
-    var path = './dist/client/assets/invoice/'+invoice+'.pdf';
+  if (mode == 'development') {
+    path = './client/assets/invoice/' + invoice + '.pdf';
+  } else if (mode == 'production') {
+    var path = './dist/client/assets/invoice/' + invoice + '.pdf';
   }
   //var path = './client/assets/invoice/'+invoice+'.pdf';
 
-  pdf.create(html, options).toFile(path, function(err, res) {
+  pdf.create(html, options).toFile(path, function (err, res) {
     if (err) return console.log(err);
     sendEmailNotification(customer.User.email, customer.User.name, invoice, extra);
   });
@@ -317,18 +324,18 @@ function sendEmailNotification(email, name, file, ex) {
       pass: config.password
     }
   });
-  
+
   var mailOptions = {
     from: config.mailSenderId,
-    to: email, 
-    attachments: [{filename: file+'.pdf', path:'./client/assets/invoice/'+file+'.pdf', contentType: 'application/pdf'}],
-    subject: 'Welcome, '+ name + '!', 
+    to: email,
+    attachments: [{ filename: file + '.pdf', path: './client/assets/invoice/' + file + '.pdf', contentType: 'application/pdf' }],
+    subject: 'Welcome, ' + name + '!',
     text: name + ',\n\nThanks for joining our community. If you have any questions, please don\'t hesitate to send them our way. Feel free to reply to this email directly.\n\nSincerely,\nThe Management',
     html: '<head><meta charset="ISO-8859-1"><title>Invitation URL</title>' +
-    '</head><body><p style="padding:0"></p> ' +
-    '<p id="demo"style="float:right"></p>' +
-    '<script>var d = new Date(); var n = d.toDateString(); document.getElementById("demo").innerHTML = n;</script>' +
-    '<table style="background: #F5F6F7; width: 100%;">\
+      '</head><body><p style="padding:0"></p> ' +
+      '<p id="demo"style="float:right"></p>' +
+      '<script>var d = new Date(); var n = d.toDateString(); document.getElementById("demo").innerHTML = n;</script>' +
+      '<table style="background: #F5F6F7; width: 100%;">\
       <tbody>\
         <tr>\
           <td>\
@@ -361,7 +368,7 @@ function sendEmailNotification(email, name, file, ex) {
                               font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                               font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;"> \
                               We will confirm your order once payment is recieved. Please contact us if you have any \
-                              questions regarding your order.<br><br>'+ex.emailtext+'</p>\
+                              questions regarding your order.<br><br>'+ ex.emailtext + '</p>\
                       <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
                               font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                               font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;\
@@ -385,10 +392,10 @@ function sendEmailNotification(email, name, file, ex) {
     </tbody>\
   </table>'
   };
-    
+
   transporter.sendMail(mailOptions, (error, success) => {
     if (error) {
-        return console.log(error);
+      return console.log(error);
     }
     console.log('Mail sent');
   });
@@ -397,7 +404,7 @@ function sendEmailNotification(email, name, file, ex) {
 
 // Upserts the given Order in the DB at the specified ID
 export function upsert(req, res) {
-  if(req.body._id) {
+  if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
 
@@ -412,7 +419,7 @@ export function upsert(req, res) {
 
 // Updates an existing Order in the DB
 export function patch(req, res) {
-  if(req.body._id) {
+  if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
   return Order.find({
@@ -442,7 +449,7 @@ export function updatestatus(req, res) {
   var dObj = {
     status_id: req.body.status
   }
-  if(req.body.status == 3) {
+  if (req.body.status == 3) {
     dObj['ship_date'] = new Date();
     return Order.update(dObj, {
       where: {
@@ -452,7 +459,7 @@ export function updatestatus(req, res) {
       .then(respondWithResult(res))
       .catch(handleError(res));
   }
-  if(req.body.status == 4) {
+  if (req.body.status == 4) {
     dObj['delivery_date'] = new Date();
     return Order.update(dObj, {
       where: {
@@ -463,40 +470,43 @@ export function updatestatus(req, res) {
       .catch(handleError(res));
   }
 
-  if(req.body.status == 5) { 
-    return Order.update(dObj, {where: { _id: req.body.id}
+  if (req.body.status == 5) {
+    return Order.update(dObj, {
+      where: { _id: req.body.id }
     })
       .then(respondWithResult(res))
       .catch(handleError(res));
   }
-  
+
 }
 
 
 export function createQuotation(req, res) {
   var temp = req.body.template;
-  var img = config.domain+'assets/images/logo.png';
+  var img = config.domain + 'assets/images/logo.png';
 
   var html = '<div style="width: 95%;padding: 10px; margin:auto; text-align: center; letter-spacing:1px; font-size: 20px;">\
   <div style="width: 95%; text-align: right; ">\
-      <img src='+img+' style="width:190px; height:80px"/><br>\
-  </div>'+temp+'</div>';
+      <img src='+ img + ' style="width:190px; height:80px"/><br>\
+  </div>'+ temp + '</div>';
 
-  var options = { format: "A4", orientation: "landscape", border: {
-    right: "10px",
-    bottom: "20px"
-  } };
+  var options = {
+    format: "A4", orientation: "landscape", border: {
+      right: "10px",
+      bottom: "20px"
+    }
+  };
 
   var mode = process.env.NODE_ENV;
   var path;
-  if(mode == 'development') {
+  if (mode == 'development') {
     path = './client/assets/invoice/test.pdf';
-  } else if(mode == 'production') {
+  } else if (mode == 'production') {
     var path = './dist/client/assets/invoice/test.pdf';
   }
   //var path = './client/assets/invoice/'+invoice+'.pdf';
 
-  pdf.create(html, options).toFile(path, function(err, res) {
+  pdf.create(html, options).toFile(path, function (err, res) {
     if (err) return console.log(err);
   });
 }

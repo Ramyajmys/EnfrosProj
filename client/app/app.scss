@@ -41,6 +41,18 @@ body {
 .padding-top-40 {
   padding-top: 40px;
 }
+.p-t-20 {
+  padding-top: 20px;
+}
+.p-t-30 {
+  padding-top: 30px;
+}
+.p-t-10 {
+  padding-top: 10px;
+}
+.p-t-40 {
+  padding-top: 40px;
+}
 .tooltips {
   color: #dc3545;
 }
@@ -71,6 +83,7 @@ body {
 @import 'addProductSubCategory/addProductSubCategory';
 @import 'admin/admin';
 @import 'allCategoryList/allCategoryList';
+@import 'billingproduct/billingproduct';
 @import 'cartDetails/cartDetails';
 @import 'customer/customer';
 @import 'customerDashboard/customerDashboard';

@@ -73,7 +73,7 @@
                     <tr>
                         <th>Product</th>
                         <th>Unitprice</th>
-                        <th>Discount</th>
+                        <!-- <th>Discount</th> -->
                         <th>CGST</th>
                         <th>SGST</th>
                         <th>IGST</th>
@@ -85,7 +85,7 @@
                     <tr ng-repeat="cart in cartDetailsCtrl.cInfo">
                         <td>
                             <div layout="row">
-                                <div><img src="{{cart.product_photo}}" alt="Product" style="width: 100px; height: 100px;"/></div> 
+                                <!-- <div><img src="{{cart.product_photo}}" alt="Product" style="width: 100px; height: 100px;"/></div>  -->
                                 <div style="padding-left: 10px;">
                                     <p>{{cart.product_name}}</p>
                                     <p style="color: green">In stock</p>
@@ -93,18 +93,33 @@
                                 </div> 
                             </div>
                         </td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice|  number : 2}}</p></div></td>
+                        <!-- <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.unitprice|  number : 2}}</p></div></td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_discount | number : 2}} ({{cart.discount}}%)</p></div></td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.tax / 2 | number : 2}} ({{cart.HSN.hsn_percentage/2}} %)</p></div></td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cartDetailsCtrl.gstatus == true ? (cart.tax/2 | number : 2) : 0}} ({{cartDetailsCtrl.gstatus == true ? (cart.HSN.hsn_percentage/2) : 0}}%)</p></div></td>
-                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cartDetailsCtrl.gstatus == true ? 0 : (cart.tax/2 | number : 2)}} ({{cartDetailsCtrl.gstatus == true ? 0 : (cart.HSN.hsn_percentage/2)}}%)</p></div></td>
+                        <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cartDetailsCtrl.gstatus == true ? 0 : (cart.tax/2 | number : 2)}} ({{cartDetailsCtrl.gstatus == true ? 0 : (cart.HSN.hsn_percentage/2)}}%)</p></div></td> -->
+
+
                         <td>
-                            <input type="number" class="form-control" min="1" value="{{cart.product_quantity}}" ng-model="quantity" ng-change="cartDetailsCtrl.quantityChange(cart, quantity)"/>
+                            <input type="number" step="0.01" class="form-control" min="0" ng-model="cart.unitprice" ng-change="cartDetailsCtrl.valueChange(cart)"/>
+                        </td>
+                        <td>
+                            <input type="number" step="0.01" class="form-control" min="0" ng-model="cart.cgst" ng-change="cartDetailsCtrl.valueChange(cart)"/>
+                        </td>
+                        <td>
+                            <input type="number" step="0.01" class="form-control" min="0" ng-model="cart.sgst" ng-change="cartDetailsCtrl.valueChange(cart)"/>
+                        </td>
+                        <td>
+                            <input type="number" step="0.01" class="form-control" min="0"  ng-model="cart.igst" ng-change="cartDetailsCtrl.valueChange(cart)"/>
+                        </td>
+
+                        <td>
+                            <input type="number" class="form-control" min="1"  ng-model="cart.product_quantity" ng-change="cartDetailsCtrl.valueChange(cart)"/>
                         </td>
                         <td><div layout="row"><i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i><p>{{cart.product_total | number : 2}}</p></div></td>
                     </tr>
                     <tr>
-                        <td colspan="8" style="text-align: right; font-weight: bold;">Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{cartDetailsCtrl.finaltotal | number : 2}}</td>
+                        <td colspan="8" style="text-align: right; font-weight: bold;"> Subtotal:  <i class="fa fa-inr" aria-hidden="true" style="padding-top: 5px; font-size: 12px;"></i>{{cartDetailsCtrl.finaltotal | number : 2}}</td>
                     </tr>
                     <tr>
                         <td colspan="8" style="text-align: right; font-weight: bold; font-size: 15px;">
@@ -115,7 +130,7 @@
                                 cartDetailsCtrl.placeofsupply == undefined || cartDetailsCtrl.emailtext == undefined">Confirm Order</button> -->
                             <button ng-click="cartDetailsCtrl.addProduct()" class="btn btn-success new-btn"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add Product</button>
                             <button ng-click="cartDetailsCtrl.confirmOrder()" class="btn btn-success green-btn" 
-                                ng-disabled="btnClicked == true"> <i class="fa fa-check" aria-hidden="true" id="icon-right-5"></i>Confirm Order</button>
+                                ng-disabled="cartDetailsCtrl.finaltotal == 0"> <i class="fa fa-check" aria-hidden="true" id="icon-right-5"></i>Confirm Order</button>
                             </td>
                     </tr>
                 </tbody>

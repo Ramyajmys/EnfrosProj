@@ -14,6 +14,8 @@ var db = {
 };
 
 // Insert models below
+db.BillingProduct = db.sequelize.import('../api/billingProduct/billingProduct.model');
+db.PurchaseEntries = db.sequelize.import('../api/PurchaseEntries/PurchaseEntries.model');
 db.Quotation = db.sequelize.import('../api/quotation/quotation.model');
 db.ProductOutputAcData = db.sequelize.import('../api/ProductOutputAcData/ProductOutputAcData.model');
 db.ProductInputDcData = db.sequelize.import('../api/ProductInputDcData/ProductInputDcData.model');
@@ -76,7 +78,7 @@ db.State.hasMany(db.City, {
   }
 });
 
-//user association 
+//user association
 db.UserProfile.belongsTo(db.User, {
   foreignKey: {
     name: 'user_id',
@@ -326,6 +328,52 @@ db.Quotation.belongsTo(db.User, {
 db.User.hasMany(db.Quotation, {
   foreignKey: {
     name: 'distributor_id'
+  }
+});
+
+db.BillingProduct.belongsTo(db.ProductCategory, {
+  foreignKey: {
+    name: 'category_id',
+    allowNull: false
+  }
+});
+db.ProductCategory.hasMany(db.BillingProduct, {
+  foreignKey: {
+    name: 'category_id',
+    allowNull: false
+  }
+});
+db.BillingProduct.belongsTo(db.ProductSubCategory, {
+  foreignKey: {
+    name: 'sub_category_id',
+    allowNull: false
+  }
+});
+db.ProductSubCategory.hasMany(db.BillingProduct, {
+  foreignKey: {
+    name: 'sub_category_id',
+    allowNull: false
+  }
+});
+db.BillingProduct.belongsTo(db.HSN, {
+  foreignKey: {
+    name: 'hsn_id'
+  }
+});
+db.HSN.hasMany(db.BillingProduct, {
+  foreignKey: {
+    name: 'hsn_id'
+  }
+});
+
+db.PurchaseEntries.belongsTo(db.BillingProduct, {
+  foreignKey: {
+    name: 'prod_id'
+  }
+});
+db.BillingProduct.hasOne(db.PurchaseEntries, {
+  foreignKey: {
+    name: 'prod_id'
   }
 });
 

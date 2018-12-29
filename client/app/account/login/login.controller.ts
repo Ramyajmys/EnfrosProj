@@ -12,7 +12,7 @@ export default class LoginController {
     email: '',
     password: ''
   };
-  errors = {login: undefined};
+  errors = { login: undefined };
   submitted = false;
   Auth;
   $state;
@@ -34,29 +34,29 @@ export default class LoginController {
         email: this.user.email,
         password: this.user.password
       })
-      .then(() => {
-        // Logged in, redirect to home
-        // this.$state.go('main');
-        this.currentUserInfo();
-      })
-      .catch(err => {
-        this.errors.login = err.message;
-      });
+        .then(() => {
+          // Logged in, redirect to home
+          // this.$state.go('main');
+          this.currentUserInfo();
+        })
+        .catch(err => {
+          this.errors.login = err.message;
+        });
     }
   }
 
   currentUserInfo() {
     var vm = this;
     this.getCurrentUser = this.Auth.getCurrentUser;
-    this.getCurrentUser(function(data){
+    this.getCurrentUser(function (data) {
       vm.currentUser = data;
       vm.role = vm.currentUser['role'];
-      if(vm.role === 'admin') {
+      if (vm.role === 'admin') {
         vm.$state.go('admin');
-      } else if(vm.role === 'Distributor') {
+      } else if (vm.role === 'Distributor') {
         vm.$state.go('main');
         // vm.$state.go('distributorDashboard');
-      } else if(vm.role === 'Customer') {
+      } else if (vm.role === 'Customer') {
         vm.$state.go('main');
         // vm.$state.go('customerDashboard');
       } else {

@@ -193,7 +193,7 @@ export class QuotationComponent {
     this.$http.post('/api/quotations/getAllQuotes', {offset: this.offset}).then(response => {
       if(response.status === 200) {
         this.qList = response.data;
-        console.log(response.data)
+        // console.log(response.data)
       }
     }, err => {
       if(err.data.message) {

@@ -43,7 +43,7 @@ export default class SignupController {
 
   //       // Update validity of form fields that match the sequelize errors
   //       if(err.name) {
-  //         angular.forEach(err.fields, (error, field) => { 
+  //         angular.forEach(err.fields, (error, field) => {
   //           form[field].$setValidity('mongoose', false);
   //           this.errors[field] = err.message;
   //         });
