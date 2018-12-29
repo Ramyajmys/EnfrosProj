@@ -8,7 +8,7 @@ import sqldb from '../sqldb';
 import config from './environment/';
 
 export default function seedDatabaseIfNeeded() {
-  if(config.seedDB) {
+  if (config.seedDB) {
     let User = sqldb.User;
     let UserProfile = sqldb.UserProfile;
     let Role = sqldb.Role;
@@ -32,20 +32,20 @@ export default function seedDatabaseIfNeeded() {
         .then(() => console.log('finished populating users'))
         .catch(err => console.log('error populating users', err)));
 
-    setTimeout(function() {
+    setTimeout(function () {
       userprofile()
     }, 1500);
 
     function userprofile() {
       UserProfile.destroy({ where: {} })
-      .then(() => UserProfile.bulkCreate([{
-        gst_number: '123456',
-        user_id: 1
-      }])
-        .then(() => console.log('finished userprofile'))
-        .catch(err => console.log('error userprofile', err)));  
+        .then(() => UserProfile.bulkCreate([{
+          gst_number: '123456',
+          user_id: 1
+        }])
+          .then(() => console.log('finished userprofile'))
+          .catch(err => console.log('error userprofile', err)));
     }
-    
+
     Role.destroy({ where: {} })
       .then(() => Role.bulkCreate([{
         roleName: 'Distributor',
@@ -71,38 +71,38 @@ export default function seedDatabaseIfNeeded() {
         .then(() => console.log('finished populating hsn'))
         .catch(err => console.log('error populating hsn', err)))
 
-    Category.destroy({where: {} })
+    Category.destroy({ where: {} })
       .then(() => Category.bulkCreate([
-      //   {
-      //   _id: 1,
-      //   category_name: 'EPC',
-      //   category_description: 'EPC'
-      // }, 
-      {
-        _id: 2,
-        category_name: 'SOLAR PANELS',
-        category_description: 'Solar panels'
-      }, {
-        _id: 3,
-        category_name: 'SOLAR INVERTERS',
-        category_description: 'Solar inverters'
-      }, {
-        _id: 4,
-        category_name: 'SOLAR KITS',
-        category_description: 'Solar kits'
-      }, {
-        _id: 5,
-        category_name: 'BOS',
-        category_description: 'battery specifications'
-      }, 
-      // {
-      //   _id: 6,
-      //   category_name: 'KNOWLEDGE',
-      //   category_description: 'Knowledge'
-      // }
-    ])
-    )
- 
+        //   {
+        //   _id: 1,
+        //   category_name: 'EPC',
+        //   category_description: 'EPC'
+        // }, 
+        {
+          _id: 2,
+          category_name: 'SOLAR PANELS',
+          category_description: 'Solar panels'
+        }, {
+          _id: 3,
+          category_name: 'SOLAR INVERTERS',
+          category_description: 'Solar inverters'
+        }, {
+          _id: 4,
+          category_name: 'SOLAR KITS',
+          category_description: 'Solar kits'
+        }, {
+          _id: 5,
+          category_name: 'BOS',
+          category_description: 'battery specifications'
+        },
+        // {
+        //   _id: 6,
+        //   category_name: 'KNOWLEDGE',
+        //   category_description: 'Knowledge'
+        // }
+      ])
+      )
+
     Status.destroy({ where: {} })
       .then(() => Status.bulkCreate([{
         _id: 1,
@@ -148,37 +148,37 @@ export default function seedDatabaseIfNeeded() {
         .then(() => console.log('finished populating country'))
         .catch(err => console.log('error populating country', err)));
 
-    setTimeout(function() {
+    setTimeout(function () {
       statedata()
     }, 1000);
 
     function statedata() {
       State.destroy({ where: {} })
-      .then(() => State.bulkCreate([{
-        _id: 1,
-        stateName: 'Karnataka',
-        country_id: 1,
-        active: true
-      }])
-        .then(() => console.log('finished populating state'))
-        .catch(err => console.log('error populating state', err)));
+        .then(() => State.bulkCreate([{
+          _id: 1,
+          stateName: 'Karnataka',
+          country_id: 1,
+          active: true
+        }])
+          .then(() => console.log('finished populating state'))
+          .catch(err => console.log('error populating state', err)));
 
-      setTimeout(function() {
+      setTimeout(function () {
         citydata()
       }, 1000);
     }
 
     function citydata(callback) {
       City.destroy({ where: {} })
-      .then(() => City.bulkCreate([{
-        _id: 1,
-        cityName: 'Mysore',
-        state_id: 1,
-        active: true
-      }])
-        .then(() => console.log('finished populating city'))
-        .catch(err => console.log('error populating city', err)));
+        .then(() => City.bulkCreate([{
+          _id: 1,
+          cityName: 'Mysore',
+          state_id: 1,
+          active: true
+        }])
+          .then(() => console.log('finished populating city'))
+          .catch(err => console.log('error populating city', err)));
     }
-  
+
   }
 }

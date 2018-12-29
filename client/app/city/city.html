@@ -1,0 +1,116 @@
+<div class="container-fluid btmSpace bgWhite">
+    <div class="row">
+        <div class="col-md-12" ng-if="cityCtrl.showList">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>City</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">City</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <button class="icon-btn" ng-click="cityCtrl.showList = !cityCtrl.showList"><i class="fa fa-plus" id="icon-right-5"></i>New
+                        City</button>
+                </div>
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
+                    <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="col-md-12 padding-top-40 table-data">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column>City Name</th>
+                                <th md-column>State</th>
+                                <th md-column>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                            <tr md-row md-auto-select ng-repeat="q in cityCtrl.list
+                                                                                | filter: filter.search
+                                                                                | filter: searchBylocation
+                                                                                | filter: search">
+                                <td md-cell>{{q.cityName}}</td>
+                                <td md-cell>{{q.State.stateName}}</td>
+                                <td md-cell>
+                                    <button type="button" class="btn btn-info new-btn" ng-click="cityCtrl.view(order)"><i
+                                            class="fa fa-edit" id="icon-right-5"></i>Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <ul uib-pagination total-items="cityCtrl.bigTotalItems" ng-model="cityCtrl.bigCurrentPage" max-size="cityCtrl.maxSize"
+                    class="pagination-sm" boundary-links="true" rotate="false" ng-click="cityCtrl.pagination()"></ul>
+
+                <div layout="row" layout-align="center center">
+                    <div class="alert alert-danger" ng-if="cityCtrl.errMsg">
+                        {{cityCtrl.errMsg}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-if="!cityCtrl.showList">
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>City</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">City</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+
+            <div class="col-md-12 padding-top-40">
+                <form name="form" ng-submit="cityCtrl.save()" validate>
+                    <div class="col-sm-8 col-sm-offset-2">
+                            <div class="form-group">
+                                <select class="form-control" ng-model="cityCtrl.cObj.state_id" name="s_id" required>
+                                    <option value="">Select State</option>
+                                    <option ng-repeat="c in cityCtrl.sList" value="{{c._id}}">{{c.stateName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" placeholder="Enter City" ng-model="cityCtrl.cObj.cityName"
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 padding-left-right-0" layout="row" layout-align="center center">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="cityCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="cityCtrl.showList = !cityCtrl.showList">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="cityCtrl.errMsg">
+                        <p class="tooltips">{{cityCtrl.errMsg}}</p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

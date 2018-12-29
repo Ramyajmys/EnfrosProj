@@ -132,3 +132,19 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+
+export function getAllCountry(req, res) {
+  var limit = 10;
+  var offset = (req.body.offset - 1) * limit;
+
+  return Country.findAll({offset: offset, limit: limit, order: [['_id', 'DESC']]})
+  .then(respondWithResult(res))
+  .catch(handleError(res));
+}
+
+export function getAllCount(req, res) {
+  return Country.count()
+  .then(respondWithResult(res))
+  .catch(handleError(res));
+}

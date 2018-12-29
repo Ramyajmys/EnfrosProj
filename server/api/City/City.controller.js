@@ -12,6 +12,7 @@
 
 import jsonpatch from 'fast-json-patch';
 import {City} from '../../sqldb';
+import {State} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -131,4 +132,19 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function getAllCity(req, res) {
+  var limit = 10;
+  var offset = (req.body.offset - 1) * limit;
+
+  return City.findAll({offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: State}]})
+  .then(respondWithResult(res))
+  .catch(handleError(res));
+}
+
+export function getAllCount(req, res) {
+  return City.count()
+  .then(respondWithResult(res))
+  .catch(handleError(res));
 }

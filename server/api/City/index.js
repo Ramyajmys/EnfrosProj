@@ -12,4 +12,7 @@ router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 
+router.post('/getAllCity', controller.getAllCity);
+router.post('/getAllCount', controller.getAllCount);
+
 module.exports = router;

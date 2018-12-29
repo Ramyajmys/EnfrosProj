@@ -1,0 +1,116 @@
+<div class="container-fluid btmSpace bgWhite">
+    <div class="row">
+        <div class="col-md-12" ng-if="stateCtrl.showList">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>State</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">State</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <button class="icon-btn" ng-click="stateCtrl.showList = !stateCtrl.showList"><i class="fa fa-plus"
+                            id="icon-right-5"></i>New State</button>
+                </div>
+                <div class="search-box">
+                    <input class="search-inp" type='text' ng-model='searchBylocation' placeholder="Search">
+                    <button class="search-btn-icon"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="col-md-12 padding-top-40 table-data">
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                            <tr md-row>
+                                <th md-column>State Name</th>
+                                <th md-column>Country</th>
+                                <th md-column>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                            <tr md-row md-auto-select ng-repeat="q in stateCtrl.list
+                                                                            | filter: filter.search
+                                                                            | filter: searchBylocation
+                                                                            | filter: search">
+                                <td md-cell>{{q.stateName}}</td>
+                                <td md-cell>{{q.Country.countryName}}</td>
+                                <td md-cell>
+                                    <button type="button" class="btn btn-info new-btn" ng-click="stateCtrl.view(order)"><i
+                                            class="fa fa-edit" id="icon-right-5"></i>Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <ul uib-pagination total-items="stateCtrl.bigTotalItems" ng-model="stateCtrl.bigCurrentPage" max-size="stateCtrl.maxSize"
+                    class="pagination-sm" boundary-links="true" rotate="false" ng-click="stateCtrl.pagination()"></ul>
+
+                <div layout="row" layout-align="center center">
+                    <div class="alert alert-danger" ng-if="stateCtrl.errMsg">
+                        {{stateCtrl.errMsg}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-if="!stateCtrl.showList">
+
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>State</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">State</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+
+            <div class="col-md-12 padding-top-40">
+                <form name="form" ng-submit="stateCtrl.save()" validate>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="stateCtrl.cObj.country_id" name="c_id" required>
+                                <option value="">Select Country</option>
+                                <option ng-repeat="c in stateCtrl.cList" value="{{c._id}}">{{c.countryName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" placeholder="Enter State" ng-model="stateCtrl.cObj.stateName"
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 padding-left-right-0" layout="row" layout-align="center center">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="stateCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="stateCtrl.showList = !stateCtrl.showList">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="stateCtrl.errMsg">
+                        <p class="tooltips">{{stateCtrl.errMsg}}</p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

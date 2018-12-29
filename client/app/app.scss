@@ -85,6 +85,8 @@ body {
 @import 'allCategoryList/allCategoryList';
 @import 'billingproduct/billingproduct';
 @import 'cartDetails/cartDetails';
+@import 'city/city';
+@import 'country/country';
 @import 'customer/customer';
 @import 'customerDashboard/customerDashboard';
 @import 'distributor/distributor';
@@ -94,11 +96,13 @@ body {
 @import 'main/main';
 @import 'myroute/myroute';
 @import 'orderdetails/orderdetails';
+@import 'others/others';
 @import 'printinvoice/printinvoice';
 @import 'productlist/productlist';
 @import 'productPage/productPage';
 @import 'quotation/quotation';
 @import 'setpassword/setpassword';
+@import 'state/state';
 @import '../components/footer/footer';
 @import '../components/modal/modal';
 @import '../components/navbar/navbar';

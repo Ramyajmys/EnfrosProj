@@ -12,4 +12,8 @@ router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 
+router.post('/getAllState', controller.getAllState);
+router.post('/getAllCount', controller.getAllCount);
+router.post('/getcList', controller.getcList);
+
 module.exports = router;

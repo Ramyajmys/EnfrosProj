@@ -46,6 +46,10 @@ import HsnlistComponent from './hsnlist/hsnlist.component';
 import EditProductComponent from './editProduct/editProduct.component';
 import QuotationComponent from './quotation/quotation.component';
 import BillingproductComponent from './billingproduct/billingproduct.component';
+import CountryComponent from './country/country.component';
+import StateComponent from './state/state.component';
+import CityComponent from './city/city.component';
+import OthersComponent from './others/others.component';
 
 import 'angular-print';
 import 'angular-material-icons';
@@ -98,7 +102,11 @@ angular.module('testprojApp', [
   HsnlistComponent,
   EditProductComponent,
   QuotationComponent,
-  BillingproductComponent
+  BillingproductComponent,
+  CountryComponent,
+  StateComponent,
+  CityComponent,
+  OthersComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

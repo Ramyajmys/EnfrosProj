@@ -6,10 +6,12 @@ var controller = require('./Country.controller');
 var router = express.Router();
 
 router.get('/', controller.index);
-router.get('/:id', controller.show);
+// router.get('/:id', controller.show);
 router.post('/', controller.create);
-router.put('/:id', controller.upsert);
-router.patch('/:id', controller.patch);
-router.delete('/:id', controller.destroy);
+// router.put('/:id', controller.upsert);
+// router.patch('/:id', controller.patch);
+// router.delete('/:id', controller.destroy);
 
+router.post('/getAllCountry', controller.getAllCountry);
+router.post('/getAllCount', controller.getAllCount);
 module.exports = router;
