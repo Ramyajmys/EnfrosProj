@@ -16,6 +16,7 @@ export default function seedDatabaseIfNeeded() {
     let State = sqldb.State;
     let City = sqldb.City;
     let Category = sqldb.ProductCategory;
+    let SubCategory = sqldb.ProductSubCategory;
     let HSN = sqldb.HSN;
     let Status = sqldb.Status;
 
@@ -73,11 +74,6 @@ export default function seedDatabaseIfNeeded() {
 
     Category.destroy({ where: {} })
       .then(() => Category.bulkCreate([
-        //   {
-        //   _id: 1,
-        //   category_name: 'EPC',
-        //   category_description: 'EPC'
-        // }, 
         {
           _id: 2,
           category_name: 'SOLAR PANELS',
@@ -94,14 +90,10 @@ export default function seedDatabaseIfNeeded() {
           _id: 5,
           category_name: 'BOS',
           category_description: 'battery specifications'
-        },
-        // {
-        //   _id: 6,
-        //   category_name: 'KNOWLEDGE',
-        //   category_description: 'Knowledge'
-        // }
+        }
       ])
-      )
+      .then(() => console.log('finished populating Category'))
+        .catch(err => console.log('error populating Category', err)));
 
     Status.destroy({ where: {} })
       .then(() => Status.bulkCreate([{
@@ -149,7 +141,8 @@ export default function seedDatabaseIfNeeded() {
         .catch(err => console.log('error populating country', err)));
 
     setTimeout(function () {
-      statedata()
+      statedata();
+      subcategory();
     }, 1000);
 
     function statedata() {
@@ -168,7 +161,7 @@ export default function seedDatabaseIfNeeded() {
       }, 1000);
     }
 
-    function citydata(callback) {
+    function citydata() {
       City.destroy({ where: {} })
         .then(() => City.bulkCreate([{
           _id: 1,
@@ -178,6 +171,19 @@ export default function seedDatabaseIfNeeded() {
         }])
           .then(() => console.log('finished populating city'))
           .catch(err => console.log('error populating city', err)));
+    }
+
+    function subcategory() {
+      SubCategory.destroy({ where: {} })
+        .then(() => SubCategory.bulkCreate([{
+          _id: 1,
+          sub_category_name: 'Trian Solar',
+          sub_category_description: 'Trian Solar',
+          active: true,
+          category_id: 2
+        }])
+          .then(() => console.log('finished populating subcategory'))
+          .catch(err => console.log('error populating subcategory', err)));
     }
 
   }

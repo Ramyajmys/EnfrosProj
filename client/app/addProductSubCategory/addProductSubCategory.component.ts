@@ -45,7 +45,7 @@ export class AddProductSubCategoryComponent {
     this.$mdToast = $mdToast;
     this.get();
     this.getCategoryList();
-    if(this.$state.params.flag != null && this.$state.params.data != null) {
+    if (this.$state.params.flag != null && this.$state.params.data != null) {
       this.flag = this.$state.params.flag;
       this.subCategoryObj = this.$state.params.data;
     }
@@ -71,24 +71,24 @@ export class AddProductSubCategoryComponent {
   getCategoryList() {
     this.$http.get('/api/ProductCategorys').then(response => {
       this.categoryList = response.data;
-     }, err => {
-       if(err.status === 500) {
-         this.errMsg = 'Internal Server Error';
-       } else if(err.status === 404) {
-         this.errMsg = 'Not Found';
-       } else {
-         this.errMsg = err;
-       }
-     });
+    }, err => {
+      if (err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if (err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
   }
 
   get() {
     this.$http.get('/api/ProductSubCategorys').then(response => {
-     this.subCategoryList = response.data;
+      this.subCategoryList = response.data;
     }, err => {
-      if(err.status === 500) {
+      if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -98,9 +98,9 @@ export class AddProductSubCategoryComponent {
 
   save() {
     this.btnClicked = true;
-    if(!this.flag) {
+    if (!this.flag) {
       this.$http.post('/api/ProductSubCategorys', this.subCategoryObj).then(response => {
-        if(response.status === 200 || response.status === 201) {
+        if (response.status === 200 || response.status === 201) {
           // this.$mdToast.show(
           //   this.$mdToast.simple()
           //   .textContent('Successfully Added')
@@ -117,11 +117,11 @@ export class AddProductSubCategoryComponent {
           this.$state.go('addProductSubCategory');
         }
       }, err => {
-        if(err.data.message) {
+        if (err.data.message) {
           this.errMsg = err.data.message;
-        } else if(err.status === 500) {
+        } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
-        } else if(err.status === 404) {
+        } else if (err.status === 404) {
           this.errMsg = 'Not Found';
         } else {
           this.errMsg = err;
@@ -129,7 +129,7 @@ export class AddProductSubCategoryComponent {
       });
     } else {
       this.$http.post('/api/ProductSubCategorys/update', this.subCategoryObj).then(response => {
-        if(response.status === 200 || response.status === 201) {
+        if (response.status === 200 || response.status === 201) {
           // this.$mdToast.show(
           //   this.$mdToast.simple()
           //   .textContent('Successfully Updated')
@@ -146,24 +146,24 @@ export class AddProductSubCategoryComponent {
           this.$state.go('addProductSubCategory');
         }
       }, err => {
-        if(err.data.message) {
+        if (err.data.message) {
           this.errMsg = err.data.message;
-        } else if(err.status === 500) {
+        } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
-        } else if(err.status === 404) {
+        } else if (err.status === 404) {
           this.errMsg = 'Not Found';
         } else {
           this.errMsg = err;
         }
       });
     }
-    
+
   }
 
   edit(dObj) {
     this.flag = true;
     this.subCategoryObj = dObj;
-    this.$state.go('addsub', {flag: this.flag, data: dObj});
+    this.$state.go('addsub', { flag: this.flag, data: dObj });
     // var vm = this;
     // this.$mdDialog.show({
     //   template: require('./add.html'),
@@ -177,22 +177,22 @@ export class AddProductSubCategoryComponent {
   }
 
   delete(dObj) {
-    this.$http.delete('/api/ProductSubCategorys/'+dObj._id).then(response => {
-      if(response.status === 204) {
+    this.$http.delete('/api/ProductSubCategorys/' + dObj._id).then(response => {
+      if (response.status === 204) {
         this.$mdToast.show(
           this.$mdToast.simple()
-          .textContent('Successfully Deleted')
-          .position('bottom right')
-          .hideDelay(3000)
+            .textContent('Successfully Deleted')
+            .position('bottom right')
+            .hideDelay(3000)
         );
         this.get();
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -202,19 +202,19 @@ export class AddProductSubCategoryComponent {
 
   confirmDelete(dObj, ev) {
     var confirm = this.$mdDialog.confirm()
-    .title('Are you sure?')
-    .textContent('You want to delete this item? This action cannot be undone.')
-    .targetEvent(ev)
-    .ok('Yes')
-    .cancel('No');
+      .title('Are you sure?')
+      .textContent('You want to delete this item? This action cannot be undone.')
+      .targetEvent(ev)
+      .ok('Yes')
+      .cancel('No');
     var vm = this;
-    this.$mdDialog.show(confirm).then(function(success) {
+    this.$mdDialog.show(confirm).then(function (success) {
       vm.delete(dObj);
     }, err => {
       this.closeDialog();
     });
   }
-  
+
   closeDialog() {
     this.$mdDialog.cancel();
   }

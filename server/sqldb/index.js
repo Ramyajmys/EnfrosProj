@@ -149,17 +149,16 @@ db.ProductSubCategory.hasMany(db.ProductDetail, {
     allowNull: false
   }
 });
-db.ProductDetail.belongsTo(db.HSN, {
-  foreignKey: {
-    name: 'hsn_id',
-    allowNull: false
-  }
-});
-db.HSN.hasMany(db.ProductDetail, {
-  foreignKey: {
-    name: 'hsn_id'
-  }
-});
+// db.ProductDetail.belongsTo(db.HSN, {
+//   foreignKey: {
+//     name: 'hsn_id'
+//   }
+// });
+// db.HSN.hasMany(db.ProductDetail, {
+//   foreignKey: {
+//     name: 'hsn_id'
+//   }
+// });
 
 // product electrical data association
 db.ProductElectricalData.belongsTo(db.ProductDetail, {

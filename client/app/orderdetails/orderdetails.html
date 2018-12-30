@@ -54,7 +54,7 @@
                                 <th md-column>Order Name</th>
                                 <th md-column>Date</th>
                                 <th md-column>Total</th>
-                                <th md-column>Paid</th>
+                                <!-- <th md-column>Paid</th> -->
                                 <th md-column>Status</th>
                                 <th md-column ng-show="orderdetailsCtrl.currentUser.role != 'Customer'">Customer</th>
                                 <th md-column ng-show="orderdetailsCtrl.currentUser.role == 'admin'">Distributor</th>
@@ -77,7 +77,7 @@
                                 <td md-cell>{{order.order_name}}</td>
                                 <td md-cell>{{order.order_date | date}}</td>
                                 <td md-cell>{{order.total}}</td>
-                                <td md-cell>{{order.paid_flag}}</td>
+                                <!-- <td md-cell>{{order.paid_flag}}</td> -->
                                 <td md-cell ng-if="order.status_id == 1 || order.status_id == 2" style="background: #00BCD4; color: white">{{order.Status.status_name}}</td>
                                 <td md-cell ng-if="order.status_id == 3" style="background: #FFDe03; color: black">{{order.Status.status_name}}</td>
                                 <td md-cell ng-if="order.status_id >= 4" style="background: #61d800; color: white">{{order.Status.status_name}}</td>

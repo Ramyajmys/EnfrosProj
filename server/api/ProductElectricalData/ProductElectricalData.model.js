@@ -8,7 +8,7 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    peak_power_watts_pmax: DataTypes.BIGINT,
+    peak_power_watts_pmax: DataTypes.STRING,
     maximum_power_voltage_vmpp: DataTypes.DECIMAL,
     maximum_power_current_impp: DataTypes.DECIMAL
   });

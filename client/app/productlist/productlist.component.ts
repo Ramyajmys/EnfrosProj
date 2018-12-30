@@ -56,43 +56,44 @@ export class ProductlistComponent {
     this.getCurrentUser = Auth.getCurrentUserSync;
     this.get();
     this.getCategoryList();
-    this.getCustomerList();
-    this.getDistributorList();
+    // this.getCustomerList();
+    // this.getDistributorList();
   }
 
-  check() {
-    this.cartArr = this.myService.getCartInfo();
-    this.custInfo = this.myService.getCustomerInfo();
-    this.distInfo = this.myService.getDistributorInfo();
+  // check() {
+  //   this.cartArr = this.myService.getCartInfo();
+  //   this.custInfo = this.myService.getCustomerInfo();
+  //   this.distInfo = this.myService.getDistributorInfo();
 
-    // if(this.cartArr != undefined) {
-    if (this.cartArr.length != 0) {
-      this.customer = this.custInfo._id;
-      this.distributor = this.distInfo._id;
-      this.rFlag = true;
+  //   // if(this.cartArr != undefined) {
+  //   if (this.cartArr.length != 0) {
+  //     this.customer = this.custInfo._id;
+  //     this.distributor = this.distInfo._id;
+  //     this.rFlag = true;
 
-      var vm = this;
-      for (var i = 0; i < this.cartArr.length; i++) {
-        this.productList.find(function (obj) {
-          if (obj._id == vm.cartArr[i]._id) {
-            obj['qadded'] = true;
-          }
-        })
-      }
-      // }
-    }
+  //     var vm = this;
+  //     for (var i = 0; i < this.cartArr.length; i++) {
+  //       this.productList.find(function (obj) {
+  //         if (obj._id == vm.cartArr[i]._id) {
+  //           obj['qadded'] = true;
+  //         }
+  //       })
+  //     }
+  //     // }
+  //   }
 
-  }
+  // }
 
   get() {
     this.$http.get('/api/ProductDetails/').then(response => {
       if (response.status === 200) {
         this.productList = response.data;
+        console.log(this.productList)
         if (this.productList.length == 0) {
           this.noData = true;
         } else {
           this.noData = false;
-          this.check();
+          // this.check();
         }
       }
     }, err => {
