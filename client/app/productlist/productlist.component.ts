@@ -88,7 +88,7 @@ export class ProductlistComponent {
     this.$http.get('/api/ProductDetails/').then(response => {
       if (response.status === 200) {
         this.productList = response.data;
-        console.log(this.productList)
+        // console.log(this.productList)
         if (this.productList.length == 0) {
           this.noData = true;
         } else {
