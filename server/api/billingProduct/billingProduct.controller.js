@@ -70,7 +70,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of BillingProducts
 export function index(req, res) {
-  return BillingProduct.findAll()
+  return BillingProduct.findAll({include: [{ model: PurchaseEntries, attributes: ['quantity'] }]})
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -89,44 +89,29 @@ export function show(req, res) {
 
 // Creates a new BillingProduct in the DB
 export function create(req, res) {
+  var brochure = req.body.brochurefiles;
+
   BillingProduct.create(req.body).then(function (prod) {
-    if(prod) {
-    var dObj = {
-      supplier_name: req.body.supplier_name,
-      quantity: req.body.quantity,
-      purchase_price: req.body.purchase_price,
-      payment_status: req.body.payment,
-      fcopy: req.body.brochurefiles,
-      prod_id: prod._id
-    };
-    var brochure = req.body.brochurefiles;
-    var base64String = brochure.base64;
-    var mode = process.env.NODE_ENV;
-    var filepath, path;
-    if (mode == 'development') {
-      filepath = './assets/attachment/' + prod._id + brochure.filename;
-      path = './client/assets/attachment/' + prod._id + brochure.filename;
-      dObj['attachment'] = filepath;
-    } else if (mode == 'production') {
-      filepath = './assets/attachment/' + prod._id + brochure.filename;
-      path = './dist/client/assets/attachment/' + prod._id + brochure.filename;
-      dObj['attachment'] = filepath;
-    }
-    // console.log(dObj)
-    base64.decode(base64String, path, function (err, output) {
-      if (!err) {
-        PurchaseEntries.create(dObj).then(function () {
-          return res.status(200).json({ message: "sucessfully Created" })
-        })
-          .catch(handleError(res));
-      }
-    });
+    if (prod) {
+      var dObj = {
+        supplier_name: req.body.supplier_name,
+        quantity: req.body.quantity,
+        purchase_price: req.body.purchase_price,
+        payment_status: req.body.payment,
+        prod_id: prod._id
+      };
+      var buf = Buffer.from(brochure.base64, 'base64');
+      dObj['file'] = buf;
+      dObj['filetype'] = brochure.filetype;
+      dObj['filename'] = brochure.filename;
+
+      PurchaseEntries.create(dObj).then(function () {
+        return res.status(200).json({ message: "sucessfully Created" })
+      })
+        .catch(handleError(res));
     }
   })
     .catch(handleError(res));
-  // return BillingProduct.create(req.body)
-  //   .then(respondWithResult(res, 201))
-  //   .catch(handleError(res));
 }
 
 // Upserts the given BillingProduct in the DB at the specified ID
@@ -176,13 +161,13 @@ export function getAllBill(req, res) {
   var limit = 10;
   var offset = (req.body.offset - 1) * limit;
 
-  return BillingProduct.findAll({offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{model: PurchaseEntries, attributes: ['_id', 'supplier_name', 'quantity', 'purchase_price', 'payment_status', 'attachment', 'prod_id']}]})
-  .then(respondWithResult(res))
-  .catch(handleError(res));
+  return BillingProduct.findAll({ offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: PurchaseEntries, attributes:['_id', 'supplier_name', 'quantity', 'purchase_price', 'payment_status', 'prod_id'] }] })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
 }
 
 export function getAllCount(req, res) {
   return BillingProduct.count()
-  .then(respondWithResult(res))
-  .catch(handleError(res));
+    .then(respondWithResult(res))
+    .catch(handleError(res));
 }

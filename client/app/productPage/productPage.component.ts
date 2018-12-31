@@ -40,6 +40,7 @@ export class ProductPageComponent {
   $onInit() {
     if(this.$state.params.product) {
       this.product = this.$state.params.product;
+      // console.log(this.product)
       this.getproductdetails(this.product.category_id, this.product._id);
     }
   }
@@ -76,6 +77,18 @@ export class ProductPageComponent {
         this.errMsg = err;
       }
     });
+  }
+
+  downloadFile(b, type, name) {
+    var link = document.createElement('a');
+    var data = new Uint8Array(b.data);
+    var blob = new Blob([data], { type: type });
+    link['href'] = window.URL.createObjectURL(blob);
+
+    var fileName = name;
+    link['download'] = fileName;
+    document.body.appendChild(link);
+    link.click();
   }
 }
 

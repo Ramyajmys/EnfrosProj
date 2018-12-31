@@ -192,7 +192,7 @@ export class CartDetailsComponent {
         this.btnClicked = false;
         this.isLoading = false;
         swal({
-          title: "Order sucessfully placed",
+          title: response.data.msg,
           icon: "success",
         });
 
@@ -202,21 +202,32 @@ export class CartDetailsComponent {
         this.myService.getGstatus(undefined);
       }
     }, err => {
-      if (err.data.message) {
-        this.errMsg = err.data.message;
-      } else if (err.status === 500) {
+      this.isLoading = false;
+      if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
+        swal({
+          title: this.errMsg,
+          icon: "error",
+        });
       } else if (err.status === 404) {
         this.errMsg = 'Not Found';
+        swal({
+          title: this.errMsg,
+          icon: "error",
+        });
       } else {
         this.errMsg = err;
+        swal({
+          title: this.errMsg,
+          icon: "error",
+        });
       }
     });
   }
 
   addProduct() {
     // this.$state.go('productlist');
-    this.$state.go('bill');
+    this.$state.go('invoice');
   }
 }
 

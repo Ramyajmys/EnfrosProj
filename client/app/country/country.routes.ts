@@ -5,6 +5,7 @@ export default function($stateProvider) {
   $stateProvider
     .state('country', {
       url: '/country',
-      template: '<country></country>'
+      template: '<country></country>',
+      authenticate: 'admin'
     });
 }

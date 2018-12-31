@@ -11,11 +11,8 @@ export default function(sequelize, DataTypes) {
     product_name: DataTypes.STRING,
     product_description: DataTypes.STRING,
     product_photo: DataTypes.TEXT,
-    // quantity: DataTypes.BIGINT,
-    // capacity: DataTypes.STRING,
-    // unitprice: DataTypes.BIGINT,
-    // discount: DataTypes.INTEGER,
-    brochure: DataTypes.STRING,
-    // active: DataTypes.BOOLEAN
+    file: DataTypes.BLOB,
+    filetype: DataTypes.STRING,
+    filename: DataTypes.STRING
   });
 }

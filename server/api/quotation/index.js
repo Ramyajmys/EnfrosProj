@@ -6,7 +6,7 @@ var controller = require('./quotation.controller');
 var router = express.Router();
 
 // router.get('/', controller.index);
-// router.get('/:id', controller.show);
+router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.post('/getAllQuotes', controller.getAllQuotes);
 router.post('/getAllQuoteCount', controller.getAllQuoteCount);

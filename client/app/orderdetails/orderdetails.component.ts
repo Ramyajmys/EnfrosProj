@@ -87,7 +87,7 @@ export class OrderdetailsComponent {
   }
 
   clickNew() {
-    this.$state.go('bill');
+    this.$state.go('invoice');
   }
 
   getorders(role, id, sid) {

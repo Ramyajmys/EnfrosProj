@@ -10,7 +10,7 @@ export default function(sequelize, DataTypes) {
     },
     date: DataTypes.STRING,
     time: DataTypes.STRING,
-    path: DataTypes.STRING,
+    file: DataTypes.BLOB,
     active: DataTypes.BOOLEAN
   });
 }

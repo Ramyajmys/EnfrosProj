@@ -1,4 +1,4 @@
-<div class="container-fluid btmSpace" ng-hide="billingproductCtrl.btnClicked" style="background: white;">
+<div class="container-fluid btmSpace" ng-hide="invoiceCtrl.btnClicked" style="background: white;">
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
@@ -18,13 +18,14 @@
         </div>
 
         <div class="col-md-12 padding-top-40">
-            <form name="myForm" ng-submit="billingproductCtrl.cartDetails()">
+            <form name="myForm" ng-submit="invoiceCtrl.cartDetails()">
 
                 <div layout="row" layout-align="center" flex>
                     <md-input-container flex="50">
                         <label>Customer</label>
-                        <md-select name="customer" ng-model="billingproductCtrl.customer" ng-change="billingproductCtrl.onCustomerChange(billingproductCtrl.customer)" required>
-                            <md-option ng-value="{{c._id}}" ng-repeat="c in billingproductCtrl.customerList">{{c.name}}</md-option>
+                        <md-select name="customer" ng-model="invoiceCtrl.customer" ng-change="invoiceCtrl.onCustomerChange(invoiceCtrl.customer)"
+                            required>
+                            <md-option ng-value="{{c._id}}" ng-repeat="c in invoiceCtrl.customerList">{{c.name}}</md-option>
                         </md-select>
                         <div class="errors" ng-messages="myForm.customer.$error">
                             <div ng-message="required">Required</div>
@@ -34,27 +35,29 @@
                 <div layout="row" layout-align="center" flex>
                     <md-input-container flex="50">
                         <label>Distributor</label>
-                        <md-select name="distributor" ng-model="billingproductCtrl.distributor" ng-change="billingproductCtrl.onDistributorChange(billingproductCtrl.distributor)" required>
-                            <md-option ng-value="{{c._id}}" ng-repeat="c in billingproductCtrl.distributorList">{{c.name}}</md-option>
+                        <md-select name="distributor" ng-model="invoiceCtrl.distributor" ng-change="invoiceCtrl.onDistributorChange(invoiceCtrl.distributor)"
+                            required>
+                            <md-option ng-value="{{c._id}}" ng-repeat="c in invoiceCtrl.distributorList">{{c.name}}</md-option>
                         </md-select>
                         <div class="errors" ng-messages="myForm.distributor.$error">
                             <div ng-message="required">Required</div>
                         </div>
                     </md-input-container>
                 </div>
-                
+
                 <div layout="row" layout-align="center" flex>
                     <md-input-container flex="50">
                         <label>Product</label>
-                        <md-select ng-model="billingproductCtrl.selectedProducts" md-on-close="billingproductCtrl.clearSearchTerm()"
-                            data-md-container-class="selectdemoSelectHeader" multiple="" ng-change="billingproductCtrl.onProductChange(billingproductCtrl.selectedProducts)" required>
+                        <md-select ng-model="invoiceCtrl.selectedProducts" md-on-close="invoiceCtrl.clearSearchTerm()"
+                            data-md-container-class="selectdemoSelectHeader" multiple="" ng-change="invoiceCtrl.onProductChange(invoiceCtrl.selectedProducts)"
+                            required>
                             <md-select-header class="demo-select-header">
-                                <input ng-model="billingproductCtrl.searchTerm" type="search" placeholder="Search for a Product.."
+                                <input ng-model="invoiceCtrl.searchTerm" type="search" placeholder="Search for a Product.."
                                     class="demo-header-searchbox md-text">
                             </md-select-header>
                             <md-optgroup label="Products">
-                                <md-option ng-value="{{p}}" ng-repeat="p in billingproductCtrl.productList |
-                                  filter:billingproductCtrl.searchTerm">{{p.product_name}}</md-option>
+                                <md-option ng-value="{{p}}" ng-repeat="p in invoiceCtrl.productList |
+                                      filter:invoiceCtrl.searchTerm">{{p.product_name}}</md-option>
                             </md-optgroup>
                         </md-select>
                         <div class="errors" ng-messages="myForm.selectedProducts.$error">
@@ -63,16 +66,16 @@
                     </md-input-container>
                 </div>
 
-               <div layout="row" layout-align="center" flex>
+                <div layout="row" layout-align="center" flex>
                     <md-input-container flex="50">
-                        <button type="submit" class="btn btn-secondary btn-block" ng-disabled="!billingproductCtrl.distributor || !billingproductCtrl.customer || billingproductCtrl.cartArr.length == 0">Next</button>
+                        <button type="submit" class="btn btn-secondary btn-block" ng-disabled="!invoiceCtrl.distributor || !invoiceCtrl.customer || invoiceCtrl.cartArr.length == 0">Next</button>
                     </md-input-container>
                 </div>
             </form>
         </div>
 
 
-        <div class="col-md-12 padding-top-40 table-data" ng-if="billingproductCtrl.cartArr.length > 0">
+        <div class="col-md-12 padding-top-40 table-data" ng-if="invoiceCtrl.cartArr.length > 0">
             <div class="col-md-12">
                 <h1 class="head-line">Selected Products</h1>
             </div>
@@ -90,7 +93,7 @@
                             </tr>
                         </thead>
                         <tbody md-body>
-                            <tr md-row md-auto-select ng-repeat="q in billingproductCtrl.cartArr">
+                            <tr md-row md-auto-select ng-repeat="q in invoiceCtrl.cartArr">
                                 <td md-cell>{{q.product_name}}</td>
                                 <td md-cell>{{q.capacity}}</td>
                                 <td md-cell>{{q.PurchaseEntry.quantity}}</td>

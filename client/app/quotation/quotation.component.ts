@@ -2,9 +2,9 @@
 const angular = require('angular');
 
 const uiRouter = require('angular-ui-router');
-
+declare var CKEDITOR: any;
 import routes from './quotation.routes';
-import '../../assets/bower_components/ng-ckeditor/ng-ckeditor';
+import '../../assets/ng-ckeditor.min.js'
 const swal = require('sweetalert');
 
 export class QuotationComponent {
@@ -121,16 +121,16 @@ export class QuotationComponent {
   }
 
   getCustomerList() {
-    this.$http.post('/api/users/get', {role: 'Customer'}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/users/get', { role: 'Customer' }).then(response => {
+      if (response.status === 200) {
         this.customerList = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -139,16 +139,16 @@ export class QuotationComponent {
   }
 
   getDistributorList() {
-    this.$http.post('/api/users/get', {role: 'Distributor'}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/users/get', { role: 'Distributor' }).then(response => {
+      if (response.status === 200) {
         this.distributorList = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -163,7 +163,7 @@ export class QuotationComponent {
 
     this.$http.post('/api/quotations', this.formData).then(response => {
       // console.log(response)
-      if(response.status === 200) {
+      if (response.status === 200) {
         swal({
           title: response.data.msg,
           icon: "success",
@@ -172,11 +172,11 @@ export class QuotationComponent {
         this.$state.go('quotation');
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -190,17 +190,17 @@ export class QuotationComponent {
   }
 
   getAllQuoteList() {
-    this.$http.post('/api/quotations/getAllQuotes', {offset: this.offset}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/quotations/getAllQuotes', { offset: this.offset }).then(response => {
+      if (response.status === 200) {
         this.qList = response.data;
         // console.log(response.data)
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -210,16 +210,46 @@ export class QuotationComponent {
 
   getTotalCount() {
     this.$http.post('/api/quotations/getAllQuoteCount', {}).then(response => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         // console.log(response.data)
         this.bigTotalItems = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
+  }
+
+  downloadPdf(b) {
+    var link = document.createElement('a');
+    var data = new Uint8Array(b.data);
+    var blob = new Blob([data], { type: "application/pdf" });
+    link['href'] = window.URL.createObjectURL(blob);
+
+    var fileName = new Date().getTime();
+    link['download'] = fileName.toString();
+    link.click();
+  }
+
+  downloadFile(id) {
+    this.$http.get('/api/quotations/'+id).then(response => {
+      if (response.status === 200) {
+        // console.log(response.data);
+        this.downloadPdf(response.data.file);
+      }
+    }, err => {
+      if (err.data.message) {
+        this.errMsg = err.data.message;
+      } else if (err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -239,5 +269,29 @@ export default angular.module('enfrosProjApp.quotation', [uiRouter, 'ngCkeditor'
     template: require('./createquotation.html'),
     controller: QuotationComponent,
     controllerAs: 'quotationCtrl'
+  })
+  .directive('ckEditor', function () {
+    return {
+      require: '?ngModel',
+      link: function (scope, elm, attr, ngModel) {
+        var ck = CKEDITOR.replace(elm[0]);
+        if (!ngModel) return;
+        ck.on('instanceReady', function () {
+          ck.setData(ngModel.$viewValue);
+        });
+        function updateModel() {
+          scope.$apply(function () {
+            ngModel.$setViewValue(ck.getData());
+          });
+        }
+        ck.on('change', updateModel);
+        ck.on('key', updateModel);
+        ck.on('dataReady', updateModel);
+
+        ngModel.$render = function (value) {
+          ck.setData(ngModel.$viewValue);
+        };
+      }
+    };
   })
   .name;

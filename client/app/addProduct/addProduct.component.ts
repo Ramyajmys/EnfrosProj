@@ -168,7 +168,7 @@ export class AddProductComponent {
 
     this.productObj['brochurefiles'] = this.brochurefiles;
 
-    console.log(this.productObj)
+    // console.log(this.productObj)
 
     this.$http.post('/api/ProductDetails/', this.productObj).then(response => {
       if (response.status === 200) {

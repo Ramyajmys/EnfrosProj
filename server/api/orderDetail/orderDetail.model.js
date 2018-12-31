@@ -13,7 +13,7 @@ export default function(sequelize, DataTypes) {
     unitprice: DataTypes.DECIMAL,
     quantity: DataTypes.BIGINT,
     product_total: DataTypes.DECIMAL,
-    product_discount: DataTypes.DECIMAL,
+    // product_discount: DataTypes.DECIMAL,
     cgst: DataTypes.DECIMAL,
     sgst: DataTypes.DECIMAL,
     igst: DataTypes.DECIMAL,

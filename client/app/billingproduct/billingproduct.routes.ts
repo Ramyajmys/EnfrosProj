@@ -12,10 +12,5 @@ export default function($stateProvider) {
       url: '/addbillingproduct',
       template: '<addbillingproduct></addbillingproduct>',
       authenticate: 'admin'
-    })
-    .state('bill', {
-      url: '/bill',
-      template: '<bill></bill>',
-      authenticate: 'admin'
     });
 }

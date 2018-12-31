@@ -50,6 +50,7 @@ import CountryComponent from './country/country.component';
 import StateComponent from './state/state.component';
 import CityComponent from './city/city.component';
 import OthersComponent from './others/others.component';
+import InvoiceComponent from './invoice/invoice.component';
 
 import 'angular-print';
 import 'angular-material-icons';
@@ -106,7 +107,8 @@ angular.module('testprojApp', [
   CountryComponent,
   StateComponent,
   CityComponent,
-  OthersComponent
+  OthersComponent,
+  InvoiceComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

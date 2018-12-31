@@ -12,7 +12,8 @@ export default function(sequelize, DataTypes) {
     quantity: DataTypes.BIGINT,
     purchase_price: DataTypes.STRING,
     payment_status: DataTypes.STRING,
-    attachment: DataTypes.STRING,
-    fcopy: DataTypes.JSON
+    file: DataTypes.BLOB,
+    filetype: DataTypes.STRING,
+    filename: DataTypes.STRING
   });
 }

@@ -15,7 +15,6 @@ import { ProductDetail } from '../../sqldb';
 import { ProductElectricalData } from '../../sqldb';
 import { ProductMechanicalData } from '../../sqldb';
 import { ProductSplFeature } from '../../sqldb';
-import { ProductBrochure } from '../../sqldb';
 import { ProductInputDcData } from '../../sqldb';
 import { ProductOutputAcData } from '../../sqldb';
 import { ProductKitsData } from '../../sqldb';
@@ -122,9 +121,17 @@ export function getProductsubCategory(req, res) {
 // Creates a new ProductDetail in the DB
 export function create(req, res) {
   var brochure = req.body.brochurefiles;
+  var buf = Buffer.from(brochure.base64, 'base64');
+  var obj1 = req.body;
+  var dObj = {};
+  dObj['file'] = buf;
+  dObj['filetype'] = brochure.filetype;
+  dObj['filename'] = brochure.filename;
+
+  var fObj = Object.assign(obj1, dObj);
 
   if (req.body.category_id == 2) {
-    return ProductDetail.create(req.body).then(function (prod) {
+    return ProductDetail.create(fObj).then(function (prod) {
       if (prod) {
         if (req.body.e_data.length != 0) {
           var eObj, eRes, sObj, sRes, mRes;
@@ -142,23 +149,7 @@ export function create(req, res) {
           mRes = ProductMechanicalData.create(req.body.m_data);
 
           if (eRes && sRes && mRes) {
-            var base64String = brochure.base64;
-            var mode = process.env.NODE_ENV;
-            var filepath, path;
-            if (mode == 'development') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './client/assets/brochure/' + prod._id + brochure.filename;
-            } else if (mode == 'production') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './dist/client/assets/brochure/' + prod._id + brochure.filename;
-            }
-
-            base64.decode(base64String, path, function (err, output) {
-              ProductDetail.update({ brochure: filepath }, { where: { _id: prod._id } }).then(function () {
-                return res.status(200).json({ message: "Product sucessfully added" })
-              })
-                .catch(handleError(res));
-            });
+            return res.status(200).json({ message: "Product sucessfully added" })
           }
         }
       }
@@ -167,7 +158,7 @@ export function create(req, res) {
   }
 
   if (req.body.category_id == 3) {
-    return ProductDetail.create(req.body).then(function (prod) {
+    return ProductDetail.create(fObj).then(function (prod) {
       if (prod) {
         if (req.body.i_data.length != 0) {
           var iObj, iRes, sObj, sRes, oObj, oRes;
@@ -188,22 +179,7 @@ export function create(req, res) {
           }
 
           if (iRes && sRes && oRes) {
-            var base64String = brochure.base64;
-            var mode = process.env.NODE_ENV;
-            var filepath, path;
-            if (mode == 'development') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './client/assets/brochure/' + prod._id + brochure.filename;
-            } else if (mode == 'production') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './dist/client/assets/brochure/' + prod._id + brochure.filename;
-            }
-            base64.decode(base64String, path, function (err, output) {
-              ProductDetail.update({ brochure: filepath }, { where: { _id: prod._id } }).then(function () {
-                return res.status(200).json({ message: "Product sucessfully added" })
-              })
-                .catch(handleError(res));
-            });
+            return res.status(200).json({ message: "Product sucessfully added" });
           }
         }
       }
@@ -212,7 +188,7 @@ export function create(req, res) {
   }
 
   if (req.body.category_id == 4) {
-    return ProductDetail.create(req.body).then(function (prod) {
+    return ProductDetail.create(fObj).then(function (prod) {
       if (prod) {
         if (req.body.k_data.length != 0) {
           var kObj, kRes, sObj, sRes;
@@ -228,22 +204,7 @@ export function create(req, res) {
           }
 
           if (kRes && sRes) {
-            var base64String = brochure.base64;
-            var mode = process.env.NODE_ENV;
-            var filepath, path;
-            if (mode == 'development') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './client/assets/brochure/' + prod._id + brochure.filename;
-            } else if (mode == 'production') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './dist/client/assets/brochure/' + prod._id + brochure.filename;
-            }
-            base64.decode(base64String, path, function (err, output) {
-              ProductDetail.update({ brochure: filepath }, { where: { _id: prod._id } }).then(function () {
-                return res.status(200).json({ message: "Product sucessfully added" })
-              })
-                .catch(handleError(res));
-            });
+            return res.status(200).json({ message: "Product sucessfully added" });
           }
         }
       }
@@ -252,7 +213,7 @@ export function create(req, res) {
   }
 
   if (req.body.category_id == 5) {
-    return ProductDetail.create(req.body).then(function (prod) {
+    return ProductDetail.create(fObj).then(function (prod) {
       if (prod) {
         if (req.body.features.length != 0) {
           var sObj, sRes;
@@ -264,22 +225,7 @@ export function create(req, res) {
           }
 
           if (sRes) {
-            var base64String = brochure.base64;
-            var mode = process.env.NODE_ENV;
-            var filepath, path;
-            if (mode == 'development') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './client/assets/brochure/' + prod._id + brochure.filename;
-            } else if (mode == 'production') {
-              filepath = './assets/brochure/' + prod._id + brochure.filename;
-              path = './dist/client/assets/brochure/' + prod._id + brochure.filename;
-            }
-            base64.decode(base64String, path, function (err, output) {
-              ProductDetail.update({ brochure: filepath }, { where: { _id: prod._id } }).then(function () {
-                return res.status(200).json({ message: "Product sucessfully added" })
-              })
-                .catch(handleError(res));
-            });
+            return res.status(200).json({ message: "Product sucessfully added" });
           }
         }
       }

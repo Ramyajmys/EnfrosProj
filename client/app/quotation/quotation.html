@@ -51,7 +51,7 @@
                                 <td md-cell>{{q.distributor.name}}</td>
                                 <td md-cell>{{q.date | date:'medium'}}</td>
                                 <td md-cell>
-                                    <a target="_target" href="{{q.path}}">view</a>
+                                    <a class="c-p" ng-click="quotationCtrl.downloadFile(q._id)">Download</a>
                                 </td>
                             </tr>
                         </tbody>

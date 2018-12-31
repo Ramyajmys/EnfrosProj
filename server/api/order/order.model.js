@@ -14,9 +14,10 @@ export default function(sequelize, DataTypes) {
     delivery_date: DataTypes.DATE,
     payment_date: DataTypes.DATE,
     total: DataTypes.BIGINT,
-    discount: DataTypes.INTEGER,
-    payment_details: DataTypes.STRING,
+    file: DataTypes.BLOB,
+    // discount: DataTypes.INTEGER,
+    // payment_details: DataTypes.STRING,
     active: DataTypes.BOOLEAN,
-    paid_flag: DataTypes.BOOLEAN
+    // paid_flag: DataTypes.BOOLEAN
   });
 }

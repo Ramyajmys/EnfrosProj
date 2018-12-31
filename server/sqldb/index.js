@@ -19,15 +19,11 @@ db.PurchaseEntries = db.sequelize.import('../api/PurchaseEntries/PurchaseEntries
 db.Quotation = db.sequelize.import('../api/quotation/quotation.model');
 db.ProductOutputAcData = db.sequelize.import('../api/ProductOutputAcData/ProductOutputAcData.model');
 db.ProductInputDcData = db.sequelize.import('../api/ProductInputDcData/ProductInputDcData.model');
-db.ProductCableData = db.sequelize.import('../api/ProductCableData/ProductCableData.model');
-db.ProductBatteryData = db.sequelize.import('../api/ProductBatteryData/ProductBatteryData.model');
 db.ProductKitsData = db.sequelize.import('../api/ProductKitsData/ProductKitsData.model');
 db.OrderDetail = db.sequelize.import('../api/orderDetail/orderDetail.model');
 db.Order = db.sequelize.import('../api/order/order.model');
 db.Status = db.sequelize.import('../api/Status/Status.model');
-db.ProductKeyNote = db.sequelize.import('../api/ProductKeyNote/ProductKeyNote.model');
 db.ProductSplFeature = db.sequelize.import('../api/ProductSplFeature/ProductSplFeature.model');
-db.ProductBrochure = db.sequelize.import('../api/ProductBrochure/ProductBrochure.model');
 db.ProductMechanicalData = db.sequelize.import('../api/ProductMechanicalData/ProductMechanicalData.model');
 db.ProductElectricalData = db.sequelize.import('../api/ProductElectricalData/ProductElectricalData.model');
 db.HSN = db.sequelize.import('../api/HSN/HSN.model');
@@ -39,7 +35,6 @@ db.State = db.sequelize.import('../api/State/State.model');
 db.Country = db.sequelize.import('../api/Country/Country.model');
 db.ProductSubCategory = db.sequelize.import('../api/ProductSubCategory/ProductSubCategory.model');
 db.ProductCategory = db.sequelize.import('../api/ProductCategory/ProductCategory.model');
-db.Thing = db.sequelize.import('../api/thing/thing.model');
 db.User = db.sequelize.import('../api/user/user.model');
 
 db.ProductCategory.hasMany(db.ProductSubCategory, {
@@ -184,18 +179,6 @@ db.ProductDetail.hasMany(db.ProductMechanicalData, {
   }
 });
 
-// product brochure association
-db.ProductBrochure.belongsTo(db.ProductDetail, {
-  foreignKey: {
-    name: 'product_detail_id'
-  }
-});
-db.ProductDetail.hasMany(db.ProductBrochure, {
-  foreignKey: {
-    name: 'product_detail_id'
-  }
-});
-
 // spl feature association
 db.ProductSplFeature.belongsTo(db.ProductDetail, {
   foreignKey: {
@@ -203,18 +186,6 @@ db.ProductSplFeature.belongsTo(db.ProductDetail, {
   }
 });
 db.ProductDetail.hasMany(db.ProductSplFeature, {
-  foreignKey: {
-    name: 'product_detail_id'
-  }
-});
-
-// product key note association
-db.ProductKeyNote.belongsTo(db.ProductDetail, {
-  foreignKey: {
-    name: 'product_detail_id'
-  }
-});
-db.ProductDetail.hasMany(db.ProductKeyNote, {
   foreignKey: {
     name: 'product_detail_id'
   }

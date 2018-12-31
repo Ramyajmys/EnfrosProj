@@ -5,6 +5,7 @@ export default function($stateProvider) {
   $stateProvider
     .state('others', {
       url: '/others',
-      template: '<others></others>'
+      template: '<others></others>',
+      authenticate: 'admin'
     });
 }

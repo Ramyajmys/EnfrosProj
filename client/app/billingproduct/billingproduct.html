@@ -37,7 +37,7 @@
                                 <th md-column>Quantity</th>
                                 <th md-column>Price</th>
                                 <th md-column>Payment Status</th>
-                                <th md-column>Action</th>
+                                <th md-column>Attachment</th>
                             </tr>
                         </thead>
                         <tbody md-body>
@@ -50,7 +50,8 @@
                                 <td md-cell>{{q.PurchaseEntry.purchase_price}}</td>
                                 <td md-cell>{{q.PurchaseEntry.payment_status}}</td>
                                 <td md-cell>
-                                    <a target="_target" href="{{q.PurchaseEntry.attachment}}">view</a>
+                                    <!-- <a class="c-p" ng-click="billingproductCtrl.downloadFile(q.PurchaseEntry.file, q.PurchaseEntry.filetype, q.PurchaseEntry.filename)">download</a> -->
+                                    <a class="c-p" ng-click="billingproductCtrl.getFileData(q.PurchaseEntry._id)">download</a>
                                 </td>
                             </tr>
                         </tbody>

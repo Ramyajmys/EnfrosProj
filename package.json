@@ -25,6 +25,7 @@
     "babel-polyfill": "^6.7.2",
     "babel-runtime": "^6.6.1",
     "base64topdf": "^1.1.8",
+    "blob": "0.0.5",
     "body-parser": "^1.13.3",
     "bootstrap": "~3.3.7",
     "bootstrap-sass": "~3.3.7",

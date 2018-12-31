@@ -1,3 +1,4 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-ckeditor/0.2.1/ng-ckeditor.min.js"></script>
 <div class="container-fluid padding-top-40 padding-bottom-80 bgWhite">
     <div class="row">
         <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
@@ -45,3 +46,5 @@
             </form>
         </div>
     </div>
+
+    <object ng-show="quotationCtrl.content" data="{{quotationCtrl.content}}" type="application/pdf" style="width: 100%; height: 400px;"></object>
