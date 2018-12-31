@@ -190,6 +190,7 @@ export function updateUser(req, res) {
     mobilenumber: req.body.mobilenumber,
   };
   var userProfile = {
+    gst_number: req.body.gst_number,
     address: req.body.address,
     city_id: req.body.city_id,
     state_id: req.body.state_id,

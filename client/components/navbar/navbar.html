@@ -57,7 +57,7 @@
         <li ng-show="$ctrl.isLoggedIn()" uib-dropdown is-open="status.isopen" ng-mouseover="status.isopen = true"
           ng-mouseleave="status.isopen = false">
           <a href id="single-button" uib-dropdown-toggle>
-            <div class="navImg"><img class="img-circle uphoto" ng-src="/assets/images/male.png" /></div>
+            <div class="navImg"><img class="img-circle uphoto" ng-src="{{$ctrl.getCurrentUser().UserProfile.profilepic != null ? $ctrl.getCurrentUser().UserProfile.profilepic : '/assets/images/male.png'}}" /></div>
           </a>
           <ul class="dropdown-menu sub-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
             <li ng-show="$ctrl.isLoggedIn()"><a href="/editprofile"><span class="spn">My Profile</span></a></li>

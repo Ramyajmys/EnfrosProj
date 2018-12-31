@@ -1,4 +1,5 @@
 'use strict';
+
 // @flow
 interface User {
   oldPassword: string;
@@ -127,6 +128,7 @@ export default class SettingsController {
   }
 
   userInfoUpdate() {
+    // console.log(this.userinfo)
     this.$http.post('/api/users/updateUser', this.userinfo).then(response => {
       if (response.status === 200) {
         this.$mdToast.show(
@@ -135,7 +137,8 @@ export default class SettingsController {
             .position('bottom right')
             .hideDelay(3000)
         );
-        this.cancel();
+        location.reload();
+        // this.cancel();
       }
     }, err => {
       if (err.data.message) {

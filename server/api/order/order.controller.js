@@ -209,7 +209,7 @@ export function create(req, res) {
         oRes = OrderDetail.create(od);
         PurchaseEntries.update({ quantity: remaingQ }, { where: { prod_id: prod._id } })
 
-        temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">' + cart[i].product_name + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].unitprice + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].product_discount + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].cgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].sgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].igst + '</td><td width="10%" style="border: 1px solid #eee;">' + cart[i].product_quantity + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].product_total + '</td></tr>';
+        temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">' + cart[i].product_name + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].unitprice + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].cgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].sgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].igst + '</td><td width="10%" style="border: 1px solid #eee;">' + cart[i].product_quantity + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].product_total + '</td></tr>';
 
         if (test.length == cart.length) {
           User.findOne({ where: { _id: 1 }, include: [{ model: UserProfile }] }).then(function (admin) {
@@ -346,9 +346,11 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
 }
 
 function invoiceTemp(customer, invoice, admin, total, temp, extra, date) {
+  var img = config.domain + 'assets/logo/logo.png';
+   // <h1>Enfros Solution</h1>\
   var html = '<div style="width: 95%;padding: 10px; margin:auto; font-family: Palatino Linotype, Book Antiqua, Palatino, serif; letter-spacing:1px;">\
   <div style="text-align: center; color: #263238;">\
-      <h1>Enfros Solution</h1>\
+      <img src='+ img + ' style="width:190px; height:80px"/><br>\
       <h4>ADDRESS</h4>\
       <h4>Bangalore</h4>\
       <h3>GSTIN: '+ admin.UserProfile.gst_number + '</h3>\
@@ -385,7 +387,6 @@ function invoiceTemp(customer, invoice, admin, total, temp, extra, date) {
           <tr>\
               <th style="border: 1px solid #eee;">Product</th>\
               <th style="border: 1px solid #eee;">Price</th>\
-              <th style="border: 1px solid #eee;">Discount</th>\
               <th style="border: 1px solid #eee;">CGST</th>\
               <th style="border: 1px solid #eee;">SGST</th>\
               <th style="border: 1px solid #eee;">IGST</th>\
