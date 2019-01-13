@@ -1,0 +1,52 @@
+<div class="col-md-12" style="padding: 20px;" ng-hide="viewbillingprodCtrl.btnClicked">
+    <div class="col-md-12">
+        <h1 class="head-line">Purchase Entry
+            <hr>
+        </h1>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name"
+                ng-model="viewbillingprodCtrl.pentryObj.supplier_name" />
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <input type="number" min="0" class="form-control" name="quantity" placeholder="Quantity"
+                ng-model="viewbillingprodCtrl.pentryObj.quantity" />
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <input type="number" min="0" class="form-control" name="purchase_price" placeholder="Purchase Price"
+                ng-model="viewbillingprodCtrl.pentryObj.purchase_price" />
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <select class="form-control" ng-model="viewbillingprodCtrl.pentryObj.payment_status" name="payment">
+                <option value="">Payment Status</option>
+                <option ng-repeat="sub in viewbillingprodCtrl.paymentArr" value="{{sub.value}}">{{sub.value}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-12 p-t-10">
+        <label class="control-label col-sm-3 p-l-0">Attachment: </label>
+        <div class="form-group">
+            <input type='file' ng-model="viewbillingprodCtrl.pentryObj.brochure"
+                base-sixty-four-input>
+        </div>
+    </div>
+    <div class="col-sm-12 p-t-20">
+        <button class="btn btn-primary btn-block new-btn" ng-click="viewbillingprodCtrl.addEntry()" ng-disabled="!viewbillingprodCtrl.pentryObj.supplier_name ||
+        !viewbillingprodCtrl.pentryObj.quantity || !viewbillingprodCtrl.pentryObj.purchase_price ||
+        !viewbillingprodCtrl.pentryObj.payment_status || !viewbillingprodCtrl.pentryObj.brochure">
+            <i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
+    </div>
+</div>
+
+<div class="container" ng-show="viewbillingprodCtrl.btnClicked" style="padding-top: 200px;">
+    <div layout="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

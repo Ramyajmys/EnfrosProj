@@ -61,6 +61,7 @@ export class EditProductComponent {
 
     if (this.$state.params.product != null) {
       this.productObj = this.$state.params.product;
+      // console.log(this.productObj)
       this.def = this.productObj['product_photo'];
       this.getproductdetails(this.$state.params.product.category_id, this.$state.params.product._id);
       this.getCategoryList();
@@ -98,7 +99,7 @@ export class EditProductComponent {
   picChange(pic) {
     if (pic) {
       this.def = 'data:' + pic.filetype + ';base64,' + pic.base64;
-      this.productObj['product_photo'] = pic;
+      this.productObj['product_photo'] = this.def;
     }
   }
 
@@ -151,6 +152,7 @@ export class EditProductComponent {
   }
 
   save() {
+    // console.log(this.productObj)
     this.btnClicked = true;
     this.productObj['brochurefiles'] = this.brochurefiles;
     this.$http.post('/api/ProductDetails/update', this.productObj).then(response => {
@@ -164,6 +166,7 @@ export class EditProductComponent {
         this.$state.go('allproducts');
       }
     }, err => {
+      this.btnClicked = false;
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {

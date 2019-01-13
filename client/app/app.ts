@@ -51,6 +51,7 @@ import StateComponent from './state/state.component';
 import CityComponent from './city/city.component';
 import OthersComponent from './others/others.component';
 import InvoiceComponent from './invoice/invoice.component';
+import ViewbillingprodComponent from './viewbillingprod/viewbillingprod.component';
 
 import 'angular-print';
 import 'angular-material-icons';
@@ -108,7 +109,8 @@ angular.module('testprojApp', [
   StateComponent,
   CityComponent,
   OthersComponent,
-  InvoiceComponent
+  InvoiceComponent,
+  ViewbillingprodComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

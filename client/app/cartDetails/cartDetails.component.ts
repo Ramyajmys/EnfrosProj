@@ -45,6 +45,7 @@ export class CartDetailsComponent {
 
   $onInit() {
     if (this.cart.length != 0) {
+      // console.log(this.cart)
       this.calculate();
     }
   }
@@ -196,10 +197,10 @@ export class CartDetailsComponent {
           icon: "success",
         });
 
-        this.myService.saveCartInfo([]);
-        this.myService.getCustomerInfo(undefined);
-        this.myService.getDistributorInfo(undefined);
-        this.myService.getGstatus(undefined);
+        this.myService.saveCartInfo2([]);
+        this.myService.saveCustomerInfo(undefined);
+        this.myService.saveDistributorInfo(undefined);
+        this.myService.saveGstatus(undefined);
       }
     }, err => {
       this.isLoading = false;

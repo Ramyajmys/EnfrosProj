@@ -4,12 +4,12 @@
             <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="center center" layout-align-sm="center center">
                 <h4>Customer</h4>
                 <button type="button" class="btn btn-success" ng-click="customerCtrl.clickNew()">New Customer</button>
-            </div> 
+            </div>
             <md-table-container>
                     <table md-table>
                         <thead md-head>
                             <tr md-row>
-                                <th md-column>Photo</th> 
+                                <th md-column>Photo</th>
                                 <th md-column>Name</th>
                                 <th md-column>Email</th>
                                 <th md-column>Mobile Number</th>
@@ -17,11 +17,11 @@
                                 <th md-column>Action</th>
                             </tr>
                         </thead>
-                        <tbody md-body>   
+                        <tbody md-body>
                             <tr md-row md-auto-select ng-repeat="customer in customerCtrl.customerList
-                                                                | orderBy: customerCtrl.query.order 
+                                                                | orderBy: customerCtrl.query.order
                                                                 | limitTo: customerCtrl.query.limit : (customerCtrl.query.page -1) * customerCtrl.query.limit">
-                                
+
 
                                 <td md-cell ><div class="imgDiv"><img ng-src="{{(customer.UserProfile.profilepic == null) ? '/assets/images/def.svg' : customer.UserProfile.profilepic}}" class="img-circle img-responsive tblImg"/></div></td>
                                 <td md-cell>{{customer.name}}</td>
@@ -38,20 +38,20 @@
                     </table>
                 </md-table-container>
 
-                <md-table-pagination md-limit="customerCtrl.query.limit" md-limit-options="customerCtrl.limitOptions" 
-                    md-page="customerCtrl.query.page" md-total="{{customerCtrl.customerList.length}}" 
-                    md-page-select="customerCtrl.options.pageSelect" md-boundary-links="customerCtrl.options.boundaryLinks" 
+                <md-table-pagination md-limit="customerCtrl.query.limit" md-limit-options="customerCtrl.limitOptions"
+                    md-page="customerCtrl.query.page" md-total="{{customerCtrl.customerList.length}}"
+                    md-page-select="customerCtrl.options.pageSelect" md-boundary-links="customerCtrl.options.boundaryLinks"
                     md-on-paginate="logPagination">
                 </md-table-pagination>
 
-            <div layout="row" layout-align="center center"> 
+            <div layout="row" layout-align="center center">
                 <div class="alert alert-danger" ng-if="customerCtrl.errMsg">
                         {{customerCtrl.errMsg}}
                 </div>
-            </div>  
+            </div>
     </div>
     </div>
-    
+
     <div class="row" ng-show="customerCtrl.flag">
     <div class="col-md-12">
                 <md-card-content>
@@ -93,7 +93,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-3 col-md-3">Email</label>
                                         <div class="col-sm-6">
-                                            <input type="text" name="email" class="form-control" placeholder="Email" ng-model="customerCtrl.user.email" required/>                         
+                                            <input type="text" name="email" class="form-control" placeholder="Email" ng-model="customerCtrl.user.email" required/>
                                         </div>
                                     </div>
                                         <div class="form-group">
@@ -149,20 +149,20 @@
                                             <div class="col-sm-6">
                                                 <md-button class="md-raised md-primary btnWidth" ng-if="!customerCtrl.isEdit" type="submit">Add</md-button>
                                                 <md-button class="md-raised md-primary btnWidth" ng-if="customerCtrl.isEdit" type="submit">Save</md-button>
-                                                <md-button class="md-raised md-accent btnWidth" ng-click="customerCtrl.cancel()">Cancel</md-button>                    
+                                                <md-button class="md-raised md-accent btnWidth" ng-click="customerCtrl.cancel()">Cancel</md-button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div layout="row" layout-align="center center" class="alert alert-danger" ng-if="customerCtrl.errMsg">
                                     {{customerCtrl.errMsg}}
                                 </div>
                             </div>
                         </form>
 
-                 
+
                 </md-card-content>
                 </div>
                 </div>
@@ -183,11 +183,14 @@
                     </ol>
                 </div>
             </div>
-            <div class="col-md-12"><hr class="hr-width "></div>
+            <div class="col-md-12">
+                <hr class="hr-width ">
+            </div>
 
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
                 <div>
-                    <button class="icon-btn" ng-click="customerCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New Customer</button>
+                    <button class="icon-btn" ng-click="customerCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New
+                        Customer</button>
                 </div>
                 <div class="search-box">
                     <input class="search-inp" type='text' ng-model='customerCtrl.searchText' placeholder="Search">
@@ -195,14 +198,15 @@
                 </div>
             </div>
 
-            <div class="col-md-12 padding-left-right-0"> 
+            <div class="col-md-12 padding-left-right-0">
                 <div class="col-md-4 col-lg-4 padding-top-40" ng-repeat="customer in customerCtrl.customerList | filter:{ 'name': customerCtrl.searchText}">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div layout="row">
                                 <div layout="column" layout-align="center center">
                                     <div class="card-i-div">
-                                        <img ng-src="{{(customer.UserProfile.profilepic == null) ? '/assets/images/male.png' : customer.UserProfile.profilepic}}" class="card-img img-circle">
+                                        <img ng-src="{{(customer.UserProfile.profilepic == null) ? '/assets/images/male.png' : customer.UserProfile.profilepic}}"
+                                            class="card-img img-circle">
                                     </div>
                                 </div>
                                 <div layout="column">
@@ -210,7 +214,8 @@
                                         <h3>{{customer.name}}</h3>
                                         <p class="card-p-email">{{customer.email}}</p>
                                         <p class="card-p-num">{{customer.mobilenumber}}</p>
-                                        <button class="btn btn-default card-btn" ng-click="customerCtrl.edit(customer)">View Profile</button>
+                                        <button class="btn btn-default card-btn" ng-click="customerCtrl.edit(customer)">View
+                                            Profile</button>
                                         <!-- <button class="btn btn-default" ng-click="customerCtrl.edit(customer)" style="margin-top: 5px;">Delete</button> -->
                                     </div>
                                 </div>
@@ -218,20 +223,20 @@
                         </div>
                     </div>
                 </div>
-                <div layout="row" layout-align="center center"> 
+                <div layout="row" layout-align="center center">
                     <div class="alert alert-danger" ng-if="customerCtrl.errMsg">
                         {{customerCtrl.errMsg}}
                     </div>
-                </div>    
+                </div>
             </div>
-            
-            
+
+
         </div>
     </div>
 
     <div class="row" ng-show="customerCtrl.flag">
-        
-        <div class="col-md-12">
+
+        <div class="col-md-12" ng-hide="customerCtrl.btnClicked">
             <div ng-if="!customerCtrl.isEdit" class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
                 <div>
                     <h1 class="head-line"><i class="fa fa-user" aria-hidden="true" id="icon-right-5"></i>Add Customer</h1>
@@ -256,76 +261,92 @@
                     </ol>
                 </div>
             </div>
-            <div class="col-md-12"><hr class="hr-width"></div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
 
             <div class="col-md-12">
                 <form name="uForm" ng-submit="customerCtrl.save()" validate>
                     <div>
                         <div class="imgCover"><img class="form-group img-circle imgStyle" ng-src="{{customerCtrl.def}}"></div>
                         <div layout="row" layout-align="center center">
-                            <input type='file' maxsize="3072" ng-model='customerCtrl.profilepic' accept="image/*" ng-change="customerCtrl.picChange(customerCtrl.profilepic)" base-sixty-four-input>
+                            <input type='file' maxsize="3072" ng-model='customerCtrl.profilepic' accept="image/*"
+                                ng-change="customerCtrl.picChange(customerCtrl.profilepic)" base-sixty-four-input>
                         </div>
                         <div class="has-error" layout="row" layout-align="center center">
                             <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 3 Mb</p>
                         </div>
                     </div>
-                    
+
                     <div class="topSpace">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="fullname" class="form-control" placeholder="Full Name" ng-model="customerCtrl.user.name" required/>
+                                <input type="text" name="fullname" class="form-control" placeholder="Full Name"
+                                    ng-model="customerCtrl.user.name" required />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="gst" class="form-control" placeholder="GST Number" ng-model="customerCtrl.user.gst_number" required/>
+                                <input type="text" name="gst" class="form-control" placeholder="GST Number" ng-model="customerCtrl.user.gst_number"
+                                    required />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control" placeholder="Email" ng-model="customerCtrl.user.email" required/>                         
+                                <input type="text" name="email" class="form-control" placeholder="Email" ng-model="customerCtrl.user.email"
+                                    required />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="mobileNumber" class="form-control" placeholder="Mobile number" ng-model="customerCtrl.user.mobilenumber" required/>
+                                <input type="text" name="mobileNumber" class="form-control" placeholder="Mobile number"
+                                    ng-model="customerCtrl.user.mobilenumber" required />
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" name="address"  placeholder="Address" ng-model="customerCtrl.user.address" required></textarea>
+                                <textarea class="form-control" rows="3" name="address" placeholder="Address" ng-model="customerCtrl.user.address"
+                                    required></textarea>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <select class="form-control" ng-model="customerCtrl.user.country_id" name="companyCountry" ng-change="customerCtrl.user.state_id=null; customerCtrl.user.city_id=null; customerCtrl.getStates(customerCtrl.user.country_id)" required>
+                                <select class="form-control" ng-model="customerCtrl.user.country_id" name="companyCountry"
+                                    ng-change="customerCtrl.user.state_id=null; customerCtrl.user.city_id=null; customerCtrl.getStates(customerCtrl.user.country_id)"
+                                    required>
                                     <option value="">Select Country</option>
-                                    <option ng-repeat="country in customerCtrl.country" ng-if="!customerCtrl.isEdit" value="{{country._id}}">{{country.countryName}}</option>
-                                    <option ng-repeat="country in customerCtrl.country" ng-if="customerCtrl.isEdit" ng-value="{{country._id}}">{{country.countryName}}</option>
+                                    <option ng-repeat="country in customerCtrl.country" ng-if="!customerCtrl.isEdit"
+                                        value="{{country._id}}">{{country.countryName}}</option>
+                                    <option ng-repeat="country in customerCtrl.country" ng-if="customerCtrl.isEdit"
+                                        ng-value="{{country._id}}">{{country.countryName}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <select class="form-control" ng-model="customerCtrl.user.state_id" name="companyState" ng-change="customerCtrl.user.city_id=null; customerCtrl.getCities(customerCtrl.user.state_id)" required>
+                                <select class="form-control" ng-model="customerCtrl.user.state_id" name="companyState"
+                                    ng-change="customerCtrl.user.city_id=null; customerCtrl.getCities(customerCtrl.user.state_id)"
+                                    required>
                                     <option value="">Select State</option>
                                     <option ng-repeat="state in customerCtrl.states" ng-if="!customerCtrl.isEdit" value="{{state._id}}">{{state.stateName}}</option>
-                                    <option ng-repeat="state in customerCtrl.states" ng-if="customerCtrl.isEdit" ng-value="{{state._id}}">{{state.stateName}}</option>
-                                </select>
-                                </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <select class="form-control" name"companyCity" ng-model="customerCtrl.user.city_id">
-                                    <option value="">Select City</option>
-                                    <option ng-repeat="city in customerCtrl.cities" ng-if="!customerCtrl.isEdit" value="{{city._id}}">{{city.cityName}}</option>
-                                    <option ng-repeat="city in customerCtrl.cities" ng-if="customerCtrl.isEdit" ng-value="{{city._id}}">{{city.cityName}}</option>
+                                    <option ng-repeat="state in customerCtrl.states" ng-if="customerCtrl.isEdit"
+                                        ng-value="{{state._id}}">{{state.stateName}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="tel" name="zip" class="form-control" placeholder="Zip" ng-model="customerCtrl.user.zip"/>
+                                <select class="form-control" ng-model="customerCtrl.user.city_id" name="companycity">
+                                    <option value="">Select City</option>
+                                    <option ng-repeat="city in customerCtrl.cities" ng-if="!customerCtrl.isEdit" value="{{city._id}}">{{city.cityName}}</option>
+                                    <option ng-repeat="city in customerCtrl.cities" ng-if="customerCtrl.isEdit"
+                                        ng-value="{{city._id}}">{{city.cityName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="tel" name="zip" class="form-control" placeholder="Zip" ng-model="customerCtrl.user.zip" />
                             </div>
                         </div>
                         <div class="col-sm-12" layout="row" layout-align="center center">
@@ -339,11 +360,18 @@
                                 <button class="btn btn-danger btn-block cancel-btn" ng-click="customerCtrl.cancel()">Cancel</button>
                             </div>
                         </div>
-                        <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="customerCtrl.errMsg">
+                        <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger"
+                            ng-if="customerCtrl.errMsg">
                             {{customerCtrl.errMsg}}
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <div class="container" ng-show="customerCtrl.btnClicked" style="padding-top: 200px;">
+            <div layout="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
         </div>
     </div>

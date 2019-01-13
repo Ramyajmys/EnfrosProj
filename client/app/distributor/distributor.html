@@ -8,12 +8,12 @@
             <div class="md-padding" layout="row" layout-align="space between start" layout-xs="column" layout-sm="column"  layout-align-xs="center center" layout-align-sm="center center">
                 <h4>Distributor</h4>
                 <button type="button" class="btn btn-success" ng-click="distributorCtrl.clickNew()">New Distributor</button>
-            </div> 
+            </div>
             <md-table-container>
                     <table md-table>
                         <thead md-head>
                             <tr md-row>
-                                <th md-column>Photo</th> 
+                                <th md-column>Photo</th>
                                 <th md-column>Name</th>
                                 <th md-column>Email</th>
                                 <th md-column>Mobile Number</th>
@@ -21,11 +21,11 @@
                                 <th md-column>Action</th>
                             </tr>
                         </thead>
-                        <tbody md-body>   
+                        <tbody md-body>
                             <tr md-row md-auto-select ng-repeat="distributor in distributorCtrl.distributorList
-                                                                | orderBy: distributorCtrl.query.order 
+                                                                | orderBy: distributorCtrl.query.order
                                                                 | limitTo: distributorCtrl.query.limit : (distributorCtrl.query.page -1) * distributorCtrl.query.limit">
-                                
+
 
                                 <td md-cell ><div class="imgDiv"><img ng-src="{{(distributor.UserProfile.profilepic == null) ? '/assets/images/def.svg' : distributor.UserProfile.profilepic}}" class="img-circle img-responsive tblImg"/></div></td>
                                 <td md-cell>{{distributor.name}}</td>
@@ -42,17 +42,17 @@
                     </table>
                 </md-table-container>
 
-                <md-table-pagination md-limit="distributorCtrl.query.limit" md-limit-options="distributorCtrl.limitOptions" 
-                    md-page="distributorCtrl.query.page" md-total="{{distributorCtrl.distributorList.length}}" 
-                    md-page-select="distributorCtrl.options.pageSelect" md-boundary-links="distributorCtrl.options.boundaryLinks" 
+                <md-table-pagination md-limit="distributorCtrl.query.limit" md-limit-options="distributorCtrl.limitOptions"
+                    md-page="distributorCtrl.query.page" md-total="{{distributorCtrl.distributorList.length}}"
+                    md-page-select="distributorCtrl.options.pageSelect" md-boundary-links="distributorCtrl.options.boundaryLinks"
                     md-on-paginate="logPagination">
                 </md-table-pagination>
 
-            <div layout="row" layout-align="center center"> 
+            <div layout="row" layout-align="center center">
                 <div class="alert alert-danger" ng-if="distributorCtrl.errMsg">
                      {{distributorCtrl.errMsg}}
                 </div>
-            </div>    
+            </div>
         </div> -->
         <div class="col-md-12">
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
@@ -66,11 +66,14 @@
                     </ol>
                 </div>
             </div>
-            <div class="col-md-12"><hr class="hr-width "></div>
+            <div class="col-md-12">
+                <hr class="hr-width ">
+            </div>
 
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
                 <div>
-                    <button class="icon-btn" ng-click="distributorCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New Distributor</button>
+                    <button class="icon-btn" ng-click="distributorCtrl.clickNew()"><i class="fa fa-plus" id="icon-right-5"></i>New
+                        Distributor</button>
                 </div>
                 <div class="search-box">
                     <input class="search-inp" type='text' ng-model='distributorCtrl.searchText' placeholder="Search">
@@ -78,14 +81,15 @@
                 </div>
             </div>
 
-            <div class="col-md-12 padding-left-right-0"> 
+            <div class="col-md-12 padding-left-right-0">
                 <div class="col-md-4 col-lg-4 padding-top-40" ng-repeat="distributor in distributorCtrl.distributorList | filter:{ 'name': distributorCtrl.searchText}">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div layout="row">
                                 <div layout="column" layout-align="center center">
                                     <div class="card-i-div">
-                                        <img ng-src="{{(distributor.UserProfile.profilepic == null) ? '/assets/images/male.png' : distributor.UserProfile.profilepic}}" class="card-img img-circle">
+                                        <img ng-src="{{(distributor.UserProfile.profilepic == null) ? '/assets/images/male.png' : distributor.UserProfile.profilepic}}"
+                                            class="card-img img-circle">
                                     </div>
                                 </div>
                                 <div layout="column">
@@ -93,7 +97,8 @@
                                         <h3>{{distributor.name}}</h3>
                                         <p class="card-p-email">{{distributor.email}}</p>
                                         <p class="card-p-num">{{distributor.mobilenumber}}</p>
-                                        <button class="btn btn-default card-btn" ng-click="distributorCtrl.edit(distributor)">View Profile</button>
+                                        <button class="btn btn-default card-btn" ng-click="distributorCtrl.edit(distributor)">View
+                                            Profile</button>
                                         <!-- <button class="btn btn-default" ng-click="distributorCtrl.edit(distributor)" style="margin-top: 5px;">Delete</button> -->
                                     </div>
                                 </div>
@@ -149,7 +154,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3 col-md-3">Email</label>
                                     <div class="col-sm-6">
-                                        <input type="text" name="email" class="form-control" placeholder="Email" ng-model="distributorCtrl.user.email" required/>                         
+                                        <input type="text" name="email" class="form-control" placeholder="Email" ng-model="distributorCtrl.user.email" required/>
                                     </div>
                                 </div>
                                     <div class="form-group">
@@ -205,13 +210,13 @@
                                         <div class="col-sm-6">
                                             <md-button class="md-raised md-primary btnWidth" ng-if="!distributorCtrl.isEdit" type="submit">Add</md-button>
                                             <md-button class="md-raised md-primary btnWidth" ng-if="distributorCtrl.isEdit" type="submit">Save</md-button>
-                                            <md-button class="md-raised md-accent btnWidth" ng-click="distributorCtrl.cancel()">Cancel</md-button>                    
+                                            <md-button class="md-raised md-accent btnWidth" ng-click="distributorCtrl.cancel()">Cancel</md-button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div layout="row" layout-align="center center" class="alert alert-danger" ng-if="distributorCtrl.errMsg">
                                 {{distributorCtrl.errMsg}}
                             </div>
@@ -219,10 +224,11 @@
                     </form>
                 </md-card-content>
         </div> -->
-        <div class="col-md-12">
+        <div class="col-md-12" ng-hide="distributorCtrl.btnClicked">
             <div ng-if="!distributorCtrl.isEdit" class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
                 <div>
-                    <h1 class="head-line"><i class="fa fa-users" aria-hidden="true" id="icon-right-5"></i>Add Distributor</h1>
+                    <h1 class="head-line"><i class="fa fa-users" aria-hidden="true" id="icon-right-5"></i>Add
+                        Distributor</h1>
                 </div>
                 <div>
                     <ol class="breadcrumb al-breadcrumb">
@@ -234,7 +240,8 @@
             </div>
             <div ng-if="distributorCtrl.isEdit" class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
                 <div>
-                    <h1 class="head-line"><i class="fa fa-users" aria-hidden="true" id="icon-right-5"></i>Edit Distributor</h1>
+                    <h1 class="head-line"><i class="fa fa-users" aria-hidden="true" id="icon-right-5"></i>Edit
+                        Distributor</h1>
                 </div>
                 <div>
                     <ol class="breadcrumb al-breadcrumb">
@@ -244,76 +251,94 @@
                     </ol>
                 </div>
             </div>
-            <div class="col-md-12"><hr class="hr-width"></div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
 
             <div class="col-md-12">
                 <form name="uForm" ng-submit="distributorCtrl.save()" validate>
                     <div>
                         <div class="imgCover"><img class="form-group img-circle imgStyle" ng-src="{{distributorCtrl.def}}"></div>
                         <div layout="row" layout-align="center center">
-                            <input type='file' maxsize="3072" ng-model='distributorCtrl.profilepic' accept="image/*" ng-change="distributorCtrl.picChange(distributorCtrl.profilepic)" base-sixty-four-input>
+                            <input type='file' maxsize="3072" ng-model='distributorCtrl.profilepic' accept="image/*"
+                                ng-change="distributorCtrl.picChange(distributorCtrl.profilepic)" base-sixty-four-input>
                         </div>
                         <div class="has-error" layout="row" layout-align="center center">
                             <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 3 Mb</p>
                         </div>
                     </div>
-                    
+
                     <div class="topSpace">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="fullname" class="form-control" placeholder="Full Name" ng-model="distributorCtrl.user.name" required/>
+                                <input type="text" name="fullname" class="form-control" placeholder="Full Name"
+                                    ng-model="distributorCtrl.user.name" required />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="gst" class="form-control" placeholder="GST Number" ng-model="distributorCtrl.user.gst_number" required/>
+                                <input type="text" name="gst" class="form-control" placeholder="GST Number" ng-model="distributorCtrl.user.gst_number"
+                                    required />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control" placeholder="Email" ng-model="distributorCtrl.user.email" required/>                         
+                                <input type="text" name="email" class="form-control" placeholder="Email" ng-model="distributorCtrl.user.email"
+                                    required />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" name="mobileNumber" class="form-control" placeholder="Mobile number" ng-model="distributorCtrl.user.mobilenumber" required/>
+                                <input type="text" name="mobileNumber" class="form-control" placeholder="Mobile number"
+                                    ng-model="distributorCtrl.user.mobilenumber" required />
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" name="address"  placeholder="Address" ng-model="distributorCtrl.user.address" required></textarea>
+                                <textarea class="form-control" rows="3" name="address" placeholder="Address" ng-model="distributorCtrl.user.address"
+                                    required></textarea>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <select class="form-control" ng-model="distributorCtrl.user.country_id" name="companyCountry" ng-change="distributorCtrl.user.state_id=null; distributorCtrl.user.city_id=null; distributorCtrl.getStates(distributorCtrl.user.country_id)" required>
+                                <select class="form-control" ng-model="distributorCtrl.user.country_id" name="companyCountry"
+                                    ng-change="distributorCtrl.user.state_id=null; distributorCtrl.user.city_id=null; distributorCtrl.getStates(distributorCtrl.user.country_id)"
+                                    required>
                                     <option value="">Select Country</option>
-                                    <option ng-repeat="country in distributorCtrl.country" ng-if="!distributorCtrl.isEdit" value="{{country._id}}">{{country.countryName}}</option>
-                                    <option ng-repeat="country in distributorCtrl.country" ng-if="distributorCtrl.isEdit" ng-value="{{country._id}}">{{country.countryName}}</option>
+                                    <option ng-repeat="country in distributorCtrl.country" ng-if="!distributorCtrl.isEdit"
+                                        value="{{country._id}}">{{country.countryName}}</option>
+                                    <option ng-repeat="country in distributorCtrl.country" ng-if="distributorCtrl.isEdit"
+                                        ng-value="{{country._id}}">{{country.countryName}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <select class="form-control" ng-model="distributorCtrl.user.state_id" name="companyState" ng-change="distributorCtrl.user.city_id=null; distributorCtrl.getCities(distributorCtrl.user.state_id)" required>
+                                <select class="form-control" ng-model="distributorCtrl.user.state_id" name="companyState"
+                                    ng-change="distributorCtrl.user.city_id=null; distributorCtrl.getCities(distributorCtrl.user.state_id)"
+                                    required>
                                     <option value="">Select State</option>
-                                    <option ng-repeat="state in distributorCtrl.states" ng-if="!distributorCtrl.isEdit" value="{{state._id}}">{{state.stateName}}</option>
-                                    <option ng-repeat="state in distributorCtrl.states" ng-if="distributorCtrl.isEdit" ng-value="{{state._id}}">{{state.stateName}}</option>
+                                    <option ng-repeat="state in distributorCtrl.states" ng-if="!distributorCtrl.isEdit"
+                                        value="{{state._id}}">{{state.stateName}}</option>
+                                    <option ng-repeat="state in distributorCtrl.states" ng-if="distributorCtrl.isEdit"
+                                        ng-value="{{state._id}}">{{state.stateName}}</option>
                                 </select>
-                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <select class="form-control" name"companyCity" ng-model="distributorCtrl.user.city_id">
                                     <option value="">Select City</option>
-                                    <option ng-repeat="city in distributorCtrl.cities" ng-if="!distributorCtrl.isEdit" value="{{city._id}}">{{city.cityName}}</option>
-                                    <option ng-repeat="city in distributorCtrl.cities" ng-if="distributorCtrl.isEdit" ng-value="{{city._id}}">{{city.cityName}}</option>
+                                    <option ng-repeat="city in distributorCtrl.cities" ng-if="!distributorCtrl.isEdit"
+                                        value="{{city._id}}">{{city.cityName}}</option>
+                                    <option ng-repeat="city in distributorCtrl.cities" ng-if="distributorCtrl.isEdit"
+                                        ng-value="{{city._id}}">{{city.cityName}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="tel" name="zip" class="form-control" placeholder="Zip" ng-model="distributorCtrl.user.zip"/>
+                                <input type="tel" name="zip" class="form-control" placeholder="Zip" ng-model="distributorCtrl.user.zip" />
                             </div>
                         </div>
                         <div class="col-sm-12" layout="row" layout-align="center center">
@@ -327,11 +352,18 @@
                                 <button class="btn btn-danger btn-block cancel-btn" ng-click="distributorCtrl.cancel()">Cancel</button>
                             </div>
                         </div>
-                        <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="distributorCtrl.errMsg">
+                        <div class="col-sm-12" layout="row" layout-align="center center" class="alert alert-danger"
+                            ng-if="distributorCtrl.errMsg">
                             {{distributorCtrl.errMsg}}
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <div class="container" ng-show="distributorCtrl.btnClicked" style="padding-top: 200px;">
+            <div layout="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
         </div>
     </div>

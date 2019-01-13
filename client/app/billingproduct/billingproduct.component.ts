@@ -30,6 +30,8 @@ export class BillingproductComponent {
   bigTotalItems;
   bigCurrentPage = 1;
   offset = 1;
+  pentryObj = {};
+  plist = [];
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
@@ -150,9 +152,20 @@ export class BillingproductComponent {
     this.brochurefiles = brochure;
   }
 
+  addPurchaseEntry() {
+    this.pentryObj['attachment'] = 'file';
+    this.plist.push(this.pentryObj);
+    this.pentryObj = {};
+    // console.log(this.plist);
+  }
+
+  deletePurchaseEntry(obj) {
+    this.plist.splice(this.plist.findIndex(item => item.supplier_name === obj.supplier_name), 1);
+  }
+
   save() {
     this.btnClicked = true;
-    this.productObj['brochurefiles'] = this.brochurefiles;
+    this.productObj['plist'] = this.plist;
     // console.log(this.productObj)
     this.$http.post('/api/billingProducts/', this.productObj).then(response => {
       if (response.status === 200) {
@@ -165,6 +178,7 @@ export class BillingproductComponent {
         this.$state.go('billingproduct');
       }
     }, err => {
+      this.btnClicked = false;
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {
@@ -175,6 +189,11 @@ export class BillingproductComponent {
         this.errMsg = err;
       }
     });
+  }
+
+  viewproduct(billproduct) {
+    this.myService.saveBillProduct(billproduct);
+    this.$state.go('viewbillingprod');
   }
 
   downloadFile(b, type, name) {
@@ -227,5 +246,4 @@ export default angular.module('enfrosProjApp.billingproduct', [uiRouter])
     template: require('./billingproduct.html'),
     controller: BillingproductComponent,
     controllerAs: 'billingproductCtrl'
-  })
-  .name;
+  }).name;

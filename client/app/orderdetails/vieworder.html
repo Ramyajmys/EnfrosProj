@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-hide="orderdetailsCtrl.isLoading">
     <div class="row">
         <div class="col-sm-12" style="padding-top: 40px;">
             <rzslider rz-slider-model="orderdetailsCtrl.slider.value" rz-slider-options="orderdetailsCtrl.slider.options"></rzslider>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="col-sm-12 padding-left-right-0 padding-top-40">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     <textarea rows="5" class="form-control" placeholder="Email Box" ng-model="orderdetailsCtrl.emailText"></textarea>
                 </div>
@@ -39,7 +39,7 @@
                     Email</button>
             </div>
 
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="form-group">
                     <textarea rows="5" class="form-control" placeholder="Message Box" ng-model="orderdetailsCtrl.smsText"></textarea>
                 </div>
@@ -47,7 +47,7 @@
                 <button type="button" class="btn btn-default btn-block new-btn" ng-disabled="orderdetailsCtrl.smsText == undefined"
                     ng-click="orderdetailsCtrl.sendSMS(orderdetailsCtrl.smsText, orderdetailsCtrl.custInfo.mobilenumber, orderdetailsCtrl.custInfo.name)">Send
                     SMS</button>
-            </div>
+            </div> -->
         </div>
 
         <div class="col-sm-12 padding-top-40">
@@ -120,5 +120,11 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="container" ng-show="orderdetailsCtrl.isLoading" style="padding-top: 200px;">
+    <div layout="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
 </div>

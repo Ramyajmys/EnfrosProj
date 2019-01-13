@@ -1,0 +1,130 @@
+<div class="container-fluid btmSpace" ng-hide="viewbillingprodCtrl.btnClicked" style="background: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>View Product</h1>
+                </div>
+                <div>
+                    <ol class="breadcrumb al-breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">View Product</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
+        </div>
+
+        <div class="col-md-12 p-t-30">
+            <form name="uForm" ng-submit="viewbillingprodCtrl.save()">
+                <div class="topSpace">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="viewbillingprodCtrl.productObj.category_id" name="category_id"
+                                ng-change="viewbillingprodCtrl.onCategoryChange(viewbillingprodCtrl.productObj.category_id)"
+                                required>
+                                <option ng-repeat="category in viewbillingprodCtrl.categoryList" ng-value="{{category._id}}">{{category.category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="viewbillingprodCtrl.productObj.sub_category_id" name="sub_category_id"
+                                required>
+                                <option value="">Select Sub-category</option>
+                                <option ng-repeat="sub in viewbillingprodCtrl.subCategoryList" ng-value="{{sub._id}}">{{sub.sub_category_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="viewbillingprodCtrl.productObj.product_name"
+                                placeholder="Enter Product name" name="productname" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <textarea type="text" rows="2" class="form-control" ng-model="viewbillingprodCtrl.productObj.product_description"
+                                placeholder="Enter Description" name="productdesc" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="viewbillingprodCtrl.productObj.capacity"
+                                placeholder="Enter Capacity" name="capacity" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="viewbillingprodCtrl.productObj.hsn_id" name="hsn_id"
+                                required>
+                                <option ng-repeat="hsn in viewbillingprodCtrl.hsnList" ng-value="{{hsn._id}}">{{hsn.hsn_code}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 padding-left-right-0 p-t-30">
+                    <div class="col-md-12 padding-left-right-0">
+                        <div class="col-md-12" layout="row" layout-align="space-between center">
+                            <div>
+                                <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Purchase Entry</h1>
+                            </div>
+                            <div>
+                                <button class="icon-btn" ng-click="viewbillingprodCtrl.NewEntry()"><i class="fa fa-plus" id="icon-right-5"></i>New
+                                    Purchase Entry</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <hr class="hr-width">
+                        </div>
+
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Supplier</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Payment</th>
+                                    <th>Attachment</th>
+                                </tr>
+                                <tr ng-repeat="list in viewbillingprodCtrl.purchaseEntries">
+                                    <td>{{list.supplier_name}}</td>
+                                    <td>{{list.quantity}}</td>
+                                    <td>{{list.purchase_price}}</td>
+                                    <td>{{list.payment_status}}</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm" ng-click="viewbillingprodCtrl.getFileData(list._id)">download</button></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="topSpace">
+                    <div class="col-md-12 padding-left-right-0 padding-top-40" layout="row" layout-align="center center">
+                        <div class="col-md-3 p-t-10">
+                            <button type="submit" class="btn btn-primary btn-block new-btn" ng-disabled="viewbillingprodCtrl.btnClicked">Save</button>
+                        </div>
+                        <div class="col-md-3 p-t-10">
+                            <button class="btn btn-danger btn-block cancel-btn" ng-click="viewbillingprodCtrl.cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Msg -->
+                <div class="col-md-12" layout="row" layout-align="center center" class="alert alert-danger" ng-if="viewbillingprodCtrl.errMsg">
+                    <p class="tooltips">{{viewbillingprodCtrl.errMsg}}</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container" ng-show="viewbillingprodCtrl.btnClicked" style="padding-top: 200px;">
+    <div layout="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>

@@ -19,7 +19,7 @@
     </div>
 </nav> -->
 
-<div class="container-fluid btmSpace bgWhite">
+<div class="container-fluid btmSpace bgWhite" ng-hide="productPageCtrl.isLoading">
     <div class="row">
         <div class="col-md-12" style="padding-top: 40px;">
             <div class="col-md-4">
@@ -251,5 +251,11 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="container" ng-show="productPageCtrl.isLoading" style="padding-top: 200px;">
+    <div layout="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
 </div>

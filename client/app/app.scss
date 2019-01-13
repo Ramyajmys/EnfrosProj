@@ -33,6 +33,21 @@ body {
 .c-p {
   cursor: pointer;
 }
+
+/* For Firefox */
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+/* Webkit browsers like Safari and Chrome */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.p-l-0 {
+  padding-left: 0px;
+}
+
 // .container, .container-fluid, .row{
 //   background-color: white;
 // }
@@ -41,6 +56,9 @@ body {
 }
 .padding-top-40 {
   padding-top: 40px;
+}
+.p-t-10 {
+  padding-top: 10px;
 }
 .p-t-20 {
   padding-top: 20px;
@@ -105,6 +123,7 @@ body {
 @import 'quotation/quotation';
 @import 'setpassword/setpassword';
 @import 'state/state';
+@import 'viewbillingprod/viewbillingprod';
 @import '../components/footer/footer';
 @import '../components/modal/modal';
 @import '../components/navbar/navbar';

@@ -10,6 +10,7 @@ export default function(sequelize, DataTypes) {
     },
     product_name: DataTypes.STRING,
     product_description: DataTypes.STRING,
-    capacity: DataTypes.STRING
+    capacity: DataTypes.STRING,
+    total_quantity: DataTypes.BIGINT
   });
 }

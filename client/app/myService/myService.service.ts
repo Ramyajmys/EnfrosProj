@@ -4,6 +4,14 @@ const angular = require('angular');
 /*@ngInject*/
 export function myServiceService($http, $cookies, Auth) {
   var cart = [], cart2=[], customer_list, distributor_list, invoice = false, customer_info, distributor_info, gstatus, category_list;
+  var productobj;
+
+  this.getBillProduct = function () {
+    return productobj;
+  }
+  this.saveBillProduct = function (val) {
+    productobj = val;
+  }
 
   this.getCategories = function () {
     return category_list;

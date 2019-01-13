@@ -220,7 +220,8 @@ export class AddProductSubCategoryComponent {
   }
 
   cancel() {
-    this.$state.reload();
+    // this.$state.reload();
+    this.$state.go('addProductSubCategory');
   }
 }
 

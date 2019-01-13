@@ -51,6 +51,7 @@ export class OrderdetailsComponent {
   bigCurrentPage = 1;
   offset = 1;
   keyword;
+  isLoading: boolean = false;
 
   /*@ngInject*/
   constructor($http, $state, Auth) {
@@ -305,8 +306,10 @@ export class OrderdetailsComponent {
   }
 
   sendEmail(text, email, name) {
+    this.isLoading = true;
     this.$http.post('/api/orderDetails/sendEmail', { name: name, email: email, text: text }).then(response => {
       if (response.status == 200) {
+        this.isLoading = false;
         swal({
           title: response.data.message,
           icon: "success",
@@ -315,6 +318,7 @@ export class OrderdetailsComponent {
         //this.$state.go('orderdetails');
       }
     }, err => {
+      this.isLoading = false;
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {

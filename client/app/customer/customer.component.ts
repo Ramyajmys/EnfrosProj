@@ -34,7 +34,7 @@ export class CustomerComponent {
   flag: boolean = false; isEdit: boolean = false;
   def: string;
   profilepic: any;
-  user = {} ;
+  user = {};
   allRoles: any;
   country: any;
   states: any;
@@ -52,7 +52,7 @@ export class CustomerComponent {
     this.Auth = Auth;
     this.$mdToast = $mdToast;
     this.myService = myService;
-    
+
     this.getRoles();
     this.getCountry();
     this.get();
@@ -60,15 +60,15 @@ export class CustomerComponent {
 
   getRoles() {
     this.$http.get('/api/Roles/').then(response => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         this.allRoles = response.data;
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -81,7 +81,7 @@ export class CustomerComponent {
       this.country = response.data;
     });
   }
-  
+
   getStates(countryid) {
     this.$http.get('/api/States/' + countryid).then(response => {
       this.states = response.data;
@@ -95,17 +95,17 @@ export class CustomerComponent {
   }
 
   get() {
-    this.$http.post('/api/users/get', {role: 'Customer'}).then(response => {
-      if(response.status === 200) {
+    this.$http.post('/api/users/get', { role: 'Customer' }).then(response => {
+      if (response.status === 200) {
         this.customerList = response.data;
         this.myService.saveCustomerList(this.customerList);
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -121,22 +121,18 @@ export class CustomerComponent {
   }
 
   picChange(pic) {
-    this.def = 'data:'+pic.filetype+';base64,'+pic.base64;
-    if(this.def !== null) {
+    this.def = 'data:' + pic.filetype + ';base64,' + pic.base64;
+    if (this.def !== null) {
       this.user['profilepic'] = this.def;
     }
   }
 
   save() {
-    if(!this.isEdit) {
+    this.btnClicked = true;
+    if (!this.isEdit) {
       this.$http.post('/api/users/', this.user).then(response => {
-        if(response.status === 200) {
-          // this.$mdToast.show(
-          //   this.$mdToast.simple()
-          //   .textContent(response.data.message)
-          //   .position('bottom right')
-          //   .hideDelay(3000)
-          // );
+        if (response.status === 200) {
+          this.btnClicked = false;
           swal({
             title: response.data.message,
             icon: "success",
@@ -146,11 +142,12 @@ export class CustomerComponent {
           this.get();
         }
       }, err => {
-        if(err.data.message) {
+        this.btnClicked = false;
+        if (err.data.message) {
           this.errMsg = err.data.message;
-        } else if(err.status === 500) {
+        } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
-        } else if(err.status === 404) {
+        } else if (err.status === 404) {
           this.errMsg = 'Not Found';
         } else {
           this.errMsg = err;
@@ -158,13 +155,8 @@ export class CustomerComponent {
       });
     } else {
       this.$http.post('/api/users/updateUser', this.user).then(response => {
-        if(response.status === 200) {
-          // this.$mdToast.show(
-          //   this.$mdToast.simple()
-          //   .textContent(response.data.message)
-          //   .position('bottom right')
-          //   .hideDelay(3000)
-          // );
+        if (response.status === 200) {
+          this.btnClicked = false;
           swal({
             title: response.data.message,
             icon: "success",
@@ -174,25 +166,26 @@ export class CustomerComponent {
           this.get();
         }
       }, err => {
-        if(err.data.message) {
+        this.btnClicked = false;
+        if (err.data.message) {
           this.errMsg = err.data.message;
-        } else if(err.status === 500) {
+        } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
-        } else if(err.status === 404) {
+        } else if (err.status === 404) {
           this.errMsg = 'Not Found';
         } else {
           this.errMsg = err;
         }
       });
     }
-    
+
   }
 
   edit(dObj) {
     this.flag = true;
     this.isEdit = true;
 
-    if(dObj.UserProfile.profilepic != null) {
+    if (dObj.UserProfile.profilepic != null) {
       this.def = dObj.UserProfile.profilepic;
     } else {
       this.def = '/assets/images/def.svg';
@@ -203,36 +196,36 @@ export class CustomerComponent {
     this.user['mobilenumber'] = dObj.mobilenumber;
     this.user['address'] = dObj.UserProfile.address;
     this.user['gst_number'] = dObj.UserProfile.gst_number;
-    if(dObj.UserProfile.country_id != null) {
+    if (dObj.UserProfile.country_id != null) {
       this.user['country_id'] = dObj.UserProfile.country_id;
       this.getStates(dObj.UserProfile.country_id);
     }
-    if(dObj.UserProfile.state_id != null) {
+    if (dObj.UserProfile.state_id != null) {
       this.user['state_id'] = dObj.UserProfile.state_id;
       this.getCities(dObj.UserProfile.state_id);
     }
-  
+
     this.user['city_id'] = dObj.UserProfile.city_id;
     this.user['zip'] = dObj.UserProfile.zip;
   }
 
   delete(dObj) {
-    this.$http.delete('/api/users/'+dObj._id).then(response => {
-      if(response.status === 204) {
+    this.$http.delete('/api/users/' + dObj._id).then(response => {
+      if (response.status === 204) {
         this.$mdToast.show(
           this.$mdToast.simple()
-          .textContent('Successfully Deleted')
-          .position('bottom right')
-          .hideDelay(3000)
+            .textContent('Successfully Deleted')
+            .position('bottom right')
+            .hideDelay(3000)
         );
         this.get();
       }
     }, err => {
-      if(err.data.message) {
+      if (err.data.message) {
         this.errMsg = err.data.message;
-      } else if(err.status === 500) {
+      } else if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
-      } else if(err.status === 404) {
+      } else if (err.status === 404) {
         this.errMsg = 'Not Found';
       } else {
         this.errMsg = err;
@@ -242,19 +235,19 @@ export class CustomerComponent {
 
   confirmDelete(dObj, ev) {
     var confirm = this.$mdDialog.confirm()
-    .title('Are you sure?')
-    .textContent('You want to delete this customer? This action cannot be undone.')
-    .targetEvent(ev)
-    .ok('Yes')
-    .cancel('No');
+      .title('Are you sure?')
+      .textContent('You want to delete this customer? This action cannot be undone.')
+      .targetEvent(ev)
+      .ok('Yes')
+      .cancel('No');
     var vm = this;
-    this.$mdDialog.show(confirm).then(function(success) {
+    this.$mdDialog.show(confirm).then(function (success) {
       vm.delete(dObj);
     }, err => {
       this.cancel();
     });
   }
- 
+
   cancel() {
     this.flag = false;
     this.errMsg = undefined;

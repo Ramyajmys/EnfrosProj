@@ -21,6 +21,7 @@ import { Country } from '../../sqldb';
 import { State } from '../../sqldb';
 import { City } from '../../sqldb';
 import { PurchaseEntries } from '../../sqldb';
+import { BillingProduct } from '../../sqldb';
 
 var fs = require('fs');
 var pdf = require('html-pdf');
@@ -205,9 +206,9 @@ export function create(req, res) {
         od.igst = prod.igst;
         test.push(od);
 
-        remaingQ = prod.PurchaseEntry.quantity - prod.product_quantity
+        remaingQ = parseInt(prod.total_quantity) - prod.product_quantity;
         oRes = OrderDetail.create(od);
-        PurchaseEntries.update({ quantity: remaingQ }, { where: { prod_id: prod._id } })
+        BillingProduct.update({ total_quantity: remaingQ }, { where: { _id: prod._id } });
 
         temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">' + cart[i].product_name + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].unitprice + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].cgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].sgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].igst + '</td><td width="10%" style="border: 1px solid #eee;">' + cart[i].product_quantity + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].product_total + '</td></tr>';
 

@@ -21,6 +21,7 @@ export class QuotationComponent {
   bigCurrentPage = 1;
   offset = 1;
   qList;
+  isLoading: boolean = false;
 
   /*@ngInject*/
   constructor($http, $state, Auth) {
@@ -157,6 +158,7 @@ export class QuotationComponent {
   }
 
   create() {
+    this.isLoading = true;
     this.formData['template'] = this.template;
     this.formData['date'] = new Date().getTime();
     this.formData['time'] = new Date().getTime();
@@ -164,6 +166,7 @@ export class QuotationComponent {
     this.$http.post('/api/quotations', this.formData).then(response => {
       // console.log(response)
       if (response.status === 200) {
+        this.isLoading = false;
         swal({
           title: response.data.msg,
           icon: "success",
@@ -172,6 +175,7 @@ export class QuotationComponent {
         this.$state.go('quotation');
       }
     }, err => {
+      this.isLoading = false;
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {

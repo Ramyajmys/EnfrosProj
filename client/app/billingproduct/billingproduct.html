@@ -34,10 +34,10 @@
                         <thead md-head>
                             <tr md-row>
                                 <th md-column>Product Name</th>
-                                <th md-column>Quantity</th>
-                                <th md-column>Price</th>
-                                <th md-column>Payment Status</th>
-                                <th md-column>Attachment</th>
+                                <th md-column>Total Quantity</th>
+                                <!-- <th md-column>Price</th>
+                                <th md-column>Payment Status</th> -->
+                                <th md-column>Action</th>
                             </tr>
                         </thead>
                         <tbody md-body>
@@ -46,12 +46,13 @@
                                                                             | filter: searchBylocation
                                                                             | filter: search">
                                 <td md-cell>{{q.product_name}}</td>
-                                <td md-cell>{{q.PurchaseEntry.quantity}}</td>
-                                <td md-cell>{{q.PurchaseEntry.purchase_price}}</td>
-                                <td md-cell>{{q.PurchaseEntry.payment_status}}</td>
+                                <td md-cell>{{q.total_quantity}}</td>
+                                <!-- <td md-cell>{{q.PurchaseEntries.purchase_price}}</td>
+                                <td md-cell>{{q.PurchaseEntries.payment_status}}</td> -->
                                 <td md-cell>
                                     <!-- <a class="c-p" ng-click="billingproductCtrl.downloadFile(q.PurchaseEntry.file, q.PurchaseEntry.filetype, q.PurchaseEntry.filename)">download</a> -->
-                                    <a class="c-p" ng-click="billingproductCtrl.getFileData(q.PurchaseEntry._id)">download</a>
+                                    <!-- <a class="c-p" ng-click="billingproductCtrl.getFileData(q.PurchaseEntries._id)">download</a> -->
+                                    <a class="c-p" ng-click="billingproductCtrl.viewproduct(q)">view</a>
                                 </td>
                             </tr>
                         </tbody>

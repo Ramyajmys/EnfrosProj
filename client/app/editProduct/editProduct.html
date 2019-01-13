@@ -1,8 +1,10 @@
-<div class="container-fluid btmSpace" style="background: white;">
+<div class="container-fluid btmSpace" ng-hide="editProductCtrl.btnClicked" style="background: white;">
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
-                <div><h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Edit Product</h1></div>
+                <div>
+                    <h1 class="head-line"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Edit Product</h1>
+                </div>
                 <div>
                     <ol class="breadcrumb al-breadcrumb">
                         <li class="breadcrumb-item"><a href="/admin">Home</a></li>
@@ -10,7 +12,9 @@
                     </ol>
                 </div>
             </div>
-            <div class="col-md-12"><hr class="hr-width"></div>
+            <div class="col-md-12">
+                <hr class="hr-width">
+            </div>
         </div>
 
         <div class="col-md-12 padding-top-40">
@@ -18,7 +22,9 @@
                 <div>
                     <div class="product-img-cover"><img class="form-group product-img-style" ng-src="{{editProductCtrl.def}}"></div>
                     <div layout="row" layout-align="center center" class="md-padding">
-                        <input type='file'  maxsize="3072" ng-model='editProductCtrl.product_def_pic' accept="image/*" ng-change="editProductCtrl.picChange(editProductCtrl.product_def_pic)" ng-required="editProductCtrl.def == null" base-sixty-four-input>
+                        <input type='file' maxsize="3072" ng-model='editProductCtrl.product_def_pic' accept="image/*"
+                            ng-change="editProductCtrl.picChange(editProductCtrl.product_def_pic)" ng-required="editProductCtrl.def == null"
+                            base-sixty-four-input>
                     </div>
                     <div class="has-error" layout="row" layout-align="center center">
                         <p class="help-block" ng-show="uForm.image.$error.maxsize">Image File must not exceed 3 Mb</p>
@@ -28,7 +34,9 @@
                 <div class="topSpace">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <select class="form-control" ng-model="editProductCtrl.productObj.category_id" name="category_id" disabled ng-change="editProductCtrl.onCategoryChange(editProductCtrl.productObj.category_id)" required>
+                            <select class="form-control" ng-model="editProductCtrl.productObj.category_id" name="category_id"
+                                disabled ng-change="editProductCtrl.onCategoryChange(editProductCtrl.productObj.category_id)"
+                                required>
                                 <option value="">Select Category</option>
                                 <option ng-repeat="category in editProductCtrl.categoryList" ng-value="{{category._id}}">{{category.category_name}}</option>
                             </select>
@@ -36,28 +44,31 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <select class="form-control" ng-model="editProductCtrl.productObj.sub_category_id" name="sub_category_id" required>
+                            <select class="form-control" ng-model="editProductCtrl.productObj.sub_category_id" name="sub_category_id"
+                                required>
                                 <option value="">Select Sub-category</option>
                                 <option ng-repeat="sub in editProductCtrl.subCategoryList" ng-value="{{sub._id}}">{{sub.sub_category_name}}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-group">
-                            <input type="text" class="form-control" ng-model="editProductCtrl.productObj.product_name" placeholder="Enter Product name" name="productname" required>
+                            <input type="text" class="form-control" ng-model="editProductCtrl.productObj.product_name"
+                                placeholder="Enter Product name" name="productname" required>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <div class="form-group">
                             <input type="text" class="form-control" ng-model="editProductCtrl.productObj.unitprice" placeholder="Enter Unit price" name="unitprice" required>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <textarea type="text" rows="2" class="form-control" ng-model="editProductCtrl.productObj.product_description" placeholder="Enter Description" name="productdesc" required></textarea>
+                            <textarea type="text" rows="2" class="form-control" ng-model="editProductCtrl.productObj.product_description"
+                                placeholder="Enter Description" name="productdesc" required></textarea>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <div class="form-group">
                             <input type="text" class="form-control" ng-model="editProductCtrl.productObj.quantity" placeholder="Enter Quantity" name="quantity" required>
                         </div>
@@ -74,12 +85,18 @@
                         <div class="form-group">
                             <input type="text" class="form-control" ng-model="editProductCtrl.productObj.discount" placeholder="Enter Discount" name="productdiscount" required/>
                         </div>
+                    </div> -->
+                    <div class="col-md-12 text-center">
+                        Brochure Name:- {{editProductCtrl.productObj.filename}}
                     </div>
-                    <div class="col-md-6 col-md-offset-4">
-                        <label class="control-label col-sm-2">Brochure: </label>
+                    <div class="col-md-6 col-md-offset-4 p-t-10">
+                        <label class="control-label col-sm-2 p-t-10">Brochure: </label>
                         <div class="form-group">
-                            <div><p>{{editProductCtrl.productObj.brochure}}</p></div>
-                            <input type='file' ng-model="editProductCtrl.brochure" ng-change="editProductCtrl.brochureChange(editProductCtrl.brochure)" ng-required="editProductCtrl.productObj.brochure == null" base-sixty-four-input>
+                            <div>
+                                <p>{{editProductCtrl.productObj.brochure}}</p>
+                            </div>
+                            <input type='file' ng-model="editProductCtrl.brochure" ng-change="editProductCtrl.brochureChange(editProductCtrl.brochure)"
+                                base-sixty-four-input>
                         </div>
                     </div>
                 </div>
@@ -87,7 +104,7 @@
                 <!-- <div class="topSpace">
 
                     <div class="col-md-12 padding-left-right-0" ng-if="editProductCtrl.productObj.category_id == 2">
-                        
+
                         <div class="col-md-12 padding-left-right-0">
                             <div class="col-md-12"><h1 class="head-line">Electrical Data<hr></h1></div>
 
@@ -110,7 +127,7 @@
                                             ng-model="editProductCtrl.edata.maximum_power_current_impp"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">	
+                                <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.saveEdata()">Save</button>
                                 </div>
                             </div>
@@ -178,7 +195,7 @@
                                             ng-model="editProductCtrl.spl_feature.feature_name" />
                                     </div>
                                 </div>
-                                <div class="col-sm-12">	
+                                <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
                                 </div>
                             </div>
@@ -244,7 +261,7 @@
                                             ng-model="editProductCtrl.input_dc.input_current"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">	
+                                <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addInputDC()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
                                 </div>
                             </div>
@@ -293,7 +310,7 @@
                                             ng-model="editProductCtrl.output_ac.frequency"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">	
+                                <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addOutputAC()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
                                 </div>
                             </div>
@@ -323,14 +340,14 @@
                                             ng-model="editProductCtrl.spl_feature.feature_name" />
                                     </div>
                                 </div>
-                                <div class="col-sm-12">	
+                                <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <ul ng-repeat="spl in editProductCtrl.slist">
                                     <li>{{spl.feature_name}}</li>
-                                </ul> 
+                                </ul>
                             </div>
                         </div>
 
@@ -339,7 +356,7 @@
                     <div class="col-md-12 padding-left-right-0" ng-if="editProductCtrl.productObj.category_id == 4">
                         <div class="col-md-12 padding-left-right-0">
                             <div class="col-md-12"><h1 class="head-line">Solar Kits<hr></h1></div>
-    
+
                             <div class="col-md-12 padding-left-right-0">
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -404,7 +421,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="col-md-4 col-md-offset-4">	
+                                    <div class="col-md-4 col-md-offset-4">
                                         <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addKits()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
                                     </div>
                                 </div>
@@ -437,7 +454,7 @@
                                         </tr>
                                     </table>
                                 </div>
-                                
+
                             </div>
                         </div>
 
@@ -451,17 +468,17 @@
                                             ng-model="editProductCtrl.spl_feature.feature_name" />
                                     </div>
                                 </div>
-                                <div class="col-sm-12">	
+                                <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-block new-btn" ng-click="editProductCtrl.addFeature()"><i class="fa fa-plus" aria-hidden="true" id="icon-right-5"></i>Add</button>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <ul ng-repeat="spl in editProductCtrl.slist">
                                     <li>{{spl.feature_name}}</li>
-                                </ul> 
+                                </ul>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div> -->
 
@@ -484,5 +501,11 @@
 
             </form>
         </div>
+    </div>
+</div>
+
+<div class="container" ng-show="editProductCtrl.btnClicked" style="padding-top: 200px;">
+    <div layout="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
 </div>

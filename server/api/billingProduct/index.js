@@ -14,4 +14,5 @@ router.post('/', controller.create);
 
 router.post('/getAllBill', controller.getAllBill);
 router.post('/getAllCount', controller.getAllCount);
+router.post('/update', controller.update);
 module.exports = router;

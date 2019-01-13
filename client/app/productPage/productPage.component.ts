@@ -24,6 +24,7 @@ export class ProductPageComponent {
   ilist;
   olist;
   klist;
+  isLoading: boolean = false;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
@@ -46,27 +47,35 @@ export class ProductPageComponent {
   }
 
   getproductdetails(cid, pid) {
+    this.isLoading = true;
     this.$http.post('/api/ProductDetails/getproductdetails', {cid: cid, pid: pid}).then(response => {
+      // console.log(response.data)
       if(response.status === 200) {
+        this.isLoading = false;
         if(cid == 2) {
+          this.product = response.data.product;
           this.elist = response.data.elist;
           this.mlist = response.data.mlist;
           this.flist = response.data.flist;
         }
         if(cid == 3) {
+          this.product = response.data.product;
           this.ilist = response.data.ilist;
           this.olist = response.data.olist;
           this.flist = response.data.flist;
         }
         if(cid == 4) {
+          this.product = response.data.product;
           this.klist = response.data.klist;
           this.flist = response.data.flist;
         }
         if(cid == 5) {
+          this.product = response.data.product;
           this.flist = response.data.flist;
         }
       }
     }, err => {
+      this.isLoading = false;
       if(err.data.message) {
         this.errMsg = err.data.message;
       } else if(err.status === 500) {

@@ -167,7 +167,7 @@ export class HsnlistComponent {
   };
 
   cancel() {
-    this.$state.reload();
+    this.$state.go('hsnlist');
   }
 }
 

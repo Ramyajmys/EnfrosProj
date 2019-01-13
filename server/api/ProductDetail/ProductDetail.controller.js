@@ -78,7 +78,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of ProductDetails
 export function index(req, res) {
-  return ProductDetail.findAll({ include: [{ model: ProductCategory }, { model: ProductSubCategory }], order: [['_id', 'DESC']] })
+  return ProductDetail.findAll({ include: [{ model: ProductCategory }, { model: ProductSubCategory }], order: [['_id', 'DESC']], attributes: { exclude: ['file'] } })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -240,10 +240,13 @@ export function getproductdetails(req, res) {
   var product_detail_id = req.body.pid;
 
   if (category_id == 2) {
-    return ProductElectricalData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (elist) {
-      return ProductMechanicalData.findOne({ where: { product_detail_id: product_detail_id } }).then(function (mlist) {
-        return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
-          return res.status(200).json({ elist: elist, mlist: mlist, flist: flist });
+    return ProductDetail.find({ where: { _id: product_detail_id } }).then(function (prod) {
+      return ProductElectricalData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (elist) {
+        return ProductMechanicalData.findOne({ where: { product_detail_id: product_detail_id } }).then(function (mlist) {
+          return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
+            return res.status(200).json({ product: prod, elist: elist, mlist: mlist, flist: flist });
+          })
+            .catch(handleError(res));
         })
           .catch(handleError(res));
       })
@@ -253,10 +256,13 @@ export function getproductdetails(req, res) {
   }
 
   if (category_id == 3) {
-    return ProductInputDcData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (ilist) {
-      return ProductOutputAcData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (olist) {
-        return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
-          return res.status(200).json({ ilist: ilist, olist: olist, flist: flist });
+    return ProductDetail.find({ where: { _id: product_detail_id } }).then(function (prod) {
+      return ProductInputDcData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (ilist) {
+        return ProductOutputAcData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (olist) {
+          return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
+            return res.status(200).json({ product: prod, ilist: ilist, olist: olist, flist: flist });
+          })
+            .catch(handleError(res));
         })
           .catch(handleError(res));
       })
@@ -266,9 +272,12 @@ export function getproductdetails(req, res) {
   }
 
   if (category_id == 4) {
-    return ProductKitsData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (klist) {
-      return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
-        return res.status(200).json({ klist: klist, flist: flist });
+    return ProductDetail.find({ where: { _id: product_detail_id } }).then(function (prod) {
+      return ProductKitsData.findAll({ where: { product_detail_id: product_detail_id } }).then(function (klist) {
+        return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
+          return res.status(200).json({ product: prod, klist: klist, flist: flist });
+        })
+          .catch(handleError(res));
       })
         .catch(handleError(res));
     })
@@ -276,8 +285,11 @@ export function getproductdetails(req, res) {
   }
 
   if (category_id == 5) {
-    return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
-      return res.status(200).json({ flist: flist });
+    return ProductDetail.find({ where: { _id: product_detail_id } }).then(function (prod) {
+      return ProductSplFeature.findAll({ where: { product_detail_id: product_detail_id } }).then(function (flist) {
+        return res.status(200).json({ product: prod, flist: flist });
+      })
+        .catch(handleError(res));
     })
       .catch(handleError(res));
   }
@@ -287,38 +299,54 @@ export function getproductdetails(req, res) {
 export function upsert(req, res) {
   var brochure = req.body.brochurefiles;
   var prod = req.body;
-
-  if (brochure == undefined) {
-    return ProductDetail.update(req.body, {
-      where: {
-        _id: req.body._id
-      }
-    })
-      .then(function () {
-        return res.status(200).json({ message: 'Successfully Updated' })
-      })
-      .catch(handleError(res));
-  } else {
-    var mode = process.env.NODE_ENV;
-    var fPath;
-    if (mode == 'development') {
-      fPath = 'client/';
-    } else if (mode == 'production') {
-      fPath = 'dist/client/';
-    }
-    fPath = fPath + req.body.brochure;
-    fs.unlinkSync(fPath);
-    var base64String = brochure.base64;
-    var filepath = './assets/brochure/' + prod._id + brochure.filename;
-    var path = './client/assets/brochure/' + prod._id + brochure.filename;
-    base64.decode(base64String, path, function (err, output) {
-      prod.brochure = filepath;
-      ProductDetail.update(prod, { where: { _id: prod._id } }).then(function () {
-        return res.status(200).json({ message: "Product sucessfully Updated" })
-      })
-        .catch(handleError(res));
-    });
+  if(brochure != null) {
+    var buf = Buffer.from(brochure.base64, 'base64');
+    prod['file'] = buf;
+    prod['filetype'] = brochure.filetype;
+    prod['filename'] = brochure.filename;
   }
+
+  return ProductDetail.update(prod, {
+    where: {
+      _id: req.body._id
+    }
+  })
+    .then(function () {
+      return res.status(200).json({ message: 'Successfully Updated' })
+    })
+    .catch(handleError(res));
+
+  // if (brochure == undefined) {
+  //   return ProductDetail.update(req.body, {
+  //     where: {
+  //       _id: req.body._id
+  //     }
+  //   })
+  //     .then(function () {
+  //       return res.status(200).json({ message: 'Successfully Updated' })
+  //     })
+  //     .catch(handleError(res));
+  // } else {
+  //   var mode = process.env.NODE_ENV;
+  //   var fPath;
+  //   if (mode == 'development') {
+  //     fPath = 'client/';
+  //   } else if (mode == 'production') {
+  //     fPath = 'dist/client/';
+  //   }
+  //   fPath = fPath + req.body.brochure;
+  //   fs.unlinkSync(fPath);
+  //   var base64String = brochure.base64;
+  //   var filepath = './assets/brochure/' + prod._id + brochure.filename;
+  //   var path = './client/assets/brochure/' + prod._id + brochure.filename;
+  //   base64.decode(base64String, path, function (err, output) {
+  //     prod.brochure = filepath;
+  //     ProductDetail.update(prod, { where: { _id: prod._id } }).then(function () {
+  //       return res.status(200).json({ message: "Product sucessfully Updated" })
+  //     })
+  //       .catch(handleError(res));
+  //   });
+  // }
 }
 
 // Updates an existing ProductDetail in the DB

@@ -341,7 +341,7 @@ db.PurchaseEntries.belongsTo(db.BillingProduct, {
     name: 'prod_id'
   }
 });
-db.BillingProduct.hasOne(db.PurchaseEntries, {
+db.BillingProduct.hasMany(db.PurchaseEntries, {
   foreignKey: {
     name: 'prod_id'
   }

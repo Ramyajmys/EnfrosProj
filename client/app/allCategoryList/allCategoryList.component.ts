@@ -206,7 +206,7 @@ export class AllCategoryListComponent {
   };
 
   cancel() {
-    this.$state.reload();
+    this.$state.go('allCategoryList');
   }
 }
 
