@@ -19,10 +19,7 @@ export default function(sequelize, DataTypes) {
     email: {
       type: DataTypes.STRING,
       unique: {
-        msg: 'The specified email address is already in use.'
-      },
-      validate: {
-        isEmail: true
+        msg: 'The specified email address is already in use, try with different Email Address'
       }
     },
     mobilenumber: {

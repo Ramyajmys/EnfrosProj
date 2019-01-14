@@ -44,6 +44,12 @@ export class CustomerComponent {
 
   searchText;
 
+  maxSize = 5;
+  bigTotalItems;
+  bigCurrentPage = 1;
+  offset = 1;
+  noDataFound: boolean = false;
+
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
     this.$mdDialog = $mdDialog;
@@ -55,7 +61,38 @@ export class CustomerComponent {
 
     this.getRoles();
     this.getCountry();
-    this.get();
+
+    this.getTotalCount();
+  }
+
+  // $onInit() {
+  //   this.get();
+  // }
+
+  getTotalCount() {
+    this.$http.post('/api/users/getCount', { role: 'Customer' }).then(response => {
+      if (response.status === 200) {
+        // console.log(response.data)
+        if(response.data.count != 0) {
+          this.get();
+          this.noDataFound = false;
+          this.bigTotalItems = response.data.count;
+        } else {
+          this.noDataFound = true;
+        }
+      }
+    }, err => {
+      this.btnClicked = false;
+      if (err.data.message) {
+        this.errMsg = err.data.message;
+      } else if (err.status === 500) {
+        this.errMsg = 'Internal Server Error';
+      } else if (err.status === 404) {
+        this.errMsg = 'Not Found';
+      } else {
+        this.errMsg = err;
+      }
+    });
   }
 
   getRoles() {
@@ -94,13 +131,22 @@ export class CustomerComponent {
     });
   }
 
+  pagination() {
+    this.offset = this.bigCurrentPage;
+    this.get();
+  }
+
   get() {
-    this.$http.post('/api/users/get', { role: 'Customer' }).then(response => {
+    this.btnClicked = true;
+    this.$http.post('/api/users/getalluser', { role: 'Customer', offset: this.offset }).then(response => {
       if (response.status === 200) {
+        // console.log(response.data)
         this.customerList = response.data;
         this.myService.saveCustomerList(this.customerList);
+        this.btnClicked = false;
       }
     }, err => {
+      this.btnClicked = false;
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {
@@ -111,6 +157,25 @@ export class CustomerComponent {
         this.errMsg = err;
       }
     });
+    // this.btnClicked = true;
+    // this.$http.post('/api/users/get', { role: 'Customer' }).then(response => {
+    //   if (response.status === 200) {
+    //     this.customerList = response.data;
+    //     this.myService.saveCustomerList(this.customerList);
+    //     this.btnClicked = false;
+    //   }
+    // }, err => {
+    //   this.btnClicked = false;
+    //   if (err.data.message) {
+    //     this.errMsg = err.data.message;
+    //   } else if (err.status === 500) {
+    //     this.errMsg = 'Internal Server Error';
+    //   } else if (err.status === 404) {
+    //     this.errMsg = 'Not Found';
+    //   } else {
+    //     this.errMsg = err;
+    //   }
+    // });
   }
 
   clickNew() {
@@ -142,7 +207,7 @@ export class CustomerComponent {
             timer: 1500
           });
           this.cancel();
-          this.get();
+          this.getTotalCount();
         }
       }, err => {
         // console.log(err)
@@ -172,7 +237,7 @@ export class CustomerComponent {
             timer: 1500
           });
           this.cancel();
-          this.get();
+          this.getTotalCount();
         }
       }, err => {
         this.btnClicked = false;

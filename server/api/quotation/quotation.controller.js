@@ -110,22 +110,20 @@ export function create(req, res) {
   </div>'+ temp + '</div>';
 
   Quotation.create(dObj).then(function (quot) {
-    // if (quot) {
-      console.log(quot)
+    if (quot) {
+      // console.log(quot)
       pdf.create(html).toBuffer(function (err, buffer) {
         if (!err) {
           var bas = buffer.toString('base64')
           Quotation.update({ file: buffer }, { where: { _id: quot._id } }).then(function (yes) {
-            console.log(yes)
+            // console.log(yes)
             sendEmailNotification1(customer.email, customer.name, bas);
             return res.status(200).json({ msg: 'Succcessfully Created' });
           })
             .catch(handleError(res));
-        } else {
-          console.log(err)
         }
       });
-    // }
+    }
   })
     .catch(handleError(res));
 }
@@ -172,14 +170,14 @@ export function getAllQuotes(req, res) {
   var limit = 10;
   var offset = (req.body.offset - 1) * limit;
 
-  return Quotation.findAll({ offset: offset, limit: limit, order: [['_id', 'DESC']], attributes:['_id', 'date', 'time'], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }] })
+  return Quotation.findAll({ offset: offset, limit: limit, order: [['_id', 'DESC']], attributes: ['_id', 'date', 'time'], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }] })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 export function getAllQuoteCount(req, res) {
-  return Quotation.count().then(function(quot) {
-    res.status(200).json({count: quot})
+  return Quotation.count().then(function (quot) {
+    res.status(200).json({ count: quot })
   })
     .catch(handleError(res));
 }

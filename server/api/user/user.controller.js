@@ -49,6 +49,39 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+export function getCount(req, res) {
+  return User.count({
+    where: { role: req.body.role }})
+    .then(users => {
+      res.status(200).json({count: users});
+    })
+    .catch(handleError(res));
+}
+
+export function getalluser(req, res) {
+  var limit = 12;
+  var offset = (req.body.offset - 1) * limit;
+
+  return User.findAll({
+    where: { role: req.body.role },
+    offset: offset, limit: limit, order: [['_id', 'DESC']],
+    attributes: [
+      '_id',
+      'name',
+      'email',
+      'role',
+      'mobilenumber',
+      'active',
+      'provider'
+    ], include: [{ model: UserProfile }], order: [['name', 'ASC']]
+  })
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(handleError(res));
+
+}
+
 function sendEmailNotification(id, email, name, msg) {
 
   var transporter = nodemailer.createTransport({
@@ -175,19 +208,6 @@ export function create(req, res) {
     city_id: req.body.city_id
   }
 
-  // return User.create(userObj).then(function(user) {
-  //   if(user) {
-  //     profile['user_id'] = user._id;
-  //     UserProfile.create(profile).then(function () {
-  //       var msg = 'You are successfully added. Please activate your account by clicking the button below';
-  //       sendEmailNotification(user._id, user.email, req.body.name, msg);
-  //       res.json({ message: 'Successfully Added' });
-  //     })
-  //     .catch(handleError(res));
-  //   }
-  // })
-  // .catch(validationError(res));
-
   var newUser = User.build(userObj);
   newUser.setDataValue('provider', 'local');
   newUser.setDataValue('password', config.default_password);
@@ -205,6 +225,18 @@ export function create(req, res) {
     .catch(handleError(res));
 
 
+  // return User.create(userObj).then(function(user) {
+  //   if(user) {
+  //     profile['user_id'] = user._id;
+  //     UserProfile.create(profile).then(function () {
+  //       var msg = 'You are successfully added. Please activate your account by clicking the button below';
+  //       sendEmailNotification(user._id, user.email, req.body.name, msg);
+  //       res.json({ message: 'Successfully Added' });
+  //     })
+  //     .catch(handleError(res));
+  //   }
+  // })
+  // .catch(validationError(res));
 }
 
 /**

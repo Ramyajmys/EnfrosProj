@@ -265,6 +265,7 @@ export function create(req, res) {
             // createInvoice(customer, order.order_name, admin, ftotal, temp, extra, today);
             var itemp = invoiceTemp(customer, order.order_name, admin, ftotal, temp, extra, today);
             var etemp = emailTemp(customer.User.name, extra, ordername);
+            
             pdf.create(itemp).toBuffer(function (err, buffer) {
               if (!err) {
                 var bas = buffer.toString('base64')

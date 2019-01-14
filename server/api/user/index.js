@@ -15,4 +15,7 @@ router.post('/', controller.create);
 router.post('/createPassword', controller.createPassword);
 router.post('/updateUser', controller.updateUser);
 
+router.post('/getCount', controller.getCount);
+router.post('/getalluser', controller.getalluser);
+
 module.exports = router;
