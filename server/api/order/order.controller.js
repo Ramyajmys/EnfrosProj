@@ -402,17 +402,17 @@ function invoiceTemp(customer, invoice, admin, total, temp, extra, date) {
   } else {
     address = admin.UserProfile.address;
   }
-  if(admin.UserProfile.City.cityName == null) {
+  if(admin.UserProfile.city_id == null) {
     city = 'city';
   } else {
     city = admin.UserProfile.City.cityName;
   }
-  if(admin.UserProfile.State.stateName == null) {
+  if(admin.UserProfile.state_id == null) {
     state = 'state';
   } else {
     state = admin.UserProfile.State.stateName;
   }
-  if(admin.UserProfile.Country.countryName == null) {
+  if(admin.UserProfile.country_id == null) {
     country = 'country';
   } else {
     country = admin.UserProfile.Country.countryName;

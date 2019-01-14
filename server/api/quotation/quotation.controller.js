@@ -102,15 +102,15 @@ export function create(req, res) {
     distributor_id: distributor._id
   };
 
+  var img = config.domain + 'assets/logo/logo.png';
+
+  var html = '<div style="width: 95%;padding: 10px; margin:auto; text-align: center; letter-spacing:1px; font-size: 20px;">\
+  <div style="width: 95%; text-align: right; ">\
+      <img src='+ img + ' style="width:190px; height:80px"/><br>\
+  </div>'+ temp + '</div>';
+console.log(html)
   Quotation.create(dObj).then(function (quot) {
     if (quot) {
-      var img = config.domain + 'assets/logo/logo.png';
-
-      var html = '<div style="width: 95%;padding: 10px; margin:auto; text-align: center; letter-spacing:1px; font-size: 20px;">\
-      <div style="width: 95%; text-align: right; ">\
-          <img src='+ img + ' style="width:190px; height:80px"/><br>\
-      </div>'+ temp + '</div>';
-
       pdf.create(html).toBuffer(function (err, buffer) {
         if (!err) {
           var bas = buffer.toString('base64')

@@ -202,7 +202,7 @@ export function create(req, res) {
       })
         .catch(handleError(res));
     })
-    .catch(validationError(res));
+    .catch(handleError(res));
 
 
 }
