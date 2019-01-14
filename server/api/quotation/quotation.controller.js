@@ -108,20 +108,24 @@ export function create(req, res) {
   <div style="width: 95%; text-align: right; ">\
       <img src='+ img + ' style="width:190px; height:80px"/><br>\
   </div>'+ temp + '</div>';
-console.log(html)
+
   Quotation.create(dObj).then(function (quot) {
-    if (quot) {
+    // if (quot) {
+      console.log(quot)
       pdf.create(html).toBuffer(function (err, buffer) {
         if (!err) {
           var bas = buffer.toString('base64')
-          Quotation.update({ file: buffer }, { where: { _id: quot._id } }).then(function () {
+          Quotation.update({ file: buffer }, { where: { _id: quot._id } }).then(function (yes) {
+            console.log(yes)
             sendEmailNotification1(customer.email, customer.name, bas);
             return res.status(200).json({ msg: 'Succcessfully Created' });
           })
             .catch(handleError(res));
+        } else {
+          console.log(err)
         }
       });
-    }
+    // }
   })
     .catch(handleError(res));
 }
