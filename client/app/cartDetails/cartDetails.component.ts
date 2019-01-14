@@ -209,6 +209,7 @@ export class CartDetailsComponent {
         swal({
           title: response.data.msg,
           icon: "success",
+          timer: 1500
         });
 
         this.myService.saveCartInfo2([]);

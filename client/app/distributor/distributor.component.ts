@@ -148,7 +148,7 @@ export class DistributorComponent {
             title: err.data.message,
             icon: "warning"
           });
-          // this.errMsg = err.data.message;
+          this.errMsg = err.data.message;
         } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
         } else if (err.status === 404) {
@@ -177,7 +177,7 @@ export class DistributorComponent {
             title: err.data.message,
             icon: "warning"
           });
-          // this.errMsg = err.data.message;
+          this.errMsg = err.data.message;
         } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
         } else if (err.status === 404) {

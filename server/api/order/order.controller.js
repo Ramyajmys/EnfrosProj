@@ -396,12 +396,33 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
 
 function invoiceTemp(customer, invoice, admin, total, temp, extra, date) {
   var img = config.domain + 'assets/logo/logo.png';
+  var address, country, state, city;
+  if(admin.UserProfile.address == null) {
+    address = 'address';
+  } else {
+    address = admin.UserProfile.address;
+  }
+  if(admin.UserProfile.City.cityName == null) {
+    city = 'city';
+  } else {
+    city = admin.UserProfile.City.cityName;
+  }
+  if(admin.UserProfile.State.stateName == null) {
+    state = 'state';
+  } else {
+    state = admin.UserProfile.State.stateName;
+  }
+  if(admin.UserProfile.Country.countryName == null) {
+    country = 'country';
+  } else {
+    country = admin.UserProfile.Country.countryName;
+  }
   // <h1>Enfros Solution</h1>\
   var html = '<div style="width: 95%;padding: 10px; margin:auto; font-family: Palatino Linotype, Book Antiqua, Palatino, serif; letter-spacing:1px;">\
   <div style="text-align: center; color: #263238;">\
       <img src='+ img + ' style="width:190px; height:80px"/><br>\
-      <h4>'+ admin.UserProfile.address+'</h4>\
-      <h4>'+admin.UserProfile.City.cityName+' ,'+admin.UserProfile.State.stateName+' ,'+admin.UserProfile.Country.countryName+'</h4>\
+      <h4>'+ address+'</h4>\
+      <h4>'+city+' ,'+state+' ,'+country+'</h4>\
       <h3>GSTIN: '+ admin.UserProfile.gst_number + '</h3>\
   </div>\
   <div style="width: 100%; font-size: 16px;">\
