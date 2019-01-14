@@ -1,4 +1,4 @@
-<div class="container-fluid btmSpace" ng-hide="invoiceCtrl.btnClicked" style="background: white;">
+<div class="container-fluid btmSpace" ng-hide="invoiceCtrl.isLoading" style="background: white;">
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12 padding-top-40" layout="row" layout-align="space-between center">
@@ -105,3 +105,9 @@
         </div>
     </div>
 </div>
+
+<div class="container" ng-show="invoiceCtrl.isLoading" style="padding-top: 200px;">
+        <div layout="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>

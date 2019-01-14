@@ -44,6 +44,7 @@ export class ProductlistComponent {
   distributor;
 
   rFlag = false;
+  isLoading: boolean = false;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
@@ -85,8 +86,10 @@ export class ProductlistComponent {
   // }
 
   get() {
+    this.isLoading = true;
     this.$http.get('/api/ProductDetails/').then(response => {
       if (response.status === 200) {
+        this.isLoading = false;
         this.productList = response.data;
         // console.log(this.productList)
         if (this.productList.length == 0) {
@@ -97,6 +100,7 @@ export class ProductlistComponent {
         }
       }
     }, err => {
+      this.isLoading = false;
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {

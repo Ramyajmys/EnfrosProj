@@ -16,7 +16,7 @@ export class InvoiceComponent {
   getCurrentUser: Function;
   currentUser: any;
   productList;
-  btnClicked = false;
+  isLoading = false;
   customerList;
   distributorList;
   searchTerm;
@@ -118,11 +118,14 @@ export class InvoiceComponent {
   }
 
   getDistributorList() {
+    this.isLoading = true;
     this.$http.post('/api/users/get', { role: 'Distributor' }).then(response => {
       if (response.status === 200) {
+        this.isLoading = false;
         this.distributorList = response.data;
       }
     }, err => {
+      this.isLoading = false;
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {

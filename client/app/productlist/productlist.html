@@ -8,7 +8,7 @@
   </div>
 </nav>
 
-<div class="container-fluid padding-top-40 padding-bottom-80 bgWhite">
+<div class="container-fluid padding-top-40 padding-bottom-80 bgWhite" ng-hide="productlistCtrl.isLoading">
   <!-- <div class="row" ng-if="productlistCtrl.getCurrentUser().role == 'admin'">
     <div class="col-md-12" style="padding-bottom: 30px; width: 100%;">
         <div class="col-sm-3">
@@ -150,4 +150,10 @@
     </div>
 
   </div>
+</div>
+
+<div class="container" ng-show="productlistCtrl.isLoading" style="padding-top: 200px;">
+    <div layout="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
 </div>
