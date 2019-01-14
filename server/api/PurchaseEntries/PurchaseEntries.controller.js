@@ -99,11 +99,13 @@ export function create(req, res) {
 
   PurchaseEntries.create(obj).then(function(entry) {
     BillingProduct.find({where: {_id: req.body.prod_id}}).then(function(prod) {
-      var total = parseInt(prod.total_quantity) + req.body.quantity;
-      BillingProduct.update({total_quantity: total},{where: {_id: req.body.prod_id}}).then(function() {
-        return res.status(200).json({entry: entry});
-      })
-      .catch(handleError(res));
+      if(prod) {
+        var total = parseInt(prod.total_quantity) + req.body.quantity;
+        BillingProduct.update({total_quantity: total},{where: {_id: req.body.prod_id}}).then(function() {
+          return res.status(200).json({entry: entry});
+        })
+        .catch(handleError(res));
+      }
     })
     .catch(handleError(res));
   })

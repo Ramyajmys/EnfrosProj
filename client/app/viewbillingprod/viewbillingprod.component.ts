@@ -137,6 +137,7 @@ export class ViewbillingprodComponent {
   }
 
   NewEntry() {
+    this.btnClicked = false;
     this.$mdDialog.show({
       controller: () => this,
       controllerAs: 'viewbillingprodCtrl',
