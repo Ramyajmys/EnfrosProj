@@ -207,7 +207,8 @@ export class CustomerComponent {
             timer: 1500
           });
           this.cancel();
-          this.getTotalCount();
+          this.get();
+          // this.getTotalCount();
         }
       }, err => {
         // console.log(err)
@@ -237,7 +238,8 @@ export class CustomerComponent {
             timer: 1500
           });
           this.cancel();
-          this.getTotalCount();
+          this.get();
+          // this.getTotalCount();
         }
       }, err => {
         this.btnClicked = false;
@@ -272,7 +274,7 @@ export class CustomerComponent {
     this.user['_id'] = dObj._id;
     this.user['name'] = dObj.name;
     this.user['email'] = dObj.email;
-    this.user['mobilenumber'] = dObj.mobilenumber;
+    this.user['mobilenumber'] = parseInt(dObj.mobilenumber);
     this.user['address'] = dObj.UserProfile.address;
     this.user['gst_number'] = dObj.UserProfile.gst_number;
     if (dObj.UserProfile.country_id != null) {
@@ -285,7 +287,7 @@ export class CustomerComponent {
     }
 
     this.user['city_id'] = dObj.UserProfile.city_id;
-    this.user['zip'] = dObj.UserProfile.zip;
+    this.user['zip'] = parseInt(dObj.UserProfile.zip);
   }
 
   delete(dObj) {

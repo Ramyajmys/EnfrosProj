@@ -139,7 +139,7 @@ export class CartDetailsComponent {
 
   valueChange(product) {
     // console.log(product);
-    if(product.product_quantity <= parseInt(product.total_quantity)) {
+    if (product.product_quantity <= parseInt(product.total_quantity)) {
       product.product_total = (product.unitprice + product.cgst + product.sgst + product.igst) * product.product_quantity;
       this.finaltotal = 0;
       for (let i = 0; i < this.cInfo.length; i++) {
@@ -171,7 +171,7 @@ export class CartDetailsComponent {
   }
 
   delete(p) {
-    if(this.exceededprod._id == p._id) {
+    if (this.exceededprod._id == p._id) {
       this.outofQuantity = false;
     }
     this.cInfo.splice(this.cInfo.findIndex(item => item._id === p._id), 1);
@@ -219,6 +219,10 @@ export class CartDetailsComponent {
       }
     }, err => {
       this.isLoading = false;
+      this.myService.saveCartInfo2([]);
+      this.myService.saveCustomerInfo(undefined);
+      this.myService.saveDistributorInfo(undefined);
+      this.myService.saveGstatus(undefined);
       if (err.status === 500) {
         this.errMsg = 'Internal Server Error';
         swal({

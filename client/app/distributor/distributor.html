@@ -199,7 +199,8 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="tel" name="zip" class="form-control" placeholder="Zip" ng-model="distributorCtrl.user.zip" />
+                                <input class="form-control" name="zip" placeholder="Zip" required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                    type="number" maxlength="6" ng-model="distributorCtrl.user.zip" required>
                             </div>
                         </div>
                         <div class="col-sm-12" layout="row" layout-align="center center">
