@@ -87,20 +87,50 @@ function handleError(res, statusCode) {
 
 // Gets a list of Orders
 export function getordersbyrole(req, res) {
-  if (req.body.role == 'admin') {
-    return Order.count({ where: { status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
-      .then(respondWithResult(res))
-      .catch(handleError(res));
-  }
-  if (req.body.role == 'Distributor') {
-    return Order.count({ where: { distributor_id: req.body.id, status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
-      .then(respondWithResult(res))
-      .catch(handleError(res));
-  }
-  if (req.body.role == 'Customer') {
-    return Order.count({ where: { customer_id: req.body.id, status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
-      .then(respondWithResult(res))
-      .catch(handleError(res));
+  if(req.body.sid != 0) {
+    if (req.body.role == 'admin') {
+      return Order.count({ where: { status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(function (count) {
+          res.status(200).json({ count: count })
+        })
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Distributor') {
+      return Order.count({ where: { distributor_id: req.body.id, status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(function (count) {
+          res.status(200).json({ count: count })
+        })
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Customer') {
+      return Order.count({ where: { customer_id: req.body.id, status_id: req.body.sid }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(function (count) {
+          res.status(200).json({ count: count })
+        })
+        .catch(handleError(res));
+    }
+  } else {
+    if (req.body.role == 'admin') {
+      return Order.count({ include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(function (count) {
+          res.status(200).json({ count: count })
+        })
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Distributor') {
+      return Order.count({ where: { distributor_id: req.body.id }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(function (count) {
+          res.status(200).json({ count: count })
+        })
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Customer') {
+      return Order.count({ where: { customer_id: req.body.id }, include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(function (count) {
+          res.status(200).json({ count: count })
+        })
+        .catch(handleError(res));
+    }
   }
 
 }
@@ -109,20 +139,38 @@ export function getorders(req, res) {
   var limit = 10;
   var offset = (req.body.offset - 1) * limit;
 
-  if (req.body.role == 'admin') {
-    return Order.findAll({ where: { status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
-      .then(respondWithResult(res))
-      .catch(handleError(res));
-  }
-  if (req.body.role == 'Distributor') {
-    return Order.findAll({ where: { distributor_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
-      .then(respondWithResult(res))
-      .catch(handleError(res));
-  }
-  if (req.body.role == 'Customer') {
-    return Order.findAll({ where: { customer_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
-      .then(respondWithResult(res))
-      .catch(handleError(res));
+  if(req.body.sid != 0) {
+    if (req.body.role == 'admin') {
+      return Order.findAll({ where: { status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Distributor') {
+      return Order.findAll({ where: { distributor_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Customer') {
+      return Order.findAll({ where: { customer_id: req.body.id, status_id: req.body.sid }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+    }
+  } else {
+    if (req.body.role == 'admin') {
+      return Order.findAll({ offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Distributor') {
+      return Order.findAll({ where: { distributor_id: req.body.id }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+    }
+    if (req.body.role == 'Customer') {
+      return Order.findAll({ where: { customer_id: req.body.id }, offset: offset, limit: limit, order: [['_id', 'DESC']], include: [{ model: User, as: 'distributor' }, { model: User, as: 'customer' }, { model: Status }] })
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+    }
   }
 
 }
@@ -202,7 +250,7 @@ export function create(req, res) {
         od.quantity = prod.product_quantity;
         od.product_total = prod.product_total;
         od.cgst = prod.cgst,
-        od.sgst = prod.sgst;
+          od.sgst = prod.sgst;
         od.igst = prod.igst;
         test.push(od);
 
@@ -213,7 +261,7 @@ export function create(req, res) {
         temp = temp + '<tr><td width="20%" style="border: 1px solid #eee;">' + cart[i].product_name + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].unitprice + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].cgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].sgst + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].igst + '</td><td width="10%" style="border: 1px solid #eee;">' + cart[i].product_quantity + '</td><td width="10%" style="border: 1px solid #eee;">₹' + cart[i].product_total + '</td></tr>';
 
         if (test.length == cart.length) {
-          User.findOne({ where: { _id: 1 }, include: [{ model: UserProfile }] }).then(function (admin) {
+          User.findOne({ where: { _id: 1 }, include: [{ model: UserProfile, include: [{model: User}, {model: Country}, {model: State}, {model: City}] }] }).then(function (admin) {
             // createInvoice(customer, order.order_name, admin, ftotal, temp, extra, today);
             var itemp = invoiceTemp(customer, order.order_name, admin, ftotal, temp, extra, today);
             var etemp = emailTemp(customer.User.name, extra, ordername);
@@ -348,12 +396,12 @@ function createInvoice(customer, invoice, admin, total, temp, extra, date) {
 
 function invoiceTemp(customer, invoice, admin, total, temp, extra, date) {
   var img = config.domain + 'assets/logo/logo.png';
-   // <h1>Enfros Solution</h1>\
+  // <h1>Enfros Solution</h1>\
   var html = '<div style="width: 95%;padding: 10px; margin:auto; font-family: Palatino Linotype, Book Antiqua, Palatino, serif; letter-spacing:1px;">\
   <div style="text-align: center; color: #263238;">\
       <img src='+ img + ' style="width:190px; height:80px"/><br>\
-      <h4>ADDRESS</h4>\
-      <h4>Bangalore</h4>\
+      <h4>'+ admin.UserProfile.address+'</h4>\
+      <h4>'+admin.UserProfile.City.cityName+' ,'+admin.UserProfile.State.stateName+' ,'+admin.UserProfile.Country.countryName+'</h4>\
       <h3>GSTIN: '+ admin.UserProfile.gst_number + '</h3>\
   </div>\
   <div style="width: 100%; font-size: 16px;">\

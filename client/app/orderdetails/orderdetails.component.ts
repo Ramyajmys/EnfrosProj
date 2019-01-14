@@ -52,6 +52,7 @@ export class OrderdetailsComponent {
   offset = 1;
   keyword;
   isLoading: boolean = false;
+  noDataFound: boolean = false;
 
   /*@ngInject*/
   constructor($http, $state, Auth) {
@@ -75,7 +76,7 @@ export class OrderdetailsComponent {
       vm.rolename = vm.currentUser.role;
       vm.userid = vm.currentUser._id;
       if (vm.currentUser.role == 'admin' || vm.currentUser.role == 'Distributor') {
-        vm.statusid = 2;
+        vm.statusid = 0;
         vm.readonlyslider = false;
         vm.getOrdersByStatus(2);
       } else {
@@ -83,7 +84,7 @@ export class OrderdetailsComponent {
         vm.getOrdersByStatus(2);
       }
       vm.getorders(vm.rolename, vm.userid, vm.statusid);
-      vm.paginationList(vm.rolename, vm.userid, vm.statusid);
+      // vm.paginationList(vm.rolename, vm.userid, vm.statusid);
     });
   }
 
@@ -94,7 +95,13 @@ export class OrderdetailsComponent {
   getorders(role, id, sid) {
     this.$http.post('/api/orders/getordersbyrole', { role: role, id: id, sid: sid }).then(response => {
       if (response.status === 200) {
-        this.bigTotalItems = response.data;
+        if(response.data.count != 0) {
+          this.noDataFound = false;
+          this.bigTotalItems = response.data.count;
+          this.paginationList(this.rolename, this.userid, this.statusid);
+        } else {
+          this.noDataFound = true;
+        }
         // this.orderList = response.data;
       }
     }, err => {
@@ -119,7 +126,7 @@ export class OrderdetailsComponent {
     this.$http.post('/api/orders/getorders', { role: role, id: id, sid: sid, offset: this.offset }).then(response => {
       if (response.status === 200) {
         this.orderList = response.data;
-        //console.log(response.data)
+        // console.log(response.data)
       }
     }, err => {
       if (err.data.message) {
@@ -144,7 +151,7 @@ export class OrderdetailsComponent {
     this.$http.get('/api/Status/').then(response => {
       if (response.status === 200) {
         this.statusList = response.data;
-        this.statusid = 2;
+        this.statusid = 0;
       }
     }, err => {
       if (err.data.message) {

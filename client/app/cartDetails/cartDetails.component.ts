@@ -28,6 +28,8 @@ export class CartDetailsComponent {
   emailtext = '';
 
   isLoading: boolean = false;
+  outofQuantity: boolean = false;
+  exceededprod;
 
   /*@ngInject*/
   constructor($http, $state, myService, $mdDialog) {
@@ -137,12 +139,21 @@ export class CartDetailsComponent {
 
   valueChange(product) {
     // console.log(product);
-    product.product_total = (product.unitprice + product.cgst + product.sgst + product.igst) * product.product_quantity;
-    this.finaltotal = 0;
-    for (let i = 0; i < this.cInfo.length; i++) {
-      this.finaltotal = this.finaltotal + this.cInfo[i].product_total;
+    if(product.product_quantity <= parseInt(product.total_quantity)) {
+      product.product_total = (product.unitprice + product.cgst + product.sgst + product.igst) * product.product_quantity;
+      this.finaltotal = 0;
+      for (let i = 0; i < this.cInfo.length; i++) {
+        this.finaltotal = this.finaltotal + this.cInfo[i].product_total;
+      }
+      this.myService.saveCartInfo(this.cInfo);
+    } else {
+      this.outofQuantity = true;
+      this.exceededprod = product;
+      swal({
+        title: 'Please update the quantity before you continue with the order',
+        icon: "warning",
+      });
     }
-    this.myService.saveCartInfo(this.cInfo);
   }
 
   confirmDelete(dObj, ev) {
@@ -160,10 +171,13 @@ export class CartDetailsComponent {
   }
 
   delete(p) {
+    if(this.exceededprod._id == p._id) {
+      this.outofQuantity = false;
+    }
     this.cInfo.splice(this.cInfo.findIndex(item => item._id === p._id), 1);
     this.finaltotal = this.finaltotal - p.product_total;
     if (this.cInfo.length == 0) {
-      this.$state.go('productlist');
+      this.$state.go('invoice');
       this.myService.saveCartInfo(this.cInfo);
     }
   }

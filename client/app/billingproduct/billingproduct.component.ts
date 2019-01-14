@@ -32,6 +32,7 @@ export class BillingproductComponent {
   offset = 1;
   pentryObj = {};
   plist = [];
+  noDataFound: boolean = false;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
@@ -65,7 +66,12 @@ export class BillingproductComponent {
     this.$http.post('/api/billingProducts/getAllCount', {}).then(response => {
       if (response.status === 200) {
         // console.log(response.data)
-        this.bigTotalItems = response.data;
+        if(response.data.count != 0) {
+          this.noDataFound = false;
+          this.bigTotalItems = response.data.count;
+        } else {
+          this.noDataFound = true;
+        }
       }
     }, err => {
       if (err.data.message) {

@@ -174,8 +174,9 @@ export function getAllQuotes(req, res) {
 }
 
 export function getAllQuoteCount(req, res) {
-  return Quotation.count()
-    .then(respondWithResult(res))
+  return Quotation.count().then(function(quot) {
+    res.status(200).json({count: quot})
+  })
     .catch(handleError(res));
 }
 

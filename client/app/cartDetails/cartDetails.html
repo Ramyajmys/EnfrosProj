@@ -143,7 +143,7 @@
                             <button ng-click="cartDetailsCtrl.addProduct()" class="btn btn-success new-btn"><i class="fa fa-plus"
                                     aria-hidden="true" id="icon-right-5"></i>Add Product</button>
                             <button ng-click="cartDetailsCtrl.confirmOrder()" class="btn btn-success green-btn"
-                                ng-disabled="cartDetailsCtrl.finaltotal == 0"> <i class="fa fa-check" aria-hidden="true"
+                                ng-disabled="cartDetailsCtrl.finaltotal == 0 || cartDetailsCtrl.outofQuantity"> <i class="fa fa-check" aria-hidden="true"
                                     id="icon-right-5"></i>Confirm Order</button>
                         </td>
                     </tr>

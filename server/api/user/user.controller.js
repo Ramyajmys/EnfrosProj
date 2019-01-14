@@ -1,9 +1,9 @@
 'use strict';
 
-import {User} from '../../sqldb';
+import { User } from '../../sqldb';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
-import {UserProfile} from '../../sqldb';
+import { UserProfile } from '../../sqldb';
 var nodemailer = require('nodemailer');
 import crypto from 'crypto';
 var twilio = require('twilio');
@@ -14,14 +14,14 @@ var twilio = require('twilio');
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
-  return function(err) {
+  return function (err) {
     return res.status(statusCode).json(err);
   };
 }
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     return res.status(statusCode).send(err);
   };
 }
@@ -31,7 +31,8 @@ function handleError(res, statusCode) {
  * restriction: 'admin'
  */
 export function index(req, res) {
-  return User.findAll({where: {role: req.body.role},
+  return User.findAll({
+    where: { role: req.body.role },
     attributes: [
       '_id',
       'name',
@@ -40,7 +41,7 @@ export function index(req, res) {
       'mobilenumber',
       'active',
       'provider'
-    ], include: [{model: UserProfile}], order:[['name', 'ASC']]
+    ], include: [{ model: UserProfile }], order: [['name', 'ASC']]
   })
     .then(users => {
       res.status(200).json(users);
@@ -63,22 +64,22 @@ function sendEmailNotification(id, email, name, msg) {
       rejectUnauthorized: false
     }
   });
-  
+
   var id = String(id);
   var cipher = crypto.createCipher("aes192", "password");
   var encrypted = cipher.update(id, 'utf8', 'hex') + cipher.final('hex');
-  var url = config.domain + 'setpassword/' +encrypted;
-  
+  var url = config.domain + 'setpassword/' + encrypted;
+
   var mailOptions = {
     from: config.mailSenderId,
-    to: email, 
-    subject: 'Welcome, '+ name + '!', 
+    to: email,
+    subject: 'Welcome, ' + name + '!',
     text: name + ',\n\nThanks for joining our community. If you have any questions, please don\'t hesitate to send them our way. Feel free to reply to this email directly.\n\nSincerely,\nThe Management',
     html: '<head><meta charset="ISO-8859-1"><title>Invitation URL</title>' +
-    '</head><body><p style="padding:0"></p> ' +
-    '<p id="demo"style="float:right"></p>' +
-    '<script>var d = new Date(); var n = d.toDateString(); document.getElementById("demo").innerHTML = n;</script>' +
-    '<table style="background: #F5F6F7; width: 100%;">\
+      '</head><body><p style="padding:0"></p> ' +
+      '<p id="demo"style="float:right"></p>' +
+      '<script>var d = new Date(); var n = d.toDateString(); document.getElementById("demo").innerHTML = n;</script>' +
+      '<table style="background: #F5F6F7; width: 100%;">\
       <tbody>\
         <tr>\
           <td>\
@@ -144,10 +145,10 @@ function sendEmailNotification(id, email, name, msg) {
     </tbody>\
   </table>'
   };
-    
+
   transporter.sendMail(mailOptions, (error, success) => {
     if (error) {
-        return console.log(error);
+      return console.log(error);
     }
     console.log('Mail sent');
   });
@@ -157,26 +158,53 @@ function sendEmailNotification(id, email, name, msg) {
  * Creates a new user
  */
 export function create(req, res) {
-  var newUser = User.build(req.body);
+  var userObj = {
+    name: req.body.name,
+    email: req.body.email,
+    mobilenumber: req.body.mobilenumber,
+    role: req.body.role
+  }
+
+  var profile = {
+    gst_number: req.body.gst_number,
+    address: req.body.address,
+    zip: req.body.zip,
+    profilepic: req.body.profilepic,
+    country_id: req.body.country_id,
+    state_id: req.body.state_id,
+    city_id: req.body.city_id
+  }
+
+  // return User.create(userObj).then(function(user) {
+  //   if(user) {
+  //     profile['user_id'] = user._id;
+  //     UserProfile.create(profile).then(function () {
+  //       var msg = 'You are successfully added. Please activate your account by clicking the button below';
+  //       sendEmailNotification(user._id, user.email, req.body.name, msg);
+  //       res.json({ message: 'Successfully Added' });
+  //     })
+  //     .catch(handleError(res));
+  //   }
+  // })
+  // .catch(validationError(res));
+
+  var newUser = User.build(userObj);
   newUser.setDataValue('provider', 'local');
   newUser.setDataValue('password', config.default_password);
-  var profile = req.body;
-  
+
   return newUser.save()
-    .then(function(user) {
+    .then(function (user) {
       profile['user_id'] = user._id;
-      UserProfile.create(profile).then(function() {
+      UserProfile.create(profile).then(function () {
         var msg = 'You are successfully added. Please activate your account by clicking the button below';
         sendEmailNotification(user._id, user.email, req.body.name, msg);
-        res.json({message: 'Successfully Added'});
+        res.json({ message: 'Successfully Added' });
       })
-      .catch(handleError(res));
-      // var token = jwt.sign({ _id: user._id }, config.secrets.session, {
-      //   expiresIn: 60 * 60 * 5
-      // });
-      // res.json({ token });
+        .catch(handleError(res));
     })
     .catch(validationError(res));
+
+
 }
 
 /**
@@ -198,13 +226,13 @@ export function updateUser(req, res) {
     zip: req.body.zip,
     profilepic: req.body.profilepic
   };
-  return User.update(userObj, {where: {_id: id}}).then(function() {
-    return UserProfile.update(userProfile, {where: {user_id: id}}).then(function() {
-      return res.status(200).json({message: 'User Details Updated'});
+  return User.update(userObj, { where: { _id: id } }).then(function () {
+    return UserProfile.update(userProfile, { where: { user_id: id } }).then(function () {
+      return res.status(200).json({ message: 'User Details Updated' });
     })
-    .catch(validationError(res));
+      .catch(validationError(res));
   })
-  .catch(validationError(res));
+    .catch(validationError(res));
 }
 
 
@@ -220,7 +248,7 @@ export function show(req, res, next) {
     }
   })
     .then(user => {
-      if(!user) {
+      if (!user) {
         return res.status(404).end();
       }
       res.json(user.profile);
@@ -234,7 +262,7 @@ export function show(req, res, next) {
  */
 export function destroy(req, res) {
   return User.destroy({ where: { _id: req.params.id } })
-    .then(function() {
+    .then(function () {
       res.status(204).end();
     })
     .catch(handleError(res));
@@ -254,7 +282,7 @@ export function changePassword(req, res) {
     }
   })
     .then(user => {
-      if(user.authenticate(oldPass)) {
+      if (user.authenticate(oldPass)) {
         user.password = newPass;
         return user.save()
           .then(() => {
@@ -276,11 +304,11 @@ function sendSMS(mobilenumber) {
   var client = new twilio(accountSid, authToken);
 
   client.messages.create({
-      body: 'Your password successfully changed.',
-      to: '+91'+mobilenumber,  // Text this number
-      from: config.sms_senderNumber
+    body: 'Your password successfully changed.',
+    to: '+91' + mobilenumber,  // Text this number
+    from: config.sms_senderNumber
   })
-  .then((message) => console.log(message.sid));
+    .then((message) => console.log(message.sid));
 }
 
 /**
@@ -300,10 +328,10 @@ export function me(req, res, next) {
       'role',
       'provider',
       'mobilenumber'
-    ], include: [{model: UserProfile}]
+    ], include: [{ model: UserProfile }]
   })
     .then(user => { // don't ever give out the password or salt
-      if(!user) {
+      if (!user) {
         return res.status(401).end();
       }
       res.json(user);
@@ -323,22 +351,22 @@ export function createPassword(req, res) {
   var userId = String(id);
 
   var decipher = crypto.createDecipher('aes192', 'password')
-  var decrypted  = decipher.update(userId, 'hex', 'utf8') + decipher.final('utf8');
+  var decrypted = decipher.update(userId, 'hex', 'utf8') + decipher.final('utf8');
   var newPassword = req.body.newPassword;
   var defaultIterations = 10000;
   var defaultKeyLength = 64;
 
-  return User.findOne({where:{_id: decrypted, active: false}}).then(function(response){
+  return User.findOne({ where: { _id: decrypted, active: false } }).then(function (response) {
     var salt = new Buffer(response.salt, 'base64');
     var encodedPwd = crypto.pbkdf2Sync(newPassword, salt, defaultIterations, defaultKeyLength, 'sha512').toString('base64');
     var details = {
       password: encodedPwd,
       active: true
     }
-    return User.update(details,{where: {_id: decrypted}}).then(function(response){
-       return res.status(200).json({message: 'Password Created. Now You Can Login !!'});
+    return User.update(details, { where: { _id: decrypted } }).then(function (response) {
+      return res.status(200).json({ message: 'Password Created. Now You Can Login !!' });
     })
-    .catch(handleError(res));
+      .catch(handleError(res));
   })
-  .catch(handleError(res));
+    .catch(handleError(res));
 }

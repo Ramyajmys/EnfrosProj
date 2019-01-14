@@ -121,6 +121,7 @@ export class CustomerComponent {
   }
 
   picChange(pic) {
+    // console.log(pic)
     this.def = 'data:' + pic.filetype + ';base64,' + pic.base64;
     if (this.def !== null) {
       this.user['profilepic'] = this.def;
@@ -128,9 +129,11 @@ export class CustomerComponent {
   }
 
   save() {
+    // console.log(this.user)
     this.btnClicked = true;
     if (!this.isEdit) {
       this.$http.post('/api/users/', this.user).then(response => {
+        // console.log(response.data)
         if (response.status === 200) {
           this.btnClicked = false;
           swal({
@@ -142,9 +145,14 @@ export class CustomerComponent {
           this.get();
         }
       }, err => {
+        // console.log(err)
         this.btnClicked = false;
         if (err.data.message) {
-          this.errMsg = err.data.message;
+          swal({
+            title: err.data.message,
+            icon: "warning"
+          });
+          // this.errMsg = err.data.message;
         } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
         } else if (err.status === 404) {
@@ -168,7 +176,11 @@ export class CustomerComponent {
       }, err => {
         this.btnClicked = false;
         if (err.data.message) {
-          this.errMsg = err.data.message;
+          swal({
+            title: err.data.message,
+            icon: "warning"
+          });
+          // this.errMsg = err.data.message;
         } else if (err.status === 500) {
           this.errMsg = 'Internal Server Error';
         } else if (err.status === 404) {

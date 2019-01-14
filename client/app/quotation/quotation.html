@@ -27,11 +27,11 @@
                 <!-- <div class="search-box">
                     <input class="search-inp" type='text' ng-model='keyword' placeholder="Search by customer name"
                         ng-change="quotationCtrl.search(keyword)">
-                    <button class="search-btn-icon" ng-click="quotationCtrl.search(keyword)"><i class="zmdi zmdi-search"></i></button>
+                    <button class="search-btn-icon" ng-click="noDataFound.search(keyword)"><i class="zmdi zmdi-search"></i></button>
                 </div> -->
             </div>
 
-            <div class="col-md-12 padding-top-40 table-data">
+            <div class="col-md-12 padding-top-40 table-data" ng-hide="quotationCtrl.noDataFound">
                 <md-table-container>
                     <table md-table>
                         <thead md-head>
@@ -69,6 +69,9 @@
                 </div>
             </div>
 
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="center center" ng-show="quotationCtrl.noDataFound">
+                No Data Found
+            </div>
         </div>
     </div>
 </div>

@@ -177,7 +177,9 @@ export function getAllBill(req, res) {
 
 export function getAllCount(req, res) {
   return BillingProduct.count()
-    .then(respondWithResult(res))
+    .then(function(count) {
+      res.status(200).json({count: count})
+    })
     .catch(handleError(res));
 }
 

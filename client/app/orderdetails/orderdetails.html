@@ -25,6 +25,7 @@
                 <div>
                     <select class="form-control" ng-model="orderdetailsCtrl.statusid" name="statusname" ng-change="orderdetailsCtrl.getOrdersByStatus(orderdetailsCtrl.statusid)"
                         required>
+                        <option ng-value="0">All</option>
                         <option ng-repeat="status in orderdetailsCtrl.statusList" ng-value="{{status._id}}">{{status.status_name}}</option>
                     </select>
                 </div>
@@ -46,7 +47,7 @@
                         <input ng-model="searchBylocation">
                     </md-input-container>
                 </div> -->
-            <div class="col-md-12 padding-top-40 table-data">
+            <div class="col-md-12 padding-top-40 table-data" ng-hide="orderdetailsCtrl.noDataFound">
                 <md-table-container>
                     <table md-table>
                         <thead md-head>
@@ -109,7 +110,9 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-12 padding-top-40" layout="row" layout-align="center center" ng-show="orderdetailsCtrl.noDataFound">
+                No Data Found
+            </div>
         </div>
     </div>
 </div>
