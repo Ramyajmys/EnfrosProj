@@ -74,48 +74,86 @@ export class QuotationComponent {
     </table>\
     \
     <p>&nbsp;</p>\
-    \
-    <h4><strong>TERMS &amp; CONDITIONS OF SUPPLY:</strong></h4>\
-    \
-    <table align="center" border="1" cellpadding="1" cellspacing="1" style="width:auto">\
-      <tbody>\
-        <tr>\
-          <td>Warranty</td>\
-          <td>System supplied is warranted against manufacturing defect.<br />\
-          Solar Modules: 25 Years,<br />\
-          Inverter: 7 Years<br />\
-          All other accessories: 25 Years</td>\
-        </tr>\
-        <tr>\
-          <td>Special warranty for<br />\
-          Modules</td>\
-          <td>Material and workmanship warranty for ten (10) years and a<br />\
-          power output warranty of 90% of the nominal output power<br />\
-          rating (Pmpp +/- 5%) during the first ten (10) years and 80%<br />\
-          during twenty-five (25) years subject to the warranty terms<br />\
-          and conditions.</td>\
-        </tr>\
-        <tr>\
-          <td>Payment terms</td>\
-          <td>40% advance along with Purchase order (PO),<br />\
-          50% against material delivery at site,<br />\
-          10% upon installation and commissioning,</td>\
-        </tr>\
-        <tr>\
-          <td>Delivery &amp; Project<br />\
-          Installation</td>\
-          <td>2 month from the date of advance, handing over of clear<br />\
-          site and techno commercially clear order.</td>\
-        </tr>\
-        <tr>\
-          <td>Validity</td>\
-          <td>This price is valid till 30th October 2018.</td>\
-        </tr>\
-      </tbody>\
-    </table>\
-    \
-    <p>&nbsp;</p>\
     ';
+//     this.template = '<h3><strong>KEY COMMERCIAL TERMS &amp; CONDITIONS FOR CAPEX MODEL</strong><h3<br />\
+//     <p>Under this model, the 50 KW solar power plant will be sold outright to<br />\
+//     <strong>Dwarka Castings &amp; Engineering Private Limited, Indore.</strong><br />\
+//     On completion of project, Enfros has no stake in the project other than the gurantees provided.</p>\
+//     \
+// <p>&nbsp;</p>\
+//     \
+//     <table align="center" border="1" cellpadding="1" cellspacing="1" style="width:auto">\
+//       <thead>\
+//         <tr>\
+//           <th scope="col">Item Description</th>\
+//           <th scope="col">Unit Price</th>\
+//         </tr>\
+//       </thead>\
+//       <tbody>\
+//         <tr>\
+//           <td>Supply, Installation and commissioning of<br />\
+//           50 KWp Grid Tied PV Solar power plant.</td>\
+//           <td>21,50,000/-</td>\
+//         </tr>\
+//         <tr>\
+//           <td>a) 5% GST Extra<br />\
+//           b) Price is for material delivery at your site<br />\
+//           c) Price includes all the necessary approvals from MPEB<br />\
+//           <strong><em>d) As per Income Tax Laws, 40% depreciation is available on solar assets, which can<br />\
+//           be claimed in the first year itself against income from other business.<br />\
+//           e) 1 Year Operation &amp; Maintenance (included in above price)</em></strong></td>\
+//           <td>\
+//           <p>&nbsp;</p>\
+//     \
+//           <p>&nbsp;</p>\
+//           </td>\
+//         </tr>\
+//       </tbody>\
+//     </table>\
+//     \
+//     <p>&nbsp;</p>\
+//     \
+//     <h4><strong>TERMS &amp; CONDITIONS OF SUPPLY:</strong></h4>\
+//     \
+//     <table align="center" border="1" cellpadding="1" cellspacing="1" style="width:auto">\
+//       <tbody>\
+//         <tr>\
+//           <td>Warranty</td>\
+//           <td>System supplied is warranted against manufacturing defect.<br />\
+//           Solar Modules: 25 Years,<br />\
+//           Inverter: 7 Years<br />\
+//           All other accessories: 25 Years</td>\
+//         </tr>\
+//         <tr>\
+//           <td>Special warranty for<br />\
+//           Modules</td>\
+//           <td>Material and workmanship warranty for ten (10) years and a<br />\
+//           power output warranty of 90% of the nominal output power<br />\
+//           rating (Pmpp +/- 5%) during the first ten (10) years and 80%<br />\
+//           during twenty-five (25) years subject to the warranty terms<br />\
+//           and conditions.</td>\
+//         </tr>\
+//         <tr>\
+//           <td>Payment terms</td>\
+//           <td>40% advance along with Purchase order (PO),<br />\
+//           50% against material delivery at site,<br />\
+//           10% upon installation and commissioning,</td>\
+//         </tr>\
+//         <tr>\
+//           <td>Delivery &amp; Project<br />\
+//           Installation</td>\
+//           <td>2 month from the date of advance, handing over of clear<br />\
+//           site and techno commercially clear order.</td>\
+//         </tr>\
+//         <tr>\
+//           <td>Validity</td>\
+//           <td>This price is valid till 30th October 2018.</td>\
+//         </tr>\
+//       </tbody>\
+//     </table>\
+//     \
+//     <p>&nbsp;</p>\
+//     ';
   }
 
   clickNew() {
@@ -171,7 +209,7 @@ export class QuotationComponent {
         swal({
           title: response.data.msg,
           icon: "success",
-          timer: 1500
+          // timer: 1500
         });
         this.$state.go('quotation');
       }

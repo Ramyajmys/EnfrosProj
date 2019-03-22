@@ -79,7 +79,9 @@ if (process.env.NODE_ENV == 'development') {
 
     service: 'Godaddy',
     mailHost: 'smtpout.secureserver.net',
+    // mailPort: 25,
     mailPort: 465,
+    // mailPort: 587,
     secureConnection: true,
     mailSenderId: 'info@enfros.co.in',
     mailSecure: false,
