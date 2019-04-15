@@ -94,30 +94,30 @@ export function create(req, res) {
   BillingProduct.create(req.body).then(function (prod) {
     if (prod) {
 
-      var dObj, pentry = [], totalquantity = 0;
-      for (var i = 0; i < plist.length; i++) {
-        dObj = {
-          supplier_name: plist[i].supplier_name,
-          quantity: plist[i].quantity,
-          purchase_price: plist[i].purchase_price,
-          payment_status: plist[i].payment,
-          file: Buffer.from(plist[i].brochure.base64, 'base64'),
-          filetype: plist[i].brochure.filetype,
-          filename: plist[i].brochure.filename,
-          prod_id: prod._id
-        };
-        totalquantity = totalquantity + plist[i].quantity;
-        PurchaseEntries.create(dObj);
+      // var dObj, pentry = [], totalquantity = 0;
+      // for (var i = 0; i < plist.length; i++) {
+      //   dObj = {
+      //     supplier_name: plist[i].supplier_name,
+      //     quantity: plist[i].quantity,
+      //     purchase_price: plist[i].purchase_price,
+      //     payment_status: plist[i].payment,
+      //     file: Buffer.from(plist[i].brochure.base64, 'base64'),
+      //     filetype: plist[i].brochure.filetype,
+      //     filename: plist[i].brochure.filename,
+      //     prod_id: prod._id
+      //   };
+      //   totalquantity = totalquantity + plist[i].quantity;
+      //   PurchaseEntries.create(dObj);
 
-        pentry.push('yes');
-      }
+      //   pentry.push('yes');
+      // }
 
-      if (plist.length == pentry.length) {
-        BillingProduct.update({ total_quantity: totalquantity }, { where: { _id: prod._id } }).then(function () {
+      // if (plist.length == pentry.length) {
+      //   BillingProduct.update({ total_quantity: totalquantity }, { where: { _id: prod._id } }).then(function () {
           return res.status(200).json({ message: "Sucessfully Created" });
-        })
-          .catch(handleError(res));
-      }
+        // })
+        //   .catch(handleError(res));
+      // }
     }
   })
     .catch(handleError(res));

@@ -34,6 +34,7 @@ import CustomerDashboardComponent from './customerDashboard/customerDashboard.co
 import DistributorDashboardComponent from './distributorDashboard/distributorDashboard.component';
 import MyrouteComponent from './myroute/myroute.component';
 import PrintinvoiceComponent from './printinvoice/printinvoice.component';
+import PurchaseentryComponent from './purchaseentry/purchaseentry.component';
 
 import 'angular-base64-upload';
 import './app.scss';
@@ -110,7 +111,8 @@ angular.module('testprojApp', [
   CityComponent,
   OthersComponent,
   InvoiceComponent,
-  ViewbillingprodComponent
+  ViewbillingprodComponent,
+  PurchaseentryComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

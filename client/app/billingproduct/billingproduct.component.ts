@@ -33,6 +33,7 @@ export class BillingproductComponent {
   pentryObj = {};
   plist = [];
   noDataFound: boolean = false;
+  prodInfo: any;
 
   /*@ngInject*/
   constructor($mdDialog, $http, $state, Auth, $mdToast, myService) {
@@ -66,7 +67,7 @@ export class BillingproductComponent {
     this.$http.post('/api/billingProducts/getAllCount', {}).then(response => {
       if (response.status === 200) {
         // console.log(response.data)
-        if(response.data.count != 0) {
+        if (response.data.count != 0) {
           this.noDataFound = false;
           this.bigTotalItems = response.data.count;
         } else {
@@ -172,7 +173,8 @@ export class BillingproductComponent {
   save() {
     this.btnClicked = true;
     this.productObj['plist'] = this.plist;
-    // console.log(this.productObj)
+    this.productObj['total_quantity'] = 0; /* new */
+    console.log(this.productObj)
     this.$http.post('/api/billingProducts/', this.productObj).then(response => {
       if (response.status === 200) {
         swal({
@@ -215,7 +217,7 @@ export class BillingproductComponent {
   }
 
   getFileData(id) {
-    this.$http.get('/api/PurchaseEntriess/'+id).then(response => {
+    this.$http.get('/api/PurchaseEntriess/' + id).then(response => {
       if (response.status === 200) {
         var res = response.data;
         this.downloadFile(res.file, res.filetype, res.filename);
@@ -238,6 +240,51 @@ export class BillingproductComponent {
     this.$state.go('allproducts');
   }
 
+  addpurchase(prod) {
+    // console.log(prod)
+    this.$state.go('purchaseentry', { prod: prod });
+  }
+
+  NewEntry(prod) {
+    // console.log(prod)
+    this.prodInfo = prod;
+    this.pentryObj = {};
+    this.btnClicked = false;
+    this.$mdDialog.show({
+      controller: () => this,
+      controllerAs: 'billingproductCtrl',
+      template: require('./addpurchase.html'),
+      clickOutsideToClose: true
+    });
+  }
+
+  addEntry() {
+    this.pentryObj['prod_id'] = this.prodInfo._id;
+    // console.log(this.pentryObj)
+    this.btnClicked = true;
+      this.$http.post('/api/PurchaseEntriess/', this.pentryObj).then(response => {
+        if (response.status === 200) {
+          this.btnClicked = false;
+          swal({
+            title: 'Successfully Added',
+            icon: "success",
+            timer: 1500
+          });
+          this.$state.reload();
+          this.$mdDialog.cancel();
+        }
+      }, err => {
+        if (err.data.message) {
+          this.errMsg = err.data.message;
+        } else if (err.status === 500) {
+          this.errMsg = 'Internal Server Error';
+        } else if (err.status === 404) {
+          this.errMsg = 'Not Found';
+        } else {
+          this.errMsg = err;
+        }
+      });
+  }
 }
 
 

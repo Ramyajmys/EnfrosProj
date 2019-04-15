@@ -15,7 +15,7 @@ export class InvoiceComponent {
   errMsg;
   getCurrentUser: Function;
   currentUser: any;
-  productList;
+  productList: any = [];
   isLoading = false;
   customerList;
   distributorList;
@@ -59,8 +59,14 @@ export class InvoiceComponent {
   get() {
     this.$http.get('/api/billingProducts/').then(response => {
       if (response.status === 200) {
-        // console.log(response.data)
-        this.productList = response.data;
+        // console.log(response.data);
+        let pList: any = response.data;
+        for(var i=0; i<pList.length; i++) {
+          if(pList[i].PurchaseEntries.length > 0) {
+            this.productList.push(pList[i])
+          }
+        }
+        // this.productList = response.data;
         this.check();
       }
     }, err => {

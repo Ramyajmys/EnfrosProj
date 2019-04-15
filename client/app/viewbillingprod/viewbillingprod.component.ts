@@ -46,6 +46,7 @@ export class ViewbillingprodComponent {
     this.getCategoryList();
     this.getHSN();
     this.productObj = this.myService.getBillProduct();
+    console.log(this.productObj)
   }
 
   $onInit() {

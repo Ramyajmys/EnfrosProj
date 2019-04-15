@@ -98,8 +98,11 @@ export function create(req, res) {
   };
 
   PurchaseEntries.create(obj).then(function(entry) {
+    // console.log(entry)
     BillingProduct.find({where: {_id: req.body.prod_id}}).then(function(prod) {
+      // console.log(prod)
       if(prod) {
+        // console.log(prod)
         var total = parseInt(prod.total_quantity) + req.body.quantity;
         BillingProduct.update({total_quantity: total},{where: {_id: req.body.prod_id}}).then(function() {
           return res.status(200).json({entry: entry});

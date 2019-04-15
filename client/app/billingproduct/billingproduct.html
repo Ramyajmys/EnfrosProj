@@ -52,7 +52,8 @@
                                 <td md-cell>
                                     <!-- <a class="c-p" ng-click="billingproductCtrl.downloadFile(q.PurchaseEntry.file, q.PurchaseEntry.filetype, q.PurchaseEntry.filename)">download</a> -->
                                     <!-- <a class="c-p" ng-click="billingproductCtrl.getFileData(q.PurchaseEntries._id)">download</a> -->
-                                    <a class="c-p" ng-click="billingproductCtrl.viewproduct(q)">view</a>
+                                    <button type="button" class="btn btn-info" ng-click="billingproductCtrl.viewproduct(q)">view</button>
+                                    <button type="button" class="btn btn-warning" ng-click="billingproductCtrl.NewEntry(q)">Add Purchase Entries</button>
                                 </td>
                             </tr>
                         </tbody>

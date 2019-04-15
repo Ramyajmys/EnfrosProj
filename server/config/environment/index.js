@@ -85,7 +85,7 @@ if (process.env.NODE_ENV == 'development') {
     secureConnection: true,
     mailSenderId: 'info@enfros.co.in',
     mailSecure: false,
-    email: 'info@enfros.co.in',
+    email: 'enfros@enfros.co.in',
     password: 'abcd12345',
 
     default_password: 'User@1234',
