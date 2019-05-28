@@ -66,6 +66,10 @@ export class AllCategoryListComponent {
     // });
   }
 
+  viewsub() {
+    this.$state.go('addProductSubCategory');
+  }
+
   get() {
     this.$http.get('/api/ProductCategorys').then(response => {
      this.categoryList = response.data;

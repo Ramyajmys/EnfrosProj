@@ -114,7 +114,7 @@ $contact-section-divider: rgb(117, 134, 148);
  * ------------------------------------------------------------------- 
  */
 #intro {
-	background: #14181E url(/assets/images/bg5.jpeg) no-repeat center center fixed;
+	background: #14181E url(/assets/images/bg1.jpg) no-repeat center center fixed;
 	width: 100%;
 	height: 75vh;
 	min-height: 720px;
@@ -453,42 +453,42 @@ $contact-section-divider: rgb(117, 134, 148);
 .contact-content {
 	@extend .section-content-styles;
 }
-.vl {
-    border-left: 2px solid $contact-section-divider;
-    height: 270px;
-}
-@media (max-width:1200px) {
-	.vl {
-		border-left: transparent;
-		height: 270px;
-	}
-}
-.contact-info {
-	padding-left: 50px;
-}
-.padding-left-20 {
-	padding-left: 20px;
-}
-#icon-color-blue {
-	color: $blue;
-}
-.float-left {
-	float: left;
-}
-.margin-left-70 {
-	margin-left: 70px !important;
-}
-.margin-bottom-0 {
-	margin-bottom: 0 !important;
-	display: block;
-}
-.margin-left-30 {
-	margin-left: -30px;
-	margin-bottom: -10px;
-}
-.padding-top-10 {
-	padding-top: 15px;
-}
+// .vl {
+//     border-left: 2px solid $contact-section-divider;
+//     height: 270px;
+// }
+// @media (max-width:1200px) {
+// 	.vl {
+// 		border-left: transparent;
+// 		height: 270px;
+// 	}
+// }
+// .contact-info {
+// 	padding-left: 50px;
+// }
+// .padding-left-20 {
+// 	padding-left: 20px;
+// }
+// #icon-color-blue {
+// 	color: $blue;
+// }
+// .float-left {
+// 	float: left;
+// }
+// .margin-left-70 {
+// 	margin-left: 70px !important;
+// }
+// .margin-bottom-0 {
+// 	margin-bottom: 0 !important;
+// 	display: block;
+// }
+// .margin-left-30 {
+// 	margin-left: -30px;
+// 	margin-bottom: -10px;
+// }
+// .padding-top-10 {
+// 	padding-top: 15px;
+// }
 .demo-btn {
 	background: $blue;
 	color: $white;
@@ -503,6 +503,25 @@ $contact-section-divider: rgb(117, 134, 148);
 }
 .letter-space {
 	letter-spacing: 1px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;   
+    cursor: inherit;
+    display: block;
 }
 
 /** 
@@ -564,7 +583,7 @@ $contact-section-divider: rgb(117, 134, 148);
 	text-align: center;
 	h5 {
 		color: $section-heading;
-		font-size: 1.9rem;
+		font-size: 2.5rem;
 		line-height: 1.875;
 		margin-bottom: 0.3rem;
 		letter-spacing: .3rem;

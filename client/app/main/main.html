@@ -20,14 +20,14 @@
   <div class="shadow-overlay"></div>
   <div class="intro-content">
     <div class="row">
-        <!-- <img src="assets/images/logo.png" alt="logo"/> -->
-        <h5>Welcome to Company.</h5>
-        <h1>We specialize in blablabla</h1>
+      <!-- <img src="assets/images/logo.png" alt="logo"/> -->
+      <h5>Welcome to Company.</h5>
+      <h1>We specialize in blablabla</h1>
     </div>
-  </div> 
+  </div>
 </section>
 
-<section id="about">
+<!-- <section id="about">
   <div class="row section-intro">
     <div class="col-lg-12">
       <h5>About Us</h5>
@@ -48,46 +48,89 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section id="contact">
   <div class="row section-intro">
     <div class="col-lg-12">
-      <h5>Get in touch, Now!</h5>
+      <!-- <h5>Get in touch, Now!</h5> -->
+      <h5>Request a call</h5>
       <hr class="break-small margin-auto">
     </div>
   </div>
   <div class="row contact-content">
-    <div class="col-lg-6">
-      <form  class="form-horizontal" ng-submit="$ctrl.freeDemo()" validate>
-          <div class="form-group">
-            <div class="col-sm-10">
-              <input type="text" name="fullname" class="form-control letter-space" placeholder="Your name *" ng-model="$ctrl.demoObj.fullname" required/>
-            </div>
+    <div class="col-lg-12">
+      <form class="form-horizontal" ng-submit="$ctrl.freeDemo()" validate>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <input type="text" name="firstname" class="form-control letter-space" placeholder="First name *"
+              ng-model="$ctrl.demoObj.fullname" required />
           </div>
-          <div class="form-group">
-            <div class="col-sm-10">
-              <input type="email" name="email" class="form-control letter-space" placeholder="Your e-mail *" ng-model="$ctrl.demoObj.email" required/>
-            </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <input type="text" name="lastname" class="form-control letter-space" placeholder="Last name *"
+              ng-model="$ctrl.demoObj.lastname" required />
           </div>
-          <div class="form-group">
-            <div class="col-sm-10">
-              <input type="text" name="contactnumber" class="form-control letter-space" placeholder="Your contact number *" ng-model="$ctrl.demoObj.contactnumber" required/>
-            </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <input type="email" name="email" class="form-control letter-space" placeholder="Your e-mail *"
+              ng-model="$ctrl.demoObj.email" required />
           </div>
-          <div class="form-group">
-            <div class="col-sm-10">
-              <textarea name="comment" class="form-control letter-space" placeholder="Message (optional)" rows="3" ng-model="$ctrl.demoObj.comment"></textarea>
-            </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <input type="text" name="contactnumber" class="form-control letter-space"
+              placeholder="Your contact number *" ng-model="$ctrl.demoObj.contactnumber" required />
           </div>
-          <div class="form-group">
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-lg btn-block demo-btn" ng-disabled="$ctrl.isDisable">Submit</button>
-            </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <select class="form-control letter-space" name="country">
+              <option>Select Country</option>
+              <option>India</option>
+            </select>
           </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <input type="text" name="zip code" class="form-control letter-space" placeholder="Zip Code *"
+              ng-model="$ctrl.demoObj.zip" required />
+          </div>
+        </div>
+
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <select class="form-control letter-space" name="call pref">
+              <option>Select Contact Preference </option>
+              <option>Phone</option>
+              <option>E-mail</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <input type="text" name="calltime" class="form-control letter-space"
+              placeholder="When do you want us to call you*" ng-model="$ctrl.demoObj.calltime" required />
+          </div>
+        </div>
+        <div class="form-group col-lg-12">
+          <div class="col-sm-12">
+            <span class="btn btn-warning btn-file">
+              Attach Power Usage <input type="file">
+            </span>
+          </div>
+        </div>
+        <div class="form-group col-lg-6"></div>
+        <div class="form-group col-lg-6">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-lg btn-block demo-btn" ng-disabled="$ctrl.isDisable">Submit</button>
+          </div>
+        </div>
       </form>
     </div>
-      <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
         <div class="vl">
           <div class="contact-info">
             <div class="inline-block">
@@ -132,16 +175,18 @@
             </div>
         </div>
       </div>
-    </div>
-    </div>
-  </section>
+    </div> -->
+  </div>
+</section>
 
-  <section>
-    <div class="col-twelve grayscale">  
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.55224477753!2d77.4908526355353!3d12.954294598450296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C+Karnataka!5e0!3m2!1sen!2sin!4v1530454110146" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-    </div>
-  </section>
+<section>
+  <div class="col-twelve grayscale">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.55224477753!2d77.4908526355353!3d12.954294598450296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C+Karnataka!5e0!3m2!1sen!2sin!4v1530454110146"
+      width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+</section>
 
-  <section>
-    <footer></footer>
-  </section>
+<section>
+  <footer></footer>
+</section>
