@@ -509,3 +509,117 @@ function emailTemp(name) {
 
   return html;
 }
+
+export function sendContactInfo(req, res) {
+
+  var cinfo = req.body;
+  // console.log(cinfo.attachment.base64)
+  var attach = cinfo.attachment.base64;
+
+  var transporter = nodemailer.createTransport({
+    service: config.service,
+    host: config.mailHost,
+    port: config.mailPort,
+    secureConnection: config.secureConnection,
+    auth: {
+      user: config.email,
+      pass: config.password
+    }
+  });
+
+  return User.find({ where: { role: 'admin' } }).then(function (auser) {
+    // console.log(auser);
+    var etemp = conatctemailTemp(cinfo, auser);
+
+    // if (auser) {
+
+    // console.log(transporter);
+    var mailOptions = {
+      from: config.mailSenderId,
+      to: auser.email,
+      attachments: [{
+        filename: new Date().getTime().toString() + '.pdf',
+        content: attach,
+        encoding: 'base64'
+      }],
+      subject: 'Hello ' + auser.name + ', Here is New Conatct Details!',
+      text: auser.name + ',\n\nThanks for joining our community. If you have any questions, please don\'t hesitate to send them our way. Feel free to reply to this email directly.\n\nSincerely,\nThe Management',
+      html: etemp
+    };
+
+    // console.log(mailOptions)
+    console.log("--------yes")
+    transporter.sendMail(mailOptions, (error, success) => {
+      console.log("yes------------------------------")
+      if (error) {
+        console.log(error)
+        return res.status(200).json({ msg: 'Some problem with the server, Please try again later' + error });
+      } else {
+        return res.status(200).json({ msg: 'Succcessfully Sent' });
+      }
+    });
+    // }
+  })
+    .catch(handleError(res));
+}
+
+function conatctemailTemp(data, admin) {
+
+  var html = '<head><meta charset="ISO-8859-1"><title>Invitation URL</title>' +
+    '</head><body><p style="padding:0"></p> ' +
+    '<p id="demo"style="float:right"></p>' +
+    '<script>var d = new Date(); var n = d.toDateString(); document.getElementById("demo").innerHTML = n;</script>' +
+    '<table style="background: #F5F6F7; width: 100%;">\
+  <tbody>\
+    <tr>\
+      <td>\
+          <table style="width: 700px; margin: auto; margin-top: 50px; border-radius: 7px;">\
+            <tbody>\
+              <tr>\
+                <td style="border-top-left-radius: 6px; border-top-right-radius: 6px; background: #263238;\
+                        background-size: 300px; background-position: 100%; background-repeat: no-repeat;\
+                        line-height: 55px; padding-top: 40px; text-align: center; color: #ffffff;\
+                        display: block; margin: 0 auto; clear: both">\
+                        <h2 style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                              margin-bottom: 15px; color: #47505e; margin: 0px 0 10px; line-height: 1.2;\
+                              font-weight: 200; line-height: 45px; margin-bottom: 30px;\
+                              font-size: 25px; line-height: 40px; margin-bottom: 10px; font-weight: 400;\
+                              color: #ffffff; padding-left: 40px; padding-right: 40px; padding-top: 40px;\
+                              padding-top: 0px; color: #009688">Enfros Solution</h2>\
+                        <h1 style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                                  margin-bottom: 15px; color: #47505e; margin: 0px 0 10px; line-height: 1.2;\
+                                  font-weight: 200; line-height: 45px; font-weight: bold; margin-bottom: 30px;\
+                                  font-size: 28px; line-height: 40px; margin-bottom: 10px; font-weight: 400;\
+                                  color: #ffffff; padding-left: 40px; padding-right: 40px; padding-top: 40px;\
+                                  padding-bottom: 40px; padding-top: 0px;">Welcome, '+ admin.name + '</h1>\</td></tr>\
+              <tr><td style="background: #fff; border-top-left-radius: 6px; border-top-right-radius: 6px;\
+                  padding-bottom: 40px; margin: 0 aut0; clear: both;">\
+                  <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                          font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                          font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;">\
+                          Here is the contact details.<br>'+ data.firstname + ' ' + data.lastname + '<br>' + data.email + '<br>' + data.contactnumber + '<br>' + data.country + '<br>' + data.zip + '<br>Contact preference: ' + data.preference + '<br>Contact time' + data.calltime + '</p>\
+                  <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                          font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                          font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;\
+                          margin-bottom: 0; padding-bottom: 0;">\
+                          Regards,\
+                          <br>\
+                          Enfros team</p>\
+                  </td>\
+              </tr>\
+          </tbody>\
+      </table>\
+      <div style="padding-top: 20px; padding-bottom: 30px; width: 100%; text-align: center; clear: both;">\
+          <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
+                  font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
+                  font-size: 12px; color: #47505e; color: #666; margin-top: 0px;">\
+                  Copyright © Enfros Solution. All right reserved.</p>\
+      </div>\
+      <br>\
+    </td>\
+  </tr>\
+</tbody>\
+</table>';
+
+  return html;
+}

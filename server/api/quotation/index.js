@@ -13,5 +13,5 @@ router.post('/getAllQuoteCount', controller.getAllQuoteCount);
 // router.put('/:id', controller.upsert);
 // router.patch('/:id', controller.patch);
 // router.delete('/:id', controller.destroy);
-
+router.post('/sendContactInfo', controller.sendContactInfo);
 module.exports = router;
