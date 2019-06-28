@@ -514,51 +514,92 @@ export function sendContactInfo(req, res) {
 
   var cinfo = req.body;
   // console.log(cinfo.attachment.base64)
-  var attach = cinfo.attachment.base64;
-
-  var transporter = nodemailer.createTransport({
-    service: config.service,
-    host: config.mailHost,
-    port: config.mailPort,
-    secureConnection: config.secureConnection,
-    auth: {
-      user: config.email,
-      pass: config.password
-    }
-  });
+  var mailOptions = {};
 
   return User.find({ where: { role: 'admin' } }).then(function (auser) {
     // console.log(auser);
     var etemp = conatctemailTemp(cinfo, auser);
 
-    // if (auser) {
+    if (auser) {
 
-    // console.log(transporter);
-    var mailOptions = {
-      from: config.mailSenderId,
-      to: auser.email,
-      attachments: [{
-        filename: new Date().getTime().toString() + '.pdf',
-        content: attach,
-        encoding: 'base64'
-      }],
-      subject: 'Hello ' + auser.name + ', Here is New Conatct Details!',
-      text: auser.name + ',\n\nThanks for joining our community. If you have any questions, please don\'t hesitate to send them our way. Feel free to reply to this email directly.\n\nSincerely,\nThe Management',
-      html: etemp
-    };
-
-    // console.log(mailOptions)
-    console.log("--------yes")
-    transporter.sendMail(mailOptions, (error, success) => {
-      console.log("yes------------------------------")
-      if (error) {
-        console.log(error)
-        return res.status(200).json({ msg: 'Some problem with the server, Please try again later' + error });
+      var transporter = nodemailer.createTransport({
+        // service: config.service,
+        host: config.mailHost,
+        port: config.mailPort,
+        secureConnection: config.secureConnection,
+        auth: {
+          user: config.email,
+          pass: config.password
+        }
+      });
+      // console.log("---------------------------")
+      // console.log(config.mailSenderId)
+      // console.log(auser.email)
+      // console.log(transporter);
+      
+      if(req.body.attachment) {
+        mailOptions = {
+          from: config.mailSenderId,
+          to: auser.email,
+          attachments: [{
+            filename: new Date().getTime().toString() + cinfo.attachment.filename,
+            content: req.body.basestring,
+            encoding: 'base64'
+          }],
+          subject: 'Hello ' + auser.name + ', Here is the New Conatct Details!',
+          text: '',
+          html: etemp
+        };
       } else {
-        return res.status(200).json({ msg: 'Succcessfully Sent' });
+        mailOptions = {
+          from: config.mailSenderId,
+          to: auser.email,
+          subject: 'Hello ' + auser.name + ', Here is the New Conatct Details!',
+          text: '',
+          html: etemp
+        };
       }
-    });
-    // }
+
+      // console.log(mailOptions)
+      // console.log("--------yes")
+      transporter.sendMail(mailOptions, (error, success) => {
+        // console.log("yes------------------------------")
+        if (error) {
+          console.log(error)
+          return res.status(200).json({ msg: 'Some problem with the server, Please try again later' + error });
+        } if (success) {
+          return res.status(200).json({ msg: 'Succcessfully Sent' });
+        }
+      });
+      // async function main() {
+      //   let transporter = nodemailer.createTransport({
+      //     host: config.mailHost,
+      //     port: 587,
+      //     secure: false, // true for 465, false for other ports
+      //     auth: {
+      //       user: config.email,
+      //       pass: config.password
+      //     }
+      //   });
+
+      //   let info = await transporter.sendMail({
+
+      //     from: '"Fred Foo 👻" <foo@example.com>',
+      //     to: auser.email,
+      //     subject: 'Hello ' + auser.name + ', Here is New Conatct Details!',
+      //     text: "Hello world?", // plain text body
+      //     attachments: [{
+      //       filename: new Date().getTime().toString() + '.pdf',
+      //       content: attach,
+      //       encoding: 'base64'
+      //     }],
+      //     html: etemp
+      //   });
+
+      //   console.log("Message sent: %s", info.messageId);
+      // }
+      // main().catch(console.error);
+    }
   })
     .catch(handleError(res));
 }
@@ -597,7 +638,7 @@ function conatctemailTemp(data, admin) {
                   <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
                           font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                           font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;">\
-                          Here is the contact details.<br>'+ data.firstname + ' ' + data.lastname + '<br>' + data.email + '<br>' + data.contactnumber + '<br>' + data.country + '<br>' + data.zip + '<br>Contact preference: ' + data.preference + '<br>Contact time' + data.calltime + '</p>\
+                          Here is the contact details.<br><br>Name: '+ data.firstname + ' ' + data.lastname + '<br>Email: ' + data.email + '<br>Contact Number: ' + data.contactnumber + '<br>Address: ' + data.country + '<br>Pincode: ' + data.zip + '<br>Contact preference: ' + data.preference + '<br>Contact time: ' + data.calltime + '</p>\
                   <p style="font-family: Helvetica neue, Helvetica, Arial, Lucida Grande sans-serif;\
                           font-weight: normal; padding: 0; line-height: 1.7; margin-bottom: 1.3em;\
                           font-size: 15px; color: #47505e; padding-left: 40px; padding-right: 40px;\

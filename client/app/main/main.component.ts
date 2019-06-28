@@ -11,6 +11,7 @@ export class MainController {
   cObj = {};
   country: any = [];
   errMsg;
+  btnClicked: boolean = false;
 
   /*@ngInject*/
   constructor($http) {
@@ -29,16 +30,24 @@ export class MainController {
   }
 
   sendToAdmin() {
-    console.log(this.cObj)
+    // console.log(this.cObj)
+    if (this.cObj['attachment']) {
+      this.cObj['basestring'] = this.cObj['attachment'].base64;
+    }
+    this.btnClicked = true;
     this.$http.post('/api/quotations/sendContactInfo', this.cObj).then(response => {
       if (response.status === 200) {
-        console.log(response)
+        // console.log(response)
         swal({
-          title: "",
-          text: response.data.msg
+          title: response.data.msg,
+          text: ''
         });
+        this.btnClicked = false;
+        this.cObj = {};
       }
     }, err => {
+      this.btnClicked = false;
+      this.cObj = {};
       if (err.data.message) {
         this.errMsg = err.data.message;
       } else if (err.status === 500) {
