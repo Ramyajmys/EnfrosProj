@@ -27,7 +27,7 @@
     "base64topdf": "^1.1.8",
     "blob": "0.0.5",
     "body-parser": "^1.13.3",
-    "bootstrap": "~3.3.7",
+    "bootstrap": "~3.4.1",
     "bootstrap-sass": "~3.3.7",
     "ckeditor": "^4.10.1",
     "composable-middleware": "^0.3.0",
